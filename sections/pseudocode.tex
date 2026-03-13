@@ -25,3 +25,23 @@ The core algorithm operates iteratively over $n-1$ steps. At any given step $i$ 
 \end{enumerate}
 
 This sequence is repeated until the system is reduced to a set of univariate polynomials in the final variable, $x_n$.
+
+\subsection{Final Phase: Univariate Solving and Backward Substitution}
+
+Upon the completion of the iterative elimination phase, the initial multivariate polynomial system is reduced to a purely univariate system in the final variable, $x_n$. Solving this univariate system over the finite field $\mathbb{F}_q$ yields the valid roots for $x_n$, establishing a direct solution of the form $x_n = c_n$ (unique right?).
+
+To conclude the algorithm and reconstruct the complete solution for the original system, we retrieve the sequence of linear relations preserved during the successive elimination steps. These stored relations naturally form a triangular system of equations:
+\begin{equation}
+\left\{
+\begin{aligned}
+    f_1(x_2, \dots, x_n)\cdot x_1 + g_1(x_2, \dots, x_n) &= 0 \\
+    f_2(x_3, \dots, x_n)\cdot x_2 + g_2(x_3, \dots, x_n) &= 0 \\
+    f_3(x_4, \dots, x_n)\cdot x_3 + g_3(x_4, \dots, x_n) &= 0 \\
+    \vdots &= \vdots \\
+    f_{n-1}(x_n)\cdot x_{n-1} + g_{n-1}(x_n) &= 0
+\end{aligned}
+\right.
+\label{eq:system}
+\end{equation}
+
+Given the computed scalar value $c_n$ for $x_n$, we execute a systematic backward substitution. By sequentially evaluating the polynomials $f_i$ and $g_i$ using the subsequently known values, we can resolve the linear relation for $x_i$. Propagating this substitution from $i = n-1$ down to $i = 1$, we recursively recover the values of all previously eliminated variables. This deterministic final step yields the complete solution set $(c_1, \dots, c_n)$ for the original polynomial system.
