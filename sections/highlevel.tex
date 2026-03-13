@@ -1,6 +1,14 @@
-Let us consider an initial system of multivariate polynomials in $n$ variables, denoted as $x_1, \dots, x_n$, defined over a finite field $\mathbb{F}_q$. Let $d_i$ denote the maximum degree of the polynomials with respect to the target variable $x_i$. 
+\subsection{Preliminary considerations}
+%TODO precisely define our setting:
+% - n_poly >= max(q, n_v)
+% - this yields unique solution with high probability
 
-The core idea of the algorithm relies on a variable elimination strategy. We begin by reinterpreting the polynomial system as a collection of polynomials in the ring $\mathbb{F}_q[x_2, \dots, x_n][x_1]$. In this representation, the system is treated as a set of univariate polynomials in $x_1$, where the coefficients are themselves multivariate polynomials in the remaining variables, specifically in $\mathbb{F}_q[x_2, \dots, x_n]$.
+
+\subsection{Intuition and high-level overview}
+Let us consider an initial system of multivariate polynomials in $n$ variables, denoted as $x_1, \dots, x_n$, defined over a finite field $\Fq$. 
+% Let $d_i$ denote the maximum degree of the polynomials with respect to the target variable $x_i$. 
+
+The core idea of the algorithm relies on a variable elimination strategy. We begin by reinterpreting the polynomial system as a collection of polynomials in the ring $\Fq[x_2, \dots, x_n][x_1]$. In this representation, the system is treated as a set of univariate polynomials in $x_1$, where the coefficients are themselves multivariate polynomials in the remaining variables, specifically in $\Fq[x_2, \dots, x_n]$.
 
 Next, we construct the coefficient matrix of this univariate representation and reduce it to its Row Echelon Form (REF). Through this reduction, the final non-zero block of the matrix yields a linear relation with respect to $x_1$, which takes the form:
 \begin{equation*}
@@ -10,7 +18,7 @@ Next, we construct the coefficient matrix of this univariate representation and 
 
 While we cannot generally assume that $g_1$ is divisible by $f_1$, this structural relation provides a crucial substitution mechanism. Returning to the original system, we multiply the equations by an appropriate power of $f_1(x_2, \dots, x_n)$. This homogenization allows us to substitute every occurrence of the term $(f_1(x_2, \dots, x_n)x_1)^k$ with $(-g_1(x_2, \dots, x_n))^k$. This substitution systematically eliminates the variable $x_1$, reducing the dimension of the polynomial system by one.
 
-This elimination procedure is applied iteratively. Specifically, at any given step $i$ (for $i = 1, \dots, n-1$), the active system is defined over the polynomial ring $\mathbb{F}_q[x_i, \dots, x_n]$. We rewrite this system by treating it as a collection of univariate polynomials in $x_i$, with coefficients belonging to the ring of the remaining variables, namely $\mathbb{F}_q[x_{i+1}, \dots, x_n][x_i]$. 
+Such elimination procedure is applied iteratively. Specifically, at any given step $i$ (for $i = 1, \dots, n-1$), the active system is defined over the polynomial ring $\Fq[x_i, \dots, x_n]$. We rewrite this system by treating it as a collection of univariate polynomials in $x_i$, with coefficients belonging to the ring of the remaining variables, namely $\Fq[x_{i+1}, \dots, x_n][x_i]$. 
 
 By constructing the coefficient matrix for this representation and reducing it to REF, we isolate a linear relation for the variable $x_i$, which takes the form:
 \begin{equation}
@@ -19,7 +27,8 @@ By constructing the coefficient matrix for this representation and reducing it t
 \end{equation}
 Using this relation to substitute and eliminate $x_i$, we project the system into a lower-dimensional space. This process continues until we obtain a purely univariate polynomial system strictly in the final variable $x_n$.
 
-Once the roots for $x_n$ are computed from this final system, we initiate a backward substitution phase. We utilize the sequence of linear relations extracted during the elimination steps to recursively recover the values of the previously eliminated variables. The relations take the following form:
+Proceeding in the same way for the system of univariate polynomials leads to a unique solution for the variable \(x_n\).
+Once the root for $x_n$ is computed from this final system, we initiate a backward substitution phase. We utilize the sequence of linear relations extracted during the elimination steps to recursively recover the values of the previously eliminated variables. Note that, after substitution the coefficients of such relations are in \(Fq\), thus permitting division. The relations take the following form:
 \begin{align*}
     f_1(x_2, \dots, x_n)\cdot x_1 + g_1(x_2, \dots, x_n) &= 0 \\
     f_2(x_3, \dots, x_n)\cdot x_2 + g_2(x_3, \dots, x_n) &= 0 \\
@@ -30,4 +39,4 @@ Once the roots for $x_n$ are computed from this final system, we initiate a back
     \label{eq:backward_substitution}
 \end{align*}
 
-By evaluating these functions with the known values obtained in the previous steps, we construct the complete solution set for the system.
+By evaluating these functions with the known value obtained in the previous steps, we construct the complete solution set for the system.

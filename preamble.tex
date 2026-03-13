@@ -1,0 +1,96 @@
+\newcommand{\K}{\mathbb{K}}
+\newcommand{\F}{\mathbb{F}}
+\newcommand{\Fp}{\mathbb{F}_p}
+\newcommand{\Fq}{\mathbb{F}_q}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\V}{\mathbb{V}}
+
+\newcommand{\idmat}{\ensuremath{\mathbf{I}}}
+\newcommand{\ideal}[1]{\ensuremath{\langle #1 \rangle}}
+\newcommand{\spoly}{\ensuremath{\mathcal{S}}}
+
+\newcommand{\bigO}{\mathcal{O}}
+\renewcommand{\deg}{\ensuremath{\mathsf{deg}}}
+\newcommand{\vars}[1]{\mathbf{#1}}
+
+% \newcommand{\ubar}{\underset{\bar{}}}
+\newcommand{\ubar}[1]{\underline{#1}}
+% \newcommand\ubar[1]{\stackunder[1.2pt]{$#1$}{\rule{.8ex}{.075ex}}}
+% \newcommand{\Res}{\mathsf{Res}}
+\newcommand{\Lin}{\mathsf{Lin}}
+\newcommand{\vin}{\mathsf{gens}}
+\newcommand{\supp}{\mathsf{supp}}
+\newcommand{\coeff}{\mathsf{coeff}}
+\newcommand{\exponents}{\mathsf{degs}}
+\newcommand{\rref}{\mathsf{rref}}
+\newcommand{\lm}{\mathsf{LM}}
+\newcommand{\lc}{\mathsf{LC}}
+\newcommand{\lt}{\mathsf{LT}}
+\newcommand{\initideal}{\mathrm{In}}
+\newcommand{\wt}{\mathsf{wt}}
+% \newcommand{\dim}{\mathrm{dim}}
+% \newcommand{\rank}{\mathsf{Rank}}
+\newcommand{\boldparagraph}[1]{\vspace{0.5cm}
+\textbf{#1} }
+\newcommand{\variables}[2]{x_#1, \dots, x_#2}
+
+\newcommand\nth{\textsuperscript{th}\xspace}
+\newcommand{\etal}{\textit{et al. }}
+
+
+\newcommand{\ufnperm}{\ensuremath{\text{UFN}^\pi}}
+\newcommand{\bfnperm}{\ensuremath{\text{Feistel-II}^\pi}}
+\newcommand{\typethreeperm}{\ensuremath{\text{Feistel-III}^\pi}}
+\newcommand{\mrfnperm}{\ensuremath{\text{MRFN}^\pi}}
+\newcommand{\ufnerf}{\ensuremath{\text{UFN}_{\text{erf}}}}
+\newcommand{\ufncrf}{\ensuremath{\text{UFN}_{\text{crf}}}}
+\newcommand{\bfnnyb}{\ensuremath{\text{Feistel-II}}}
+\newcommand{\bfntwo}{\ensuremath{\text{Feistel-II}}}
+\newcommand{\bfnthree}{\ensuremath{\text{Feistel-III}}}
+\newcommand{\mrfn}{\ensuremath{\text{MRFN}}}
+
+
+% for editorial purpose
+%
+\newcommand{\ar}[1]{\textcolor{blue}{AR: #1}}
+\newcommand{\luc}[1]{\textcolor{red}{LC: #1}}
+% \newlist{todolist}{itemize}{2}
+% \setlist[todolist]{label=$\square$}
+
+
+% \tikzset{XOR/.style={draw,circle,thick,inner sep=1.2mm,append after command={
+%         [shorten >=\pgflinewidth, shorten <=\pgflinewidth,]
+%         (\tikzlastnode.north) edge[thick] (\tikzlastnode.south)
+%         (\tikzlastnode.east) edge[thick] (\tikzlastnode.west)
+%         }
+%     }
+%   }%
+
+
+%% names
+
+\newcommand{\ipos}{\ensuremath{\mathtt{IPoS}}}
+\newcommand{\matrixdef}[1]{\ensuremath{#1}}
+
+%% For polynomial division
+
+%% for multivariate polynomial division
+% \begin{array}{rll}
+%      a_1\colon  & \multicolumn{1}{l}{x+y}\\
+%      a_2\colon  & \multicolumn{1}{l}{1}           & \ r\\ \cline{1-2}
+%   xy + 1\PhantC & \multirow{2}*{$\bigg) \ x^2y + xy^2+y^2 $} \\\cline{3-3}
+%  y^2 + 1\PhantC &\\
+%     %
+%     &\PhantSQ           x^2y -     x                                         \\\CMidRule[3.0ex][9.0ex]{2-2}
+%     &\PhantSQ \hphantom{x^2y +{}}  xy^2 +    x + y^2                         \\
+%     &\PhantSQ \hphantom{x^2y +{}}  xy^2 -    y                               \\\CMidRule[9.0ex][5.0ex]{2-2}
+%     &\PhantSQ \hphantom{x^2y +     xy^2 +{}} x +    y^2 +     y              \\\CMidRule[16.0ex][5.0ex]{2-2}
+%     &\PhantSQ \hphantom{x^2y +     xy^2 +    x +{}} y^2 +     y              \\
+%     &\PhantSQ \hphantom{x^2y +     xy^2 +    x +{}} y^2 -     1              \\\CMidRule[20.0ex][5.0ex]{2-2}
+%     &\PhantSQ \hphantom{x^2y +     xy^2 +    x +    y^2 +{}}  y + 1          \\\CMidRule[25.0ex][1.0ex]{2-2}
+%     &\PhantSQ \hphantom{x^2y +     xy^2 +    x +    y^2 + y +{}}  1 &\to x+y \\\CMidRule[25.0ex][1.0ex]{2-2}
+%     &\PhantSQ \hphantom{x^2y +     xy^2 +    x +    y^2 + y +{}}  0 &\to x+y+1
+%   \\&\PhantSQ\color{red}x^2y +     xy^2 +    x +    y^2 + y + 1
+%    % Last line above should be removed -- used for alignment purposes only.
+% \end{array}
