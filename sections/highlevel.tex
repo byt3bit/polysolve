@@ -28,7 +28,7 @@ By constructing the coefficient matrix for this representation and reducing it t
 Using this relation to substitute and eliminate $x_i$, we project the system into a lower-dimensional space. This process continues until we obtain a purely univariate polynomial system strictly in the final variable $x_n$.
 
 Proceeding in the same way for the system of univariate polynomials leads to a unique solution for the variable \(x_n\).
-Once the root for $x_n$ is computed from this final system, we initiate a backward substitution phase. We utilize the sequence of linear relations extracted during the elimination steps to recursively recover the values of the previously eliminated variables. Note that, after substitution the coefficients of such relations are in \(Fq\), thus permitting division. The relations take the following form:
+Once the root for $x_n$ is computed from this final system, we initiate a backward substitution phase. We utilize the sequence of linear relations extracted during the elimination steps to recursively recover the values of the previously eliminated variables. Note that, after substitution the coefficients of such relations are in \(\Fq\), thus permitting division. The relations take the following form:
 \begin{align*}
     f_1(x_2, \dots, x_n)\cdot x_1 + g_1(x_2, \dots, x_n) &= 0 \\
     f_2(x_3, \dots, x_n)\cdot x_2 + g_2(x_3, \dots, x_n) &= 0 \\
