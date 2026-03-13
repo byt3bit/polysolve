@@ -13,7 +13,7 @@ The core algorithm operates iteratively over $n-1$ steps. At any given step $i$ 
 \begin{enumerate}
     \item \textbf{Univariate Representation:} The current polynomial system is recast such that the equations are treated as univariate polynomials in the variable $x_i$. The coefficients of these polynomials are themselves multivariate polynomials belonging to the ring of the remaining variables, $\mathbb{F}_q[x_{i+1}, \dots, x_n]$.
     
-    \item \textbf{Reduction and Extraction:} We construct the coefficient matrix corresponding to this univariate representation and reduce it to REF. From the lowest non-zero row of this reduced matrix, we extract and store the underlying linear relation in $x_i$, which takes the form: 
+    \item \textbf{Reduction and Extraction:} We construct the coefficient matrix corresponding to this univariate representation and reduce it to REF. Note that, because division is not guaranteed, Dodgson's triangularization~\cite{} algorithm is employed. From the lowest non-zero row of this reduced matrix, we extract and store the underlying linear relation in $x_i$, which takes the form: 
     \begin{equation}
         f_i(x_{i+1}, \dots, x_n)\cdot x_i + g_i(x_{i+1}, \dots, x_n) = 0
         \label{eq:step_i_relation}
@@ -45,3 +45,6 @@ To conclude the algorithm and reconstruct the complete solution for the original
 \end{equation}
 
 Given the computed scalar value $c_n$ for $x_n$, we execute a systematic backward substitution. By sequentially evaluating the polynomials $f_i$ and $g_i$ using the subsequently known values, we can resolve the linear relation for $x_i$. Propagating this substitution from $i = n-1$ down to $i = 1$, we recursively recover the values of all previously eliminated variables. This deterministic final step yields the complete solution set $(c_1, \dots, c_n)$ for the original polynomial system.
+
+
+% need to explain how to avoid the insertion of useless solutions due to division impossibility
