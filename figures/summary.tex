@@ -1,0 +1,153 @@
+\begin{tikzpicture}[
+  matparens/.style={
+    inner sep=3pt,
+    left delimiter={(},
+    right delimiter={)}
+  },
+  block/.style={draw=gray, thick, inner sep=2pt, minimum height=12mm, minimum width=12mm, font=\large\bfseries},
+  bullet/.style={draw=gray, fill=gray!30, minimum width=12mm, minimum height=12mm},
+  arrow/.style={->, thick, line cap=round},
+  node distance=2mm
+]
+
+% -------------------
+% BLOCK 1) Samples
+% -------------------
+\node[matparens] (A1) {
+    \begin{tikzpicture}
+        \node[lipicsGray, matrix={1}{1}, fill=lipicsBulletGray] (R) {};
+        \draw[lipicsGray, line width=0.70mm] (R.north west) -- (R.south east) -- cycle;
+        \node[font=\footnotesize, fill=white, draw=lipicsGray, line width=0.4pt, inner sep=1pt] at (R.center) {$i+1$};
+
+        \node[lipicsBulletGray, matrix={1}{3}, fill=lipicsLightGray, right=1mm of R] (T) {};
+        \node[black, align=center, text width=21mm, anchor=center] at (T.center) {degree $<i+1$};
+
+        \node[draw, dotted, thick, rounded corners, inner sep=3pt, fit=(R)(T)] (boxd) {};
+
+    \end{tikzpicture}
+  };
+
+
+% -------------------
+% 2) DiagA
+% -------------------
+% \node[matparens, below=of A1] (A2) {
+%     \begin{tikzpicture}
+%         \node[lipicsGray, matrix={1}{1}, fill=white] (P) {};
+%         \begin{scope}
+%         \clip (P.north west) -- (P.south east) -- (P.north east) -- cycle;
+%         \fill[lipicsBulletGray] (P.north west) rectangle (P.south east);
+%         \end{scope}
+%         \draw[lipicsGray, line width=0.70mm] (P.north west) -- (P.south east);
+%         \draw[lipicsGray, line width=0.4pt] (P.north west) -- (P.north east) -- (P.south east) -- (P.south west) -- cycle;
+
+%         \node[font=\large, fill=white, draw=lipicsGray, line width=0.4pt, inner sep=2pt, anchor=center] at (P.center) {\large$i$};
+
+%         \node[lipicsBulletGray, matrix={1}{3}, fill=lipicsLightGray, right=2mm of P] (L) {};
+%         \node[black, align=center, text width=16mm, anchor=center] at (L.center) {degree $<i$};
+%     \end{tikzpicture}
+% };
+
+% % Arrow A1 -> A2
+% \draw[arrow] (A1.south) -- (A2.north) node[midway, right=1mm, font=\scriptsize, align=center] {\texttt{DiagA}};
+
+% -------------------
+% BLOCK 2) DiagA + DiagB
+% -------------------
+\node[matparens, below=of A1] (B2) {
+    \begin{tikzpicture}
+        \node[lipicsGray, matrix={1}{1}, fill=white] (P) {};
+        \draw[lipicsGray, line width=0.70mm] (P.north west) -- (P.south east) -- cycle;
+        \node[font=\footnotesize, fill=white, draw=lipicsGray, line width=0.4pt, inner sep=1pt, anchor=center] at (P.center) {$i+1$};
+
+        \node[lipicsBulletGray, matrix={1}{3}, fill=lipicsLightGray, right=1mm of P] (L) {};
+        \node[black, align=center, text width=21mm, anchor=center] at (L.center) {degree $<i+1$};
+
+        \node[draw, dotted, thick, rounded corners, inner sep=3pt, fit=(P)(L)] (boxd) {};
+    \end{tikzpicture}
+};
+
+% Arrow A2 -> B2
+\draw[arrow]
+  (A1.south) -- (B2.north)
+  node[midway, right=1mm, font=\scriptsize, align=center] {\texttt{DiagA + DiagB}};
+
+
+% -------------------
+% BLOCK 3) Spoly generation
+% -------------------
+\node[matparens, below=of B2] (A1b) {
+\begin{tikzpicture}
+    \node[lipicsGray, matrix={0.7}{1}, fill=lipicsBulletGray] (K) {};
+    \node[font=\footnotesize, fill=white, draw=lipicsGray, line width=0.4pt, inner sep=1pt, anchor=center] at (K.center) {$i+1$};
+    
+    \node[lipicsGray, matrix={0.7}{0.7}, fill=lipicsBulletGray, right=1mm of K] (R) {};
+    \draw[lipicsGray, line width=0.70mm] (R.north west) -- (R.south east) -- cycle;
+    \node[font=\footnotesize, fill=white, draw=lipicsGray, line width=0.4pt, inner sep=1pt, anchor=center] at (R.center) {$i$};
+
+
+    \node[lipicsBulletGray, matrix={0.7}{2.2}, fill=lipicsLightGray, right=1mm of R] (T) {};
+    \node[black, align=center, text width=16mm, anchor=center, font=\footnotesize] at (T.center) {degree $<i$};
+
+    \node[draw, dotted, thick, rounded corners, inner sep=3pt, fit=(K)(R)(T)] (boxd) {};
+\end{tikzpicture}
+};
+
+% Arrow B2 -> A1b
+\draw[arrow] (B2.south) -- (A1b.north) node[midway, right=1mm, font=\scriptsize, align=center] {\texttt{Spoly} (gen.)};
+
+% -------------------
+% BLOCK 4) Spoly reduction
+% -------------------
+\node[matparens, below=of A1b] (B3) {
+\begin{tikzpicture}
+    %\node[draw=lipicsGray, dashed, line width=0.6pt, fill=none, matrix={0.7}{1}] (K) {};
+    \node[matrix={0.7}{1}, draw=none, fill=none] (K) {};
+
+    \node[lipicsGray, matrix={0.7}{0.7}, fill=lipicsBulletGray, right=1mm of K] (R) {};
+    \draw[lipicsGray, line width=0.70mm] (R.north west) -- (R.south east) -- cycle;
+    \node[font=\footnotesize, fill=white, draw=lipicsGray, line width=0.4pt, inner sep=1pt, anchor=center] at (R.center) {$i$};
+
+    \node[lipicsBulletGray, matrix={0.7}{2.2}, fill=lipicsLightGray, right=1mm of R] (T) {};
+    \node[black, align=center, text width=16mm, anchor=center, font=\footnotesize] at (T.center) {degree $<i$};
+
+    \node[draw, dotted, thick, rounded corners, inner sep=3pt, fit=(R)(T)] (boxd) {};
+\end{tikzpicture}
+};
+
+% Arrow B2 -> A1b
+\draw[arrow] (A1b.south) -- (B3.north) node[midway, right=1mm, font=\scriptsize, align=center] {\texttt{Spoly} (red.)};
+
+% -------------------
+% BLOCK 5) Diagonalization
+% -------------------
+\node[matparens, below=of B3] (AA1) {
+    \begin{tikzpicture}
+        % \node[draw=lipicsGray, dashed, line width=0.6pt, fill=none, matrix={0.7}{1}] (K) {};
+        \node[matrix={0.7}{1}, draw=none, fill=none] (K) {};
+
+        \node[lipicsGray, matrix={0.7}{0.7}, fill=white, right=1mm of K] (P) {};
+        \draw[lipicsGray, line width=0.70mm] (P.north west) -- (P.south east) -- cycle;
+        \node[font=\footnotesize, fill=white, draw=lipicsGray, line width=0.4pt, inner sep=1pt, anchor=center] at (P.center) {$i$};
+
+        \node[lipicsBulletGray, matrix={0.7}{2.2}, fill=lipicsLightGray, right=1mm of P] (L) {};
+        \node[font=\footnotesize, black, align=center, text width=16mm, anchor=center] at (L.center) {degree $<i$};
+
+        \node[draw, dotted, thick, rounded corners, inner sep=3pt, fit=(P)(L)] (boxd) {};
+    \end{tikzpicture}
+};
+
+% Arrow A2 -> B2
+\draw[arrow]
+  (B3.south) -- (AA1.north)
+  node[midway, right=1mm, font=\scriptsize, align=center] {\texttt{DiagA + DiagB}};
+
+
+% Arrow B3 -> A1
+% \draw[arrow, dashed]
+%   ($(AA1.east)+(3mm,0)$)
+%   -- ($(AA1.east)+(7mm,0)$)
+%   -- ($(B2.east)+(7mm,0)$)
+%   -- ($(B2.east)+(3mm,0)$);
+
+\end{tikzpicture}

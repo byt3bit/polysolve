@@ -24,6 +24,24 @@
 % Useful packages
 \usepackage{hyperref}
 \usepackage{graphicx}
+\usepackage{csquotes}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage[svgnames]{xcolor}
+\usepackage{comment}
+\usepackage{setspace}
+\usepackage{appendix}
+\usepackage{lmodern} 
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{physics}
+\usepackage{braket}
+\usepackage{amsthm}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\allowdisplaybreaks
+\usepackage{booktabs}
+\usepackage{caption}
 
 % Title info
 \title{Your Title Here}
@@ -35,10 +53,10 @@
 \maketitle
 
 \section{Introduction}
+\input{sections/1introduction.tex}
 
-This is a sample paragraph demonstrating the template format. 
-The document uses 11-point font, single spacing, and generous
-spacing between paragraphs and sections for readability.
+\section{Algorithm Overview}
+\input{sections/highlevel.tex}
 
 \section{Main Section}
 

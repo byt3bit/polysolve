@@ -1,0 +1,17 @@
+*.pdf
+*.aux
+*.log
+*.out
+*.toc
+*.bbl
+*.blg
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.vtc
+
+*~
+*.swp
+.vscode/
+
+OLDFORMAT
