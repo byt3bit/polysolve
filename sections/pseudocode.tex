@@ -1,0 +1,27 @@
+
+\subsection{System Requirements and Initialization}
+Let $n$ denote the number of variables in the system and $q$ denote the size of the finite field $\mathbb{F}_q$.
+\begin{itemize}
+    \item To guarantee a unique solution, the system must inherently comprise at least $n$ algebraically independent equations.
+    \item Furthermore, working over a finite field allows us to reduce any polynomial modulo the field equations, $x_i^q - x_i = 0$, for every variable $x_i$. This property ensures that the maximum degree of any individual variable in the system is strictly bounded by $q-1$.
+\end{itemize}
+Consequently, to ensure the algorithm successfully isolates the variables, the initial system must contain a minimum number of equations $m$, with $m \geq \max\{n, q\}$.
+
+\subsection{Iterative Elimination Phase}
+The core algorithm operates iteratively over $n-1$ steps. At any given step $i$ (where $i = 1, \dots, n-1$), the initial polynomial system has been reduced to a working system defined over the ring $\mathbb{F}_q[x_i, \dots, x_n]$. The elimination of the variable $x_i$ proceeds through the following structured steps:
+
+\begin{enumerate}
+    \item \textbf{Univariate Representation:} The current polynomial system is recast such that the equations are treated as univariate polynomials in the variable $x_i$. The coefficients of these polynomials are themselves multivariate polynomials belonging to the ring of the remaining variables, $\mathbb{F}_q[x_{i+1}, \dots, x_n]$.
+    
+    \item \textbf{Reduction and Extraction:} We construct the coefficient matrix corresponding to this univariate representation and reduce it to REF. From the lowest non-zero row of this reduced matrix, we extract and store the underlying linear relation in $x_i$, which takes the form: 
+    \begin{equation}
+        f_i(x_{i+1}, \dots, x_n)\cdot x_i + g_i(x_{i+1}, \dots, x_n) = 0
+        \label{eq:step_i_relation}
+    \end{equation}
+    
+    \item \textbf{Homogenization and Substitution:} Let $k_j$ be the maximum degree of $x_i$ in the $j$-th equation of our system. To remove the variable $x_i$ from the expression, we multiply the $j$-th polynomial equation by $(f_i)^{k_j}$. This homogenization allows us to systematically substitute every occurrence of the term $(f_i\cdot x_i)^\ell$ with $(-g_i)^\ell$ for all relevant powers $\ell$. Upon completing these substitutions across all equations, the variable $x_i$ is entirely eliminated, yielding a new system defined strictly in $\mathbb{F}_q[x_{i+1}, \dots, x_n]$.
+    
+    \item \textbf{Field Reduction:} The polynomial multiplications and substitutions performed in the previous step may increase the overall degree of the equations in the system. However, because the system is defined over the finite field $\mathbb{F}_q$, we can exploit the field equations, $x_j^q - x_j = 0$, for all remaining variables $x_j \in \{x_{i+1}, \dots, x_n\}$. To maintain a proper and computationally tractable system, we reduce every updated polynomial modulo these field equations. This vital reduction step ensures that the degree of any individual variable in the system strictly never exceeds $q-1$, preventing exponential degree growth during the elimination process.
+\end{enumerate}
+
+This sequence is repeated until the system is reduced to a set of univariate polynomials in the final variable, $x_n$.
