@@ -28,7 +28,7 @@ This sequence is repeated until the system is reduced to a set of univariate pol
 
 \subsection{Final Phase: Univariate Solving and Backward Substitution}
 
-Upon the completion of the iterative elimination phase, the initial multivariate polynomial system is reduced to a purely univariate system in the final variable, $x_n$. Solving this univariate system over the finite field $\mathbb{F}_q$ yields the valid roots for $x_n$, establishing a direct solution of the form $x_n = c_n$ (unique right?).
+Upon the completion of the iterative elimination phase, the initial multivariate polynomial system is reduced to a purely univariate system in the final variable, $x_n$. Solving this univariate system over the finite field $\mathbb{F}_q$ yields the valid roots for $x_n$, establishing a direct solution of the form $x_n = c_n$ (\mlf{unique right?}).
 
 To conclude the algorithm and reconstruct the complete solution for the original system, we retrieve the sequence of linear relations preserved during the successive elimination steps. These stored relations naturally form a triangular system of equations:
 \begin{equation}
