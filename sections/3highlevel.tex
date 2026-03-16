@@ -1,7 +1,4 @@
-\subsection{Preliminary considerations}
-%TODO precisely define our setting:
-% - n_poly >= max(q, n_v)
-% - this yields unique solution with high probability
+%\subsection{Preliminary considerations}
 
 
 \subsection{Intuition and high-level overview}
@@ -49,3 +46,24 @@ By evaluating these functions with the known value obtained in the previous step
     }
     \caption{Overview}\label{fig:overview}
 \end{figure}
+
+
+\subsection{Details of REF and Non-Linear Relations}
+
+In the ideal scenario described, a single reduction of the coefficient matrix to Row Echelon Form (REF) immediately isolates a linear relation in the active variable $x_i$. However, in practice, a single REF computation does not strictly guarantee a degree 1 equation. It might happened that the last row gives us a relation of degree $d > 1$.
+
+For instance, suppose the REF reduction yields a quadratic relation instead of a linear one:
+\begin{equation}
+    h_i^{(2)}(x_{i+1}, \dots, x_n) x_i^2 + h_i^{(1)}(x_{i+1}, \dots, x_n) x_i + h_i^{(0)}(x_{i+1}, \dots, x_n) = 0.
+    \label{eq:quadratic_relation}
+\end{equation}
+To overcome this and force a linear relation, we employ an iterative degree-reduction. Using the relation obtained in Equation~\ref{eq:quadratic_relation}, we can express the leading term as a function of lower-degree terms:
+\begin{equation*}
+    h_i^{(2)}(x_{i+1}, \dots, x_n) x_i^2 = -\left( h_i^{(1)}(x_{i+1}, \dots, x_n) x_i + h_i^{(0)}(x_{i+1}, \dots, x_n) \right).
+\end{equation*}
+
+We then use this identity to systematically reduce the degree of $x_i$ in all other equations within the active system. To do this without introducing rational functions, we multiply the remaining polynomial equations by an appropriate power of the leading coefficient, ${(h_i^{(2)})}^k$. This homogenization step allows us to substitute every occurrence of ${(h_i^{(2)} x_i^2)}^k$ with the lower-degree equivalent ${\left( -h_i^{(1)} x_i - h_i^{(0)} \right)}^k$.
+
+After applying this substitution across the entire system, the maximal degree of $x_i$ in the remaining equations is strictly reduced. We then reconstruct the univariate coefficient matrix for this newly updated system and perform the REF reduction again. 
+
+Because the system is defined over the finite field $\Fq$ and augmented by the field equations $x_i^q - x_i = 0$, the roots are strictly bounded. Consequently, this iterative cycle of REF reduction and pseudo-division will decrease the minimum degree of the relations. By applying this process iteratively, the degree of the minimal relation will continually drop until a linear relation of the form showed in Equation~\ref{eq:linear_relation_i} is successfully extracted, allowing the main algorithm to proceed.
