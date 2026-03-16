@@ -1,0 +1,96 @@
+\begin{tikzpicture}[
+    every node/.style={inner sep=0pt, outer sep=0pt},
+    % Brace style
+    curlybrace/.style={
+        thick,
+        decoration={brace, amplitude=8pt},
+        decorate
+    },
+    % Matrix border style
+    matrixbox/.style={
+        draw=black,
+        thick,
+        fill=white
+    }
+]
+
+% Global parameters (easy to scale)
+\def\matH{4}       % Height of matrices (n)
+\def\matW{4.5}     % Width of matrices (n+1)
+\def\gap{3}        % Horizontal gap between matrices
+
+% ================================
+% 1. DENSE MATRIX (INITIAL SYSTEM)
+% ================================
+\begin{scope}[xshift=0cm]
+    \draw[matrixbox] (0,0) rectangle (\matW,\matH);
+    
+    % Fully shaded
+    \fill[fill=red!20] (0,0) rectangle (\matW,\matH);
+    
+    % Braces
+    \draw[curlybrace] (-0.2,0) -- (-0.2,\matH) node[midway, left=10pt] {$n$};
+    \draw[curlybrace] (0,\matH+0.2) -- (\matW,\matH+0.2) node[midway, above=10pt] {$n+1$};
+    
+    % Label below
+    \node[anchor=north, font=\small] at (\matW/2, -0.6) {Initial Dense System};
+\end{scope}
+
+% ================================
+% ARROW 1
+% ================================
+\draw[->, >=latex, thick] (\matW + 0.3, \matH/2) -- (\matW + \gap - 0.9, \matH/2)
+    node[midway, above=6pt, font=\small, align=center] {First}
+    node[midway, below=6pt, font=\small, align=center] {reduction};
+
+% ================================
+% 2. INTERMEDIATE MATRIX
+% ================================
+\begin{scope}[xshift=\matW cm + \gap cm]
+    \draw[matrixbox] (0,0) rectangle (\matW,\matH);
+    
+    % Top shape
+    \fill[fill=red!20] (0,\matH) -- (\matW/2,\matH/2) -- (\matW,\matH/2) -- (\matW,\matH) -- cycle;
+    \draw[draw=red!70!black, thick] (0,\matH) -- (\matW/2,\matH/2); 
+    \draw[draw=red!70!black, thick] (\matW/2,\matH/2) -- (\matW,\matH/2); 
+    \draw[draw=red!70!black, thick] (\matW/2,\matH/2) -- (\matW/2,\matH); 
+    
+    % Lower square block
+    \fill[fill=red!20] (\matW/2, 0) rectangle (\matW, \matH/2);
+    \draw[draw=red!70!black, thick] (\matW/2, 0) rectangle (\matW, \matH/2);
+    % Braces
+    \draw[curlybrace] (-0.2,0) -- (-0.2,\matH) node[midway, left=10pt] {$n$};
+    \draw[curlybrace] (0,\matH+0.2) -- (\matW,\matH+0.2) node[midway, above=10pt] {$n+1$};
+    
+    % Label below
+    \node[anchor=north, font=\small] at (\matW/2, -0.6) {Intermediate System};
+\end{scope}
+
+% ================================
+% ARROW 2
+% ================================
+\draw[->, >=latex, thick] (2*\matW + \gap + 0.3, \matH/2) -- (2*\matW + 2*\gap - 0.9, \matH/2)
+    node[midway, above=6pt, font=\small, align=center] {$\cdots$}
+    node[midway, below=6pt, font=\scriptsize, align=center] {$\cdots$};
+
+% ================================
+% 3. FINAL MATRIX (LINEAR RELATION)
+% ================================
+\begin{scope}[xshift=2*\matW cm + 2*\gap cm]
+    \draw[matrixbox] (0,0) rectangle (\matW,\matH);
+    
+    % Triangular shape
+    \fill[fill=red!20] (0,\matH) -- (\matH,0) -- (\matW,0) -- (\matW,\matH) -- cycle;
+    \draw[draw=red!70!black, thick] (0,\matH) -- (\matH,0);
+    
+    % Braces
+    \draw[curlybrace] (-0.2,0) -- (-0.2,\matH) node[midway, left=10pt] {$n$};
+    \draw[curlybrace] (0,\matH+0.2) -- (\matW,\matH+0.2) node[midway, above=10pt] {$n+1$};
+    \draw[curlybrace] (\matW, -0.1) -- (\matH, -0.1) node[midway, below=10pt] {2};
+
+    
+    % Label below
+    \node[anchor=north, font=\small] at (\matW/2, -0.6) {Final System};
+\end{scope}
+
+\end{tikzpicture}

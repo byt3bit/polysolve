@@ -38,15 +38,13 @@ Once the root for $x_n$ is computed from this final system, we initiate a backwa
 
 By evaluating these functions with the known value obtained in the previous steps, we construct the complete solution set for the system.
 
-
 \begin{figure}[h!]
     \centering
-    \resizebox{0.3\linewidth}{!}{
-        \input{figures/overview.tex}
+    \resizebox{0.8\linewidth}{!}{
+        \input{figures/oneshotiteration.tex}
     }
-    \caption{Overview}\label{fig:overview}
+    \caption{Graphical overview of the REF step over 1 iteration.}\label{fig:overview}
 \end{figure}
-
 
 \subsection{Details of REF and Non-Linear Relations}
 
@@ -67,3 +65,11 @@ We then use this identity to systematically reduce the degree of $x_i$ in all ot
 After applying this substitution across the entire system, the maximal degree of $x_i$ in the remaining equations is strictly reduced. We then reconstruct the univariate coefficient matrix for this newly updated system and perform the REF reduction again. 
 
 Because the system is defined over the finite field $\Fq$ and augmented by the field equations $x_i^q - x_i = 0$, the roots are strictly bounded. Consequently, this iterative cycle of REF reduction and pseudo-division will decrease the minimum degree of the relations. By applying this process iteratively, the degree of the minimal relation will continually drop until a linear relation of the form showed in Equation~\ref{eq:linear_relation_i} is successfully extracted, allowing the main algorithm to proceed.
+
+\begin{figure}[h!]
+    \centering
+    \resizebox{0.9\linewidth}{!}{
+        \input{figures/iteration.tex}
+    }
+    \caption{Graphical overview of a general reduction phase in a single iteration.}\label{fig:iteration}
+\end{figure}
