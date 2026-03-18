@@ -53,7 +53,7 @@ Given the computed scalar value $c_n$ for $x_n$, we execute a systematic backwar
 
 
 
-\begin{algorithm}[t]
+\begin{algorithm}[h!]
 \caption{(\texttt{DodgsonTriangularization})}\label{alg:dodgson-triangularization}
 \begin{algorithmic}[1]
 \Statex{\hspace*{-\algorithmicindent} \textbf{Input:} $A$: matrix with entries in \(\Fq[x_{i+1}, \dots, x_n]\)}
@@ -77,7 +77,7 @@ Given the computed scalar value $c_n$ for $x_n$, we execute a systematic backwar
 \end{algorithmic}
 \end{algorithm}
 
-\begin{algorithm}[t]
+\begin{algorithm}[h!]
 \caption{(\texttt{GetLinearRelation})}\label{alg:get-linear-relation}
 \begin{algorithmic}[1]
 \Statex{\hspace*{-\algorithmicindent} \textbf{Input:} $\mathcal{P}_i$: polynomial set in \(\Fq[x_{i+1}, \dots, x_n][x_i]\), $1\le i\le d-1$: current variable index}
@@ -101,7 +101,7 @@ Given the computed scalar value $c_n$ for $x_n$, we execute a systematic backwar
 
 
 
-\begin{algorithm}[t]
+\begin{algorithm}[h!]
 \caption{(\texttt{PolynomialSystemTriangularization})}\label{alg:polynomial-system-triangularization}
 \begin{algorithmic}[1]
 \Statex{\hspace*{-\algorithmicindent} \textbf{Input:} $\mathcal{P}$: polynomial set in \(\Fq[x_1, \dots, x_n]\)}
@@ -136,7 +136,7 @@ Given the computed scalar value $c_n$ for $x_n$, we execute a systematic backwar
 \State{$\mathcal{S} \gets \emptyset$}
 \State{$\mathcal{Q} \gets \texttt{PolynomialSystemTriangularization}(\mathcal{P})$}
 \For{$f \in \texttt{Factorization}(q_n)$}
-    \State{$s \gets [0, \dots 0]$} \Comment{$|s| = n$}
+    \State{$s \gets [0, \dots, 0]$} \Comment{$|s| = n$}
     \If{$\deg(f) = 1$}
     \State{$a_n \gets \texttt{RootOf}(f)$} 
         \State{$s[n] \gets a_n$}
