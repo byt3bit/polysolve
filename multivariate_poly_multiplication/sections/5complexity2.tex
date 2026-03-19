@@ -1,0 +1,32 @@
+\begin{itemize}
+    \item Complexity of multiplying two dense polynomials in \(\Fq[x_{i+1}, \dots, x_n]\) of total degree at most \(d_i\) is given by \[
+     M_i = \bigO\left(T_i\log(T_i)\right)
+    \] where \(T_i = \binom{d_i+n-i}{n-i}\) is the number of monomials in \(\Fq[x_{i+1}, \dots, x_n]\) of total degree at most \(d_i\).
+     Using Stirling's approximation, we have
+     \[
+     T_i = \bigO\left( (d_i+1)^{n-i} \right).
+     \]
+     Therefore, the complexity of multiplying two dense polynomials in \(\Fq[x_{i+1}, \dots, x_n]\) of total degree at most \(d_i\) is given by
+     \[
+     T_i\log(T_i) = \bigO\left( (d_i+1)^{n-i}\log((d_i+1)^{n-i}) \right) = \bigO\left( (d_i+1)^{n-i}\log(d_i+1) \right).
+     \]
+     
+    \item Complexity of \Cref{alg:dodgson-triangularization} at step \(i\) is given by
+    \[
+    \bigO\left( M_i((d_i+1)d_i^2 + d_i^3) \right)
+    \] where $d_i$ and $d_i+1$ are the number of rows and columns of the considered matrix \(M\) at step \(i\) respectively. 
+    \item Once the linear relation is computed, the complexity of performing the substitutions on all the $q$ polynomials belonging to the system is given by
+    \[
+        \bigO\left( qd_i(d_i+1)M_i \right).
+    \]
+    \item Considering that triangularization and substitution are applied \(n-1\) times, as in \Cref{alg:polynomial-system-triangularization}, the overall complexity of the algorithm is given by 
+    \[
+        \mathop\sum_{i=1}^{n-1} \bigO\left( M_i((d_i+1)d_i^2 + d_i^3) + qd_i(d_i+1)M_i \right) = \bigO\left( \sum_{i=1}^{n-1} M_i(d_i^3 + qd_i^2) \right).
+    \]
+
+    \item The complexity of the GCD algorithm between two univariate polynomials of maximum degree \(d\) is given by \(d\log^2(d)\log\log(d)\) field operations. Hence, the complexity of computing the GCD between \(q\) univariate polynomials can be upper bounded by \(\bigO\left( qd\log^2(d)\log\log(d) \right)\).
+    \item Finally, the overall complexity of \Cref{alg:polynomial-system-triangularization} is given by \[
+        \bigO\left( \sum_{i=1}^{n-1} M_i(d_i^3 + qd_i^2) + qd_n\log^2(d_n)\log\log(d_n) \right).
+    \]
+\end{itemize}
+

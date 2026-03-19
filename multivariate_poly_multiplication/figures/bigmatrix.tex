@@ -1,0 +1,77 @@
+\begin{tikzpicture}[
+    every label/.append style={anchor=base, yshift=3pt},
+    every left delimiter/.style={lipicsBulletGray},
+    every right delimiter/.style={lipicsBulletGray},
+    hugeblock/.style={
+        inner sep=6pt,
+        left delimiter={(},
+        right delimiter={)}
+    }
+]
+
+% ================================
+% BLOCKS
+% ================================
+% d BLOCK
+\node[lipicsGray, matrix={2.5}{2.5}, fill=none] (d) {};
+\draw[lipicsLineGray, line width=0.70mm] (d.north west) -- (d.south east) -- cycle;
+\node[font=\LARGE, fill=white, draw=lipicsGray, line width=0.4pt, inner sep=2pt] at (d.center) {deg $d$};
+
+% <d BLOCK
+\node[lipicsBulletGray, matrix={2.5}{10}, fill=lipicsLightGray, right=2mm of d] (ld) {};
+\node[font=\LARGE] at (ld.center) {degree $<d$};
+
+\node[draw, dotted, thick, rounded corners, inner sep=4pt, fit=(d)(ld)] (boxd) {};
+
+% d-1 BLOCK
+\node[lipicsGray, matrix={2.5}{2.5}, fill=none, below=4mm of ld.south west, anchor=north west] (d1) {};
+\draw[lipicsLineGray, line width=0.70mm] (d1.north west) -- (d1.south east) -- cycle;
+\node[font=\Large, fill=white, draw=lipicsGray, line width=0.4pt, inner sep=2pt] at (d1.center) {deg $d{-}1$};
+
+% <d-1 BLOCK
+\node[lipicsBulletGray, matrix={2.5}{7.3}, fill=lipicsLightGray, right=2mm of d1] (ld1) {};
+\node[font=\Large] at (ld1.center) {degree $<d{-}1$};
+
+\node[draw, dotted, thick, rounded corners, inner sep=4pt, fit=(d1)(ld1)] (boxd1) {};
+
+% d-2 BLOCK
+\node[lipicsGray, matrix={2}{2}, fill=none, below=4mm of ld1.south west, anchor=north west] (d2) {};
+\draw[lipicsLineGray, line width=0.70mm] (d2.north west) -- (d2.south east) -- cycle;
+\node[font=\normalsize, fill=white, draw=lipicsGray, line width=0.4pt, inner sep=2pt] at (d2.center) {deg $d{-}2$};
+
+% <d-2 BLOCK
+\node[lipicsBulletGray, matrix={2}{5.1}, fill=lipicsLightGray, right=2mm of d2] (ld2) {};
+\node[font=\normalsize] at (ld2.center) {degree $<d{-}2$};
+
+\node[draw, dotted, thick, rounded corners, inner sep=4pt, fit=(d2)(ld2)] (boxd2) {};
+
+% DOTS
+\node[inner sep=0pt, draw=lipicsBulletGray, outer sep=0pt, matrix={0.8}{5.1}, fill=none, below=2mm of ld2, label=center:$\ddots$] (dots) {};
+
+% 1 BLOCK
+\node[lipicsGray, matrix={0.5}{0.5}, fill=none, below=2mm of dots.south east, anchor=north east] (d1block) {};
+\draw[lipicsLineGray, line width=0.70mm] (d1block.north west) -- (d1block.south east) -- cycle;
+\node[font=\footnotesize\bfseries, fill=white, draw=lipicsGray, line width=0.4pt, inner sep=2pt] at (d1block.center) {$1$};
+
+\node[draw, dotted, thick, rounded corners, inner sep=4pt, fit=(d1block)] (box1) {};
+
+% ================================
+% GIANT BLOCK OF BLOCKS
+% ================================
+\node[hugeblock, fit=(boxd)(boxd1)(boxd2)(dots)(box1)] (big) {};
+
+% ================================
+% ARROWS
+% ================================
+\draw[->, very thick, line cap=round, line join=round, overlay]
+([xshift=3pt]boxd.west) .. controls +(-24mm,-12mm) and +(-25mm,2mm) .. node[below=6mm, xshift=1mm] {iteration-$(d-1)$} ([yshift=2mm]boxd1.west);
+
+\draw[->, very thick, line cap=round, line join=round, overlay]
+([xshift=3pt]boxd1.west) .. controls +(-24mm,-12mm) and +(-25mm,2mm) .. node[below=5mm] {iteration-$(d-2)$} ([yshift=2mm]boxd2.west);
+
+\draw[->, very thick, line cap=round, line join=round, overlay]
+([xshift=3pt]boxd2.west) .. controls +(-15mm,-12mm) and +(-20mm,0mm) .. (dots.west);
+
+% insert: draw=lipicsGray, for lighter arrows
+
+\end{tikzpicture}

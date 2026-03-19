@@ -1,0 +1,22 @@
+\subsection{Complexity of Algorithm~\ref{alg:dodgson-triangularization}}
+
+Denoting with $M_i$ the cost of performing the multiplication in $\Fq[x_{i+1},\dots,x_n]$ we have:
+
+\begin{align*}
+    \mathcal{C}_{dodgeson} &= M_i\cdot \sum_{k=1}^n \left[ \sum_{i=k+1}^n \left( \sum_{j=k}^m 2 \right)  \right] \\
+    &= M_i\cdot \sum_{k=1}^n \left[ \sum_{i=k+1}^n 2(m-k) \right]  \\
+    &= M_i\cdot \sum_{k=1}^n \left[  2(m-k)(n-k-1)  \right] \\
+    &= M_i\cdot \sum_{k=1}^n \left[  2mn - 2m + k\cdot 2(1-m-n) + 2k^2  \right] \\
+    &= M_i\cdot \left( 2mn^2 - 2mn + 2\frac{1}{2}n(n+1)(1-m-n) +2\frac{1}{6}n(n+1)(2n+1) \right)\\
+    &= M_i\cdot \left( 2mn^2 - 2mn + n(n+1)(1-m-n) +\frac{1}{2}n(n+1)(2n+1)\right) \\
+\end{align*}
+where we have used the relations
+\[
+\sum_{i=1}^n i = \frac{1}{2}n(n+1),\quad \sum_{i=1}^n i^2 = \frac{1}{6}n(n+1)(2n+1)
+\]
+Hence, the asymptotic complexity bound is given by:
+\begin{equation*}
+    \mathcal{C}_{dodgeson} = \mathcal{O}\left( M_i\cdot (mn^2 + n^3)
+    \right).
+\end{equation*}
+\subsection{Total complexity}

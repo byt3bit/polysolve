@@ -1,0 +1,154 @@
+
+\subsection{System Requirements and Initialization}
+Let $n$ denote the number of variables in the system and $q$ denote the size of the finite field $\mathbb{F}_q$.
+\begin{itemize}
+    \item To guarantee a unique solution, the system must inherently comprise at least $n$ algebraically independent equations.
+    \item Furthermore, working over a finite field allows us to reduce any polynomial modulo the field equations, $x_i^q - x_i = 0$, for every variable $x_i$. This property ensures that the maximum degree of any individual variable in the system is strictly bounded by $q-1$.
+\end{itemize}
+Consequently, to ensure the algorithm successfully isolates the variables, the initial system must contain a minimum number of equations $m$, with $m \geq \max\{n, q\}$.
+
+\subsection{Iterative Elimination Phase}
+The core algorithm operates iteratively over $n-1$ steps. At any given step $i$ (where $i = 1, \dots, n-1$), the initial polynomial system has been reduced to a working system defined over the ring $\mathbb{F}_q[x_i, \dots, x_n]$. The elimination of the variable $x_i$ proceeds through the following structured steps:
+
+\begin{enumerate}
+    \item \textbf{Univariate Representation:} The current polynomial system is recast such that the equations are treated as univariate polynomials in the variable $x_i$. The coefficients of these polynomials are themselves multivariate polynomials belonging to the ring of the remaining variables, $\mathbb{F}_q[x_{i+1}, \dots, x_n]$.
+    
+    \item \textbf{Reduction and Extraction:} We construct the coefficient matrix corresponding to this univariate representation and reduce it to REF. Note that, because division is not guaranteed, Dodgson's triangularization~\cite{} algorithm is employed. From the lowest non-zero row of this reduced matrix, we extract and store the underlying linear relation in $x_i$, which takes the form: 
+    \begin{equation}
+        f_i(x_{i+1}, \dots, x_n)\cdot x_i + g_i(x_{i+1}, \dots, x_n) = 0
+        \label{eq:step_i_relation}
+    \end{equation}
+    
+    \item \textbf{Homogenization and Substitution:} Let $k_j$ be the maximum degree of $x_i$ in the $j$-th equation of our system. To remove the variable $x_i$ from the expression, we multiply the $j$-th polynomial equation by $(f_i)^{k_j}$. This homogenization allows us to systematically substitute every occurrence of the term $(f_i\cdot x_i)^\ell$ with $(-g_i)^\ell$ for all relevant powers $\ell$. Upon completing these substitutions across all equations, the variable $x_i$ is entirely eliminated, yielding a new system defined strictly in $\mathbb{F}_q[x_{i+1}, \dots, x_n]$.
+    
+    \item \textbf{Field Reduction:} The polynomial multiplications and substitutions performed in the previous step may increase the overall degree of the equations in the system. However, because the system is defined over the finite field $\mathbb{F}_q$, we can exploit the field equations, $x_j^q - x_j = 0$, for all remaining variables $x_j \in \{x_{i+1}, \dots, x_n\}$. To maintain a proper and computationally tractable system, we reduce every updated polynomial modulo these field equations. This vital reduction step ensures that the degree of any individual variable in the system strictly never exceeds $q-1$, preventing exponential degree growth during the elimination process.
+\end{enumerate}
+
+This sequence is repeated until the system is reduced to a set of univariate polynomials in the final variable, $x_n$.
+
+\subsection{Final Phase: Univariate Solving and Backward Substitution}
+
+Upon the completion of the iterative elimination phase, the initial multivariate polynomial system is reduced to a purely univariate system in the final variable, $x_n$. Solving this univariate system over the finite field $\mathbb{F}_q$ yields the valid roots for $x_n$, establishing a direct solution of the form $x_n = c_n$ (\mlf{unique right?}).
+
+To conclude the algorithm and reconstruct the complete solution for the original system, we retrieve the sequence of linear relations preserved during the successive elimination steps. These stored relations naturally form a triangular system of equations:
+\begin{equation}
+\left\{
+\begin{aligned}
+    f_1(x_2, \dots, x_n)\cdot x_1 + g_1(x_2, \dots, x_n) &= 0 \\
+    f_2(x_3, \dots, x_n)\cdot x_2 + g_2(x_3, \dots, x_n) &= 0 \\
+    f_3(x_4, \dots, x_n)\cdot x_3 + g_3(x_4, \dots, x_n) &= 0 \\
+    \vdots &= \vdots \\
+    f_{n-1}(x_n)\cdot x_{n-1} + g_{n-1}(x_n) &= 0
+\end{aligned}
+\right.
+\label{eq:system}
+\end{equation}
+
+Given the computed scalar value $c_n$ for $x_n$, we execute a systematic backward substitution. By sequentially evaluating the polynomials $f_i$ and $g_i$ using the subsequently known values, we can resolve the linear relation for $x_i$. Propagating this substitution from $i = n-1$ down to $i = 1$, we recursively recover the values of all previously eliminated variables. This deterministic final step yields the complete solution set $(c_1, \dots, c_n)$ for the original polynomial system.
+
+
+% need to explain how to avoid the insertion of useless solutions due to division impossibility
+
+
+
+
+
+\begin{algorithm}[h!]
+\caption{(\texttt{DodgsonTriangularization})}\label{alg:dodgson-triangularization}
+\begin{algorithmic}[1]
+\Statex{\hspace*{-\algorithmicindent} \textbf{Input:} $A$: matrix with entries in \(\Fq[x_{i+1}, \dots, x_n]\)}
+\Statex{\hspace*{-\algorithmicindent} \textbf{Output:} $B$: upper triangular form of $A$}
+% \begin{algorithmic}[1]
+% \Statex{\hspace*{-\algorithmicindent} \textbf{Input:} $A \in R^{n \times m}$: matrix over a ring $R$}
+% \Statex{\hspace*{-\algorithmicindent} \textbf{Output:} $A$: upper triangular form (fraction-free)}
+\State{$B \gets A$}
+\For{$k \gets 1$ to $n$}
+    \For{$i \gets k+1$ to $n$}
+        \If{$k > 1$ \textbf{and} $A_{k-1,k-1} = 0$}
+            \State{\textbf{continue}} \Comment{Skip if previous pivot is zero}
+        \EndIf
+        \For{$j \gets k$ to $m$}
+            \State{$B_{i,j} \gets A_{k,k} \cdot A_{i,j} - A_{i,k} \cdot A_{k,j}$} \Comment{Fraction-free elimination}
+        \EndFor
+    \EndFor
+    \State{$A \gets B$}
+\EndFor
+\State{\Return{$A$}}
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}[h!]
+\caption{(\texttt{GetLinearRelation})}\label{alg:get-linear-relation}
+\begin{algorithmic}[1]
+\Statex{\hspace*{-\algorithmicindent} \textbf{Input:} $\mathcal{P}_i$: polynomial set in \(\Fq[x_{i+1}, \dots, x_n][x_i]\), $1\le i\le d-1$: current variable index}
+\Statex{\hspace*{-\algorithmicindent} \textbf{Output:} $q \in \Fq[x_{i+1}, \dots, x_n][x_i]$ s.t. \(q = c_1x_i + c_2\) where $c_1, c_2 \in \Fq[x_{i+1}, \dots, x_n]$: linear relation with respect to $x_i$}
+% \begin{algorithmic}[1]
+% \Statex{\hspace*{-\algorithmicindent} \textbf{Input:} $A \in R^{n \times m}$: matrix over a ring $R$}
+% \Statex{\hspace*{-\algorithmicindent} \textbf{Output:} $A$: upper triangular form (fraction-free)}
+\State{$\overline{\mathcal{P}} \gets \emptyset$}
+\State{\texttt{max\_degree} $\gets \max(\{\deg(p) \mid p \in \mathcal{P}_i\})$}
+\While{$|\overline{\mathcal{P}}| < \text{\texttt{max\_degree}}$}
+    \State{Select $p \in \mathcal{P}_i$ s.t. \(\deg(p) = \texttt{max\_degree}\)}
+    \State{$\overline{\mathcal{P}} \gets \overline{\mathcal{P}} \cup \{p\}$}
+    % \State{$\mathcal{P}_i \gets \mathcal{P}_i \setminus \{p\}$}
+\EndWhile
+\State{$A \gets$ coefficient matrix of $\overline{\mathcal{P}}$ with respect to $x_i$}
+\State{$A \gets \text{DodgsonTriangularization}(A)$}
+\State{Extract the lowest non-zero row from $A$ to obtain and reconstruct the linear relation $q$}
+\State{\Return{$q$}}
+\end{algorithmic}
+\end{algorithm}
+
+
+
+\begin{algorithm}[h!]
+\caption{(\texttt{PolynomialSystemTriangularization})}\label{alg:polynomial-system-triangularization}
+\begin{algorithmic}[1]
+\Statex{\hspace*{-\algorithmicindent} \textbf{Input:} $\mathcal{P}$: polynomial set in \(\Fq[x_1, \dots, x_n]\)}
+\Statex{\hspace*{-\algorithmicindent} \textbf{Output:} $\mathcal{Q} := \{ q_i \in \Fq[x_i][x_{i+1}, \dots, x_n] \mid q_i = c_{1,i}x_i + c_{2,i}, c_{1,i}, c_{2,i} \in \Fq[x_{i+1}, \dots, x_n] \text{ for } 1 \le i \le n-1\} \cup \{ q \in \Fq[x_n]\}$: linear relations with respect to $x_i$}
+% \begin{algorithmic}[1]
+% \Statex{\hspace*{-\algorithmicindent} \textbf{Input:} $A \in R^{n \times m}$: matrix over a ring $R$}
+% \Statex{\hspace*{-\algorithmicindent} \textbf{Output:} $A$: upper triangular form (fraction-free)}
+\State{$\mathcal{Q} \gets \emptyset$}
+\For{$i \gets 1 \to n-1$}
+    \State{$\mathcal{P} \gets \{ \texttt{map}(p, \Fq[x_{i+1}, \dots, x_n][x_i]) \mid p \in \mathcal{P} \}$}\Comment{\texttt{map} from \(\Fq[x_{i}, \dots, x_n][x_{i-1}]\) to \(\Fq[x_{i+1}, \dots, x_n][x_{i}]\) where \(\Fq[x_{1}, \dots, x_n][x_{0}] = \Fq[x_1, \dots, x_n]\)}
+    \State{$q_i \gets \texttt{GetLinearRelation}(\mathcal{P}, i)$}
+    \State{$\mathcal{Q} \gets \mathcal{Q} \cup \{q_i\}$}
+    \State{Homogenize and substitute $q_i$ into $\mathcal{P}$ to eliminate $x_i$}
+    \State{Reduce $\mathcal{P}$ modulo field equations to control degree growth}
+\EndFor
+\Comment{All polynomials in $\mathcal{P}$ are now univariate in $x_n$}
+\State{$q_n \gets \gcd(\mathcal{P})$} \Comment{Compute the GCD to find the univariate relation in $x_n$}
+\State{$\mathcal{Q} \gets \mathcal{Q} \cup \{q_n\}$}
+\State{\Return{$\mathcal{Q}$}}
+\end{algorithmic}
+\end{algorithm}
+
+
+\begin{algorithm}[t]
+\caption{(\texttt{Solve})}\label{alg:solve}
+\begin{algorithmic}[1]
+\Statex{\hspace*{-\algorithmicindent} \textbf{Input:} $\mathcal{P}$: polynomial set in \(\Fq[x_1, \dots, x_n]\)}
+\Statex{\hspace*{-\algorithmicindent} \textbf{Output:} $\V(\ideal{\mathcal{P}})$: set of solutions in \(\Fq^n\)}
+% \begin{algorithmic}[1]
+% \Statex{\hspace*{-\algorithmicindent} \textbf{Input:} $A \in R^{n \times m}$: matrix over a ring $R$}
+% \Statex{\hspace*{-\algorithmicindent} \textbf{Output:} $A$: upper triangular form (fraction-free)}
+\State{$\mathcal{S} \gets \emptyset$}
+\State{$\mathcal{Q} \gets \texttt{PolynomialSystemTriangularization}(\mathcal{P})$}
+\For{$f \in \texttt{Factorization}(q_n)$}
+    \State{$s \gets [0, \dots, 0]$} \Comment{$|s| = n$}
+    \If{$\deg(f) = 1$}
+    \State{$a_n \gets \texttt{RootOf}(f)$} 
+        \State{$s[n] \gets a_n$}
+        \For{$i \gets n-1 \text{ down to } 1$}
+            \State{$\overline{q_i} \gets q_i \mod{\ideal{\{x_j - s_j \mid i+1 \le j \le n\}}}$}
+            \State{$a_i \gets \texttt{RootOf}(\overline{q_i})$}
+            \State{$s[i] \gets a_i$}
+        \EndFor
+        \State{$\mathcal{S} \gets \mathcal{S} \cup \{s\}$}
+    \EndIf
+\EndFor
+
+\State{\Return{$\mathcal{S}$}}
+\end{algorithmic}
+\end{algorithm}

@@ -1,0 +1,93 @@
+\documentclass[11pt,letterpaper]{article}
+
+% Page layout
+\usepackage[margin=1in]{geometry}
+
+% Line spacing (single-spaced)
+\usepackage{setspace}
+\singlespacing
+
+% Better font rendering
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+
+% Paragraph spacing (ample spacing, no indent)
+\usepackage{parskip}
+\setlength{\parskip}{0.75em}
+\setlength{\parindent}{0pt}
+
+% Section spacing control
+\usepackage{titlesec}
+\titlespacing*{\section}{0pt}{1.5em}{0.75em}
+\titlespacing*{\subsection}{0pt}{1.25em}{0.5em}
+
+% Useful packages
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{csquotes}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage[svgnames]{xcolor}
+\usepackage{comment}
+\usepackage{setspace}
+\usepackage{appendix}
+\usepackage{lmodern} 
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{physics}
+\usepackage{braket}
+\usepackage{amsthm}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\allowdisplaybreaks
+\usepackage{booktabs}
+\usepackage{caption}
+\usepackage{tikz}
+\usepackage{cleveref}
+\usetikzlibrary{fit}
+\usetikzlibrary{decorations.pathreplacing, positioning, shapes.arrows, matrix, calc}
+% \tikzset{
+% 	matrix/.style n args={2}{
+% 		minimum height={#1 cm},
+% 		minimum width={#2 cm},
+% 		draw, fill=.!10,
+% 		anchor=north west,
+% 	},
+%     every label/.style={font=\Large},
+%     eqn/.style={font=\Large\boldmath, right},
+% }
+% \usepackage{colortbl}
+
+
+\input{preamble.tex}
+% Title info
+\title{Your Title Here}
+%\author{Your Name}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+\input{sections/1introduction.tex}
+
+\section{Notation and Preliminaries}
+\input{sections/2preliminaries.tex}
+
+\section{An Overview of Our Algorithm}
+\input{sections/3highlevel.tex}
+
+\section{Algorithm and Correctness}
+\input{sections/4pseudocode.tex}
+
+\section{Complexity Analysis}
+\input{sections/5complexity.tex}
+\input{sections/5complexity2.tex}
+
+
+\section{Conclusion}
+
+Summarize your content here.
+
+\end{document}
