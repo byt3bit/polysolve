@@ -84,7 +84,7 @@ following operations:
 % With this notation, the $\deg_i$ iteration corresponds to the $(d-i)$-th step of the algorithm. Each $\deg_i$ iteration consists of two main operations:
 
 \begin{enumerate}
-    \item \textbf{\textsf{$S$-polynomial generation.}} (\texttt{Spoly})
+    \item \textbf{$S$-polynomial generation.} (\texttt{Spoly})
     We generate $\binom{n+i-1}{i}$ $S$-polynomials, ensuring that the set contains exactly as many equations as there are monomials of degree $i$.
 
     An $S$-polynomial between polynomials $f$ and $g$ is computed if the greatest common divisor of their (distinct) leading terms has degree $i$.
@@ -97,7 +97,7 @@ following operations:
     As a consequence, $S_{fg}$ consists only of monomials of degree at most $i+1$.
     After reduction with respect to the starting set of polynomials, all terms in $S_{fg}$ have degree at most $i$.
 
-    \item \textbf{\textsf{Diagonalization.}} (\texttt{Diag})
+    \item \textbf{Diagonalization.} (\texttt{Diag})
     The leading principal submatrix of size $\binom{n+i-1}{i}$ is diagonalized in two stages: 
     \begin{enumerate}
         \item (\texttt{DiagA}) compute a row-echelon form to obtain an upper triangular matrix by eliminating entries below the diagonal;

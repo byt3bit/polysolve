@@ -20,7 +20,7 @@ using primal and dual approaches that reduce LWE to BDD/uSVP or SIS and rely on 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \noindent
-\textbf{\textsf{Hardness and Cryptographic Application.}}
+\textbf{Hardness and Cryptographic Application.}
 % Regev proved that LWE is as hard on average as worst-case lattice problems such as GapSVP and SIVP via quantum reductions~\cite{STOC:Regev05}.
 % The hardness guarantees was later extended to purely classical reductions by Brakerski et al.~\cite{STOC:BLPRS13}, under specific, but practically relevant, parameter choices. \ar{need to be specific}
 %It has been shown that worst-case GapSVP reduces to average-case LWE~\cite{STOC:BLPRS13,STOC:Regev05}.
@@ -113,7 +113,7 @@ This Work & $2$ & $\mathcal{O}\left(\frac{n(n-1)}{2}\right)$ & $\mathcal{O}\Big(
 
 
 \noindent
-\textbf{\textsf{Linearization Technique~\cite{ICALP:AroGe11}.}} 
+\textbf{Linearization Technique~\cite{ICALP:AroGe11}.} 
 Each sample $(\mathbf{a}_i, b_i) = (\mathbf{a}_i, \langle\mathbf{a}_i, \mathbf{s}\rangle + e_i) \in \mathbb{F}_q^n \times \mathbb{F}_q$, for $1 \leq i \leq m$, allows to generate a non-linear equation of degree $d$ in the $n$ components of the secret $\mathbf{s}$. %which holds with probability $1 - e^{\mathcal{O}({-t^2})}$.
 Considering that a common choice for the error distribution is the discrete Gaussian with mean $0$ and standard deviation $\sigma$, denoted as $\mathcal{N}(0,\sigma)$,
 we have
@@ -130,7 +130,7 @@ The \belwe\, in which $\mathbf{e} \in \{0,1\}^m$, is a particular instance and w
 
 
 \noindent
-\textbf{\textsf{Gr{\"o}bner Basis and Degree of Regularity.}}
+\textbf{Gr{\"o}bner Basis and Degree of Regularity.}
 In~\cite{EPRINT:ACFP14} Gr{\"o}bner basis algorithm was applied %F4~\cite{faugere:F4} and F5~\cite{faugere:F5} can be applied
 to solve the (error free) polynomial system, resulting in significant speed-up over the Arora-Ge algorithm. 
 %For applying Gr{\"o}bner algorithm, or its variants, one should work over $\mathbb{F}_q$
