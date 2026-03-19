@@ -46,17 +46,17 @@
 \usepackage{cleveref}
 \usetikzlibrary{fit}
 \usetikzlibrary{decorations.pathreplacing, positioning, shapes.arrows, matrix, calc}
-% \tikzset{
-% 	matrix/.style n args={2}{
-% 		minimum height={#1 cm},
-% 		minimum width={#2 cm},
-% 		draw, fill=.!10,
-% 		anchor=north west,
-% 	},
-%     every label/.style={font=\Large},
-%     eqn/.style={font=\Large\boldmath, right},
-% }
-% \usepackage{colortbl}
+\tikzset{
+	matrix/.style n args={2}{
+		minimum height={#1 cm},
+		minimum width={#2 cm},
+		draw, fill=.!10,
+		anchor=north west,
+	},
+    every label/.style={font=\Large},
+    eqn/.style={font=\Large\boldmath, right},
+}
+\usepackage{colortbl}
 
 
 \input{preamble.tex}
@@ -73,7 +73,7 @@
 \input{sections/1introduction.tex}
 
 \section{Notation and Preliminaries}
-\input{sections/2preliminaries.tex}
+\input{sections/2background.tex}
 
 \section{An Overview of Our Algorithm}
 \input{sections/3highlevel.tex}
@@ -83,7 +83,7 @@
 
 \section{Complexity Analysis}
 \input{sections/5complexity.tex}
-\input{sections/5complexity2.tex}
+%\input{over_Zq/sections/5complexity2.tex}
 
 
 \section{Conclusion}
