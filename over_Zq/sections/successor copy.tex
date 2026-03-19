@@ -1,0 +1,96 @@
+
+\begin{algorithm}
+\caption{Gray-composition helpers and non-recursive \texttt{gray\_comp\_next}}
+\begin{algorithmic}[1]
+\Function{first\_comp}{m, s}
+  \If{$m \le 0$}
+    \State \Return $[]$
+  \EndIf
+  \State \Return $[0,\dots,0,s]$ \Comment{length $m$, all zeros except last entry $s$}
+\EndFunction
+
+\Function{last\_comp}{m, s}
+  \If{$m \le 0$}
+    \State \Return $[]$
+  \EndIf
+  \State \Return $[s,0,\dots,0]$ \Comment{length $m$, $s$ in first position}
+\EndFunction
+
+\Function{opposite\_mode}{mode}
+  \If{mode = \texttt{next}}
+    \State \Return \texttt{prev}
+  \Else
+    \State \Return \texttt{next}
+  \EndIf
+\EndFunction
+
+\Function{gray\_comp\_next}{prev, n, d}
+  \Comment{Return next composition in Gray-like order or \textbf{null} if none}
+  \If{$n \le 1$} \State \Return \textbf{null} \EndIf
+
+  \State $a \gets$ copy of $prev$
+  \Comment{prefix sums: prefix[k] = sum(a[0..k-1])}
+  \State allocate array $prefix[0..n-1]$; $prefix[0]\gets 0$
+  \For{$k \gets 1$ \textbf{to} $n-1$}
+    \State $prefix[k] \gets prefix[k-1] + a[k-1]$
+  \EndFor
+
+  \Comment{stack of frames; frame = (kind, mode, k, i?)}
+  \State initialize empty stack
+  \State push $(\textsf{call}, \textsf{next}, 0)$
+  \State $last\_ret \gets$ \textbf{null}
+
+  \While{stack not empty}
+    \State $frame \gets$ pop(stack)
+    \If{$frame.kind = \textsf{call}$}
+      \State $(\_, mode, k) \gets frame$
+      \If{$k = n-1$}
+        \State $last\_ret \gets$ \textbf{null}
+        \State \textbf{continue}
+      \EndIf
+      \State $i \gets a[k]$
+      \State push $(\textsf{after}, mode, k, i)$
+      \If{$i \bmod 2 = 0$}
+        \State $child\_mode \gets mode$
+      \Else
+        \State $child\_mode \gets \textsc{opposite\_mode}(mode)$
+      \EndIf
+      \State push $(\textsf{call}, child\_mode, k+1)$
+    \Else
+      \State $(\_, mode, k, i) \gets frame$
+      \State $rem\_block \gets d - prefix[k]$
+      \If{$last\_ret \neq$ \textbf{null}}
+        \State $last\_ret \gets$ prepend($i$, $last\_ret$)
+        \State \textbf{continue}
+      \EndIf
+
+      \If{mode = \texttt{next}}
+        \For{$ip \gets i+1$ \textbf{to} $rem\_block$}
+          \State $rem2 \gets rem\_block - ip$
+          \If{$ip \bmod 2 = 0$}
+            \State $tail \gets \textsc{first\_comp}(n-k-1, rem2)$
+          \Else
+            \State $tail \gets \textsc{last\_comp}(n-k-1, rem2)$
+          \EndIf
+          \State $last\_ret \gets$ prepend($ip$, $tail$)
+          \State \textbf{break}
+        \EndFor
+      \Else
+        \For{$ip \gets i-1$ \textbf{downto} $0$}
+          \State $rem2 \gets rem\_block - ip$
+          \If{$ip \bmod 2 = 0$}
+            \State $tail \gets \textsc{last\_comp}(n-k-1, rem2)$
+          \Else
+            \State $tail \gets \textsc{first\_comp}(n-k-1, rem2)$
+          \EndIf
+          \State $last\_ret \gets$ prepend($ip$, $tail$)
+          \State \textbf{break}
+        \EndFor
+      \EndIf
+    \EndIf
+  \EndWhile
+
+  \State \Return $last\_ret$ \Comment{either a composition of length $n$ or \textbf{null}}
+\EndFunction
+\end{algorithmic}
+\end{algorithm}

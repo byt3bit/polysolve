@@ -1,0 +1,67 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\noindent
+\textbf{\textsf{Polynomials and Solving Polynomial System.}}
+For $\alpha = (\alpha_1,\dots,\alpha_n) \in \mathbb{Z}_{\ge 0}^n$ we define $\mathbf{x}^{\alpha} := x_1^{\alpha_1}\cdots x_n^{\alpha_n}$. The total degree of $\mathbf{x}^{\alpha}$ is $|\alpha|$, where $|\alpha| := \sum_{i=1}^n \alpha_i$. For a polynomial $f \in \mathbb{F}_q[x_1,\dots,x_n]$ of total degree $d$, we adopt the following degree decomposition:
+\[
+f = f^{(d)} + f^{(d-1)} + \cdots + f^{(1)} + f^{(0)},
+\]
+where $f^{(k)}$ denotes the sum of all monomials in $f$ of total degree exactly $k$.
+For a fixed monomial order $\prec$ on $\mathbb{F}_q[x_1,\dots,x_n]$, \LM$(f)$ and \LT$(f)$ denote respectively the leading monomial and leading term of $f$ with respect to $\prec$. The notion of $S$-polynomial for $f, g \in \mathbb{F}_q[x_1,\dots,x_n]$, fundamental to the Gr\"obner basis method, is defined as
+\begin{equation}\label{eq:spoly-expanded}
+    S_{fg} := \frac{\mathbf{x}^\gamma}{\mathrm{LT}(f)} \cdot f
+              - \frac{\mathbf{x}^\gamma}{\mathrm{LT}(g)} \cdot g,
+\end{equation}
+where $\mathbf{x}^\gamma$ denotes the least common multiple of $\mathrm{LM}(f)$ and $\mathrm{LM}(g)$. The Gr\"obner basis method is a well-known technique for solving a system of polynomials. For a complete introduction to the topic of Gr\"obner basis we refer the reader to~\cite{Cox2015Ideals}.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+% \noindent
+% \textbf{\textsf{Search-LWE and Parameters.}}
+% A common choice for the error distribution $\chi$ is the discrete Gaussian with mean $0$ and standard deviation $\sigma$, denoted $\chi \sim \mathcal{N}(0,\sigma)$.
+% For all $t>0$, then the following standard property holds: 
+% \[
+% \mathbb{P}\big[ e \overset{\scriptscriptstyle\$}{\gets} \chi : |e| > t \cdot \sigma \big] \leq \frac{2}{t\sqrt{2\pi}} e^{-t^2/2}\in e^{\mathcal{O}({-t^2})}.
+% \]
+% In particular, elements sampled from a Gaussian distribution take only values on the interval $[-t\cdot\sigma,\dots,t\cdot\sigma]$ of $\mathbb{Z}_q$ with probability $1 - e^{\mathcal{O}({-t^2})}$ when representing elements in $\mathbb{Z}_q$ as integers in $[-\lfloor q/2 \rfloor, \dots, \lfloor q/2 \rfloor]$.
+% Moreover, if $e \overset{\scriptscriptstyle \$}{\gets} \chi$ then $f(e)=0$ for $f(x) = x \cdot \prod_{i=1}^{t\cdot\sigma} (x+i)(x-i)$ with probability at least $1 - e^{\mathcal{O}({-t^2})}$.
+% The degree of $f$ is $d := 2 \cdot t \sigma + 1 < q$. We denote by $n$ the dimension of the secret and by $m$ the number of samples. %and $d := 2 \cdot t + 1$ the size of the interval where the error lies.
+% % It follows that if $(\mathbf{a}_i, b_i) = (\mathbf{a}_i, \langle\mathbf{a}_i, \mathbf{s}\rangle + e_i) \in \mathbb{Z}_q^n \times \mathbb{Z}_q$ and $e \overset{\scriptscriptstyle \$}{\gets} \chi$, then 
+% % \[
+% % f(-b_i + \sum_{j=1}^n{(\mathbf{a}_i)}_j x_j) = 0,
+% % \]
+% % with probability at least $1 - e^{\mathcal{O}({-t^2})}$.
+% Each sample $(\mathbf{a}_i, b_i) = (\mathbf{a}_i, \langle\mathbf{a}_i, \mathbf{s}\rangle + e_i) \in \mathbb{Z}_q^n \times \mathbb{Z}_q$ allows to generate a non-linear equation of degree $d$ in the $n$ components of the secrets $\mathbf{s}$, which holds with probability $1 - e^{\mathcal{O}({-t^2})}$.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+% \noindent
+% \textbf{\textsf{LWE Polynomial System.}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% % \begin{equation}
+% %     \mathbb{P}\big[ e \overset{\$}{\gets} \chi : |e| > t \cdot \sigma \big] \leq \frac{2}{t\sqrt{2\pi}} \exp\!\left(-\frac{t^2}{2}\right).
+% \end{equation}
+% In particular, by choosing $t$ sufficiently large, the error values are bounded by $|e| \le t \cdot \sigma$ with overwhelming probability.
+% This assumption is standard in algebraic encodings of LWE and will be used to derive the corresponding polynomial system.
+
+% Define the univariate polynomial $f(x) = x \cdot \prod_{i=1}^{t} (x+i)(x-i) \in \mathbb{F}_q[x]$ as in~\cite{ICALP:AroGe11}.
+% By construction, every error value in the above interval is a root of $f$, and $f$ is square-free. In particular, $f$ divides the field equation $x^q - x$.
+
+% Given an LWE sample $(\mathbf{a}_i, c_i) = (\mathbf{a}_i, \mathbf{a}_i^T \mathbf{s} + e_i) \in \mathbb{Z}_q^n \times \mathbb{Z}_q$, we obtain a polynomial equation in the unknown secret variables $\mathbf{x} = (x_1,\dots,x_n)$:
+% \begin{equation}
+% \label{eq:lwe_poly_sistem}
+% f(c_i - \mathbf{a}_i^T \mathbf{x}) = 0
+% \end{equation}
+% which holds in $\mathbb{F}_q[x_1,\dots,x_n]$ with probability at least 
+% $1 - \frac{2}{t\sqrt{2\pi}} \exp\Big(-\frac{t^2}{2}\Big)$.

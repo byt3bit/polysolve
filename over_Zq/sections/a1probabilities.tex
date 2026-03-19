@@ -1,0 +1,196 @@
+% \subsection{Probability of Sample Linear Independence}
+% Let $v_1 \in \mathbb{F}_q^t$ be a fixed nonzero vector, and let
+% $v_2 \in \mathbb{F}_q^t$ be sampled uniformly at random.
+% The probability that $v_2$ is linearly independent of $v_1$ is
+% \[
+% \mathbb{P}\bigl(v_2 \notin \langle v_1 \rangle\bigr)
+% = \frac{q^t - q}{q^t}
+% = 1 - q^{1-t}.
+% \]
+
+% Conditioned on $v_1$ and $v_2$ being linearly independent, let
+% $v_3 \in \mathbb{F}_q^t$ be sampled uniformly at random.
+% The probability that $v_3$ is linearly independent of $\{v_1,v_2\}$ is
+% \[
+% \mathbb{P}\bigl(v_3 \notin \langle v_1,v_2 \rangle \,\big|\, v_1,v_2 \text{ independent}\bigr)
+% = \frac{q^t - q^2}{q^t}
+% = 1 - q^{2-t}.
+% \]
+
+% More generally, for $j \geq 2$, conditioned on $v_1,\dots,v_{j-1}$ being linearly independent, a uniformly random vector
+% $v_j \in \mathbb{F}_q^t$ satisfies
+% \[
+% \mathbb{P}\bigl(v_j \notin \langle v_1,\dots,v_{j-1} \rangle \,\big|\, v_1,\dots,v_{j-1} \text{ independent}\bigr)
+% = 1 - q^{j-1-t}.
+% \]
+
+% Hence, the probability that $k$ uniformly random vectors
+% $v_1,\dots,v_k \in \mathbb{F}_q^t$ are linearly independent is
+% \begin{equation}\label{independence}
+% \mathbb{P}_k
+% = \prod_{j=1}^{k} \left(1 - \frac{q^{j-1}}{q^t}\right)
+% = \prod_{j=1}^{k} \left(1 - q^{j-1-t}\right).
+% \end{equation}
+
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% \noindent
+% \textbf{Example.}
+% In our setting,
+% \[
+% t = \binom{n+d}{d}, \qquad
+% k = \binom{n+d-1}{d}.
+% \]
+% Using the CRYSTALS-Kyber parameter set $n=256$, $d=7$, and $q=3329$ (Kyber768, see~\cite{NISTPQC:CRYSTALS-KYBER22}), we obtain
+% \begin{itemize}
+%     \item $k = \binom{262}{7} \approx 1.55 \times 10^{13}$,
+%     \item $t = \binom{263}{7} \approx 1.59 \times 10^{13}$,
+%     \item $t - k \approx 4.24 \times 10^{11}$.
+% \end{itemize}
+
+% The largest term $q^{j-1-t}$ in~\eqref{independence} occurs for $j = k$, yielding
+% \[
+% q^{k-1-t} = 3329^{-(t-k+1)} \approx 3329^{-4.24 \times 10^{11}}
+% \approx 10^{-10^{12}},
+% \]
+% which is negligibly small.
+% For such values, we may use the approximation $\log(1-x) = -x + \mathcal{O}(x^2)$, giving
+% \[
+% \log \mathbb{P}_k
+% = \sum_{j=1}^{k} \log(1 - q^{j-1-t})
+% = -\sum_{j=1}^{k} q^{j-1-t} + \mathcal{O}\!\left(\sum_{j=1}^{k} q^{2(j-1-t)}\right).
+% \]
+% Exponentiating and retaining the leading term (using $e^x = 1 + x + \mathcal{O}(x^2)$) yields
+% \[
+% \mathbb{P}_k
+% = 1 - \sum_{j=1}^{k} q^{j-1-t} + o(1).
+% \]
+
+% Using the bound $\sum_{j=1}^{k} q^{j-1-t} \le k\, q^{k-1-t}$, we obtain
+% \[
+% \mathbb{P}_k
+% \ge 1 - k\, q^{k-1-t}
+% \approx 1 - 10^{13} \cdot 10^{-10^{12}}
+% > 1 - 10^{10^{2}}\cdot 10^{-10^{12}}
+% \approx 1-10^{-10^{10}}.
+% \]
+% Thus, the probability that the sampled vectors are linearly independent is overwhelmingly close to $1$.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+% For small $q^{j-1-m}$ we can use Taylor expansions
+% \[
+% \mathbb{P}_k = e^{\log(\mathbb{P}_k)} = e^{\sum_{j=1}^k(\log(1-q^{j-1-t}))} =  e^{\sum_{j=1}^k(-q^{j-1-t})} \sim 1 - \sum_{j=1}^k(q^{j-1-t}),
+% \]
+% where we used: $\log(1-x) = -x +\mathcal{O}(x^2)$ and $e^x=1+x+\mathcal{O}(x^2)$.
+
+% This correspnds to a probability of:
+% \begin{align*}
+%     \mathbb{P}_k &= 1 - \sum_{j=1}^k(-q^{j-1-t}) \geq \\
+%     &\geq 1 - k(q^{k-1-t}) \sim \\
+%     &\sim 1 - (10^{13})\cdot \big(10^{-10^{12}}\big) \geq \\
+%     &\geq 1 - (10^{10^{2}})\cdot \big(10^{-10^{12}}\big)\sim 1-10^{-10^{10}}.
+% \end{align*}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+% \subsection{Probability of Diagonal Pivots}
+% The probability that $k := \binom{n+d-1}{d}$ vectors
+% $v_1,\dots,v_k \in \mathbb{F}_q^k$ are linearly independent is
+% \begin{equation}\label{pivots}
+%     \mathbb{P}_k(\{v_1,\dots,v_k\} \text{ independent})
+%     = \prod_{j=1}^{k} \left(1 - \frac{q^{j-1}}{q^k}\right)
+%     = \prod_{j=1}^{k} \left(1 - q^{j-1-k}\right).
+% \end{equation}
+% To estimate $\mathbb{P}_t$, we use
+% \(\mathbb{P}_t = e^{\log(\mathbb{P}_t)}\) and the inequality
+% \(\log(1-x) \ge - \frac{x}{1-x}\) for \(0 < x < 1\):
+% \begin{align*}3
+% \log \mathbb{P}_t 
+% &= \sum_{j=1}^{t} \log\left(1 - q^{j-1-t}\right)\geq \sum_{j=1}^{t} \left(1 - \frac{1}{1 - q^{j-1-t}}\right)\\
+% &= - \sum_{j=1}^{t} \frac{q^{j-1-t}}{1 - q^{j-1-t}} \geq - \frac{1}{1 - q^{-1}} \sum_{j=1}^{t} q^{j-1-t}\quad (1 - q^{-1} = \min_{1\le j\le k}{\{1-q^{j-1-t}\}})\\
+% &= - \frac{1}{1 - q^{-1}} \frac{\frac{1}{q} - \frac{1}{q^{t+1}}}{1 - \frac{1}{q}} = - \frac{1}{1 - q^{-1}} \cdot \frac{1 - q^{-t}}{q-1} \sim - \frac{1}{(1 - q^{-1})(q-1)}.
+% \end{align*}
+
+% \noindent
+% \textbf{Example.}  
+% Using CRYSTALS-Kyber~\cite{NISTPQC:CRYSTALS-KYBER22}  parameters $q=3329$, we obtain
+% \begin{itemize}
+%     \item $1 - q^{-1} \approx 0.99969961$;
+%     \item $\dfrac{1 - q^{-t}}{q-1} \approx \dfrac{1}{q-1} \approx 3.0048 \cdot 10^{-4}$;
+%     \item $\log \mathbb{P}_t \approx - \frac{3.0048 \cdot 10^{-4}}{0.9997} \approx -3.0057 \cdot 10^{-4}$.
+% \end{itemize}
+% Hence
+% \[
+% \mathbb{P}_t \ge \exp(-3.0057 \cdot 10^{-4}) \approx 0.99969943,
+% \]
+% so the probability that the pivots lie on the diagonal is overwhelmingly close to 1.
+
+
+% KEEP ESTIMATES FOR CLARITY?
+% \begin{remark}
+%     We will use the following relations to give a bound for $\log(\mathbb{P}_k)$:
+%     \begin{itemize}
+%         \item $\log x \ge 1-\frac{1}{x}$ for $0<x<1$;
+%         \item \item $q^{j-1-t} \le q^{-1}$;
+%         \item $\sum_{k=0}^{r}x^k = \frac{1-x^{r+1}}{1-x}$;
+%         \item $e^x > 1 + x$ for $x>0$.
+%     \end{itemize}
+% \end{remark}
+% \begin{itemize}
+%     \item $1-q^{-1} \approx 0.99969961$;
+%     \item $\frac{1 - q^{-t}}{q-1} \approx \frac{1}{q-1} \approx 3.0048 \cdot 10^{-4}$;
+%     \item $\log \mathbb{P}_t \geq - \frac{3.0048 \cdot 10^{-4}}{0.9997} \approx -3.0057 \cdot 10^{-4}$.
+% \end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+% \subsection{Duality from~\cite{EC:NMSU25} (Keep it?)}
+
+% \begin{definition}[Learning With Bounded Errors]
+%     Let $\mathbb{F}$ be a field.
+%     Let $k,n,d\in\mathbb{N}$, an choose subsets $S_1,\dots,S_n\subset \mathbb{F}$, each of size $d$.
+
+%     For a generator matrix $\mathbf{G}\in\mathbb{F}^{n\times k}$, the LWBE problem asks to extract $\mathbf{x}\in\mathbb{F}^{k}$ from $(\mathbf{G},\mathbf{b}=\mathbf{Gx+e})$, where $\mathbf{e}\in S_1\times \cdots\times S_n$.
+% \end{definition}
+
+% It is easy to see that LWBE problem is equivalent to its dual version:
+
+% \begin{definition}[Bounded Syndrome Decoding]
+%     For a parity-check matrix $\mathbf{H}\in\mathbb{F}^{(n-k)\times n}$, the BSD problem asks to extract $\mathbf{e}$ from $(\mathbf{H},\mathbf{s}=\mathbf{He})$, where $\mathbf{e}\in S_1\times \cdots\times S_n$.
+% \end{definition}
+% \newpage
+
+
+
+
+
+
+\subsection{Probability of Diagonal Pivots}
+
+Let \(k < N\) and consider \(k\) vectors \(v_1,\dots,v_k \in \mathbb{F}_q^N\). 
+The probability that these vectors are linearly independent is well-known and can be expressed as
+\begin{equation}\label{pivots}
+\mathbb{P}_k(\{v_1,\dots,v_k\} \text{ are independent}) 
+= \prod_{j=1}^{k} \left(1 - q^{j-1-N}\right).
+\end{equation}
+For large \(q\), this probability is extremely close to 1.  
+
+\noindent
+\textsf{\textbf{Example.}} 
+Consider the parameters of CRYSTALS-Kyber768~\cite{NISTPQC:CRYSTALS-KYBER22} with \(n = 256\), \(d = 7\), and \(q = 3329\). 
+The initial set of LWE samples can be seen as \(k\) vectors in \(\mathbb{F}_q^N\), with $k = \binom{n+d-1}{d} = \binom{262}{7}$, and \(N = \binom{n+d}{d} = \binom{263}{7} \).
+Using standard estimates for the product in the above formula, we obtain
+\begin{equation*}
+\mathbb{P}_k \ge \exp\left(-\frac{1}{(1-q^{-1})(q-1)}\right) \approx 0.9997.
+\end{equation*}
+Hence, the probability that the pivots lie on the diagonal is overwhelmingly close to 1. 
+The same argument applies for each $1 \le i \le d$, with $i$ replacing $d$ in the definitions of $k$ and $N$.

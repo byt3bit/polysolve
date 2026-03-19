@@ -1,0 +1,126 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% \subsection{NEW Overview}
+% A Polynomial System Solving (PoSSo) problem can be represented as a linear algebra problem by associating each polynomial with its coefficient vector in the vector space of multivariate polynomials of degree at most $d$ in $n$ variables, of dimension $w = \binom{n+d}{d}$. In this work, we adopt a graded monomial ordering, which prioritizes monomials by total degree without fixing a specific ordering among monomials of the same degree.
+
+% For an LWE polynomial system $\mathcal{F}_{\mathrm{LWE}}$ with $m = \binom{n+d-1}{d}$ samples, this representation yields a matrix $M \in \mathbb{F}_q^{m \times w}$. With high probability, the rows of $M$ are linearly independent and its leading principal submatrix is invertible. Diagonalizing this submatrix produces a set of polynomials with monic leading terms of degree $d$.
+
+% We iteratively compute $S$-polynomials of decreasing degree and diagonalize the resulting matrices at each step, reducing the maximal degree by one at each iteration. This process continues until degree $1$, yielding a reduced Gr\"obner basis of linear polynomials $\{x_j - s_j\} _{j=1,\dots,n}$ that directly reveals the secret vector $\mathbf{s}$.  
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% OLD IMAGE -- Switch to this.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \begin{figure}[b!]
+% \centering
+% \resizebox{0.55\linewidth}{!}{
+%   \input{figures/bigmatrix}
+% }
+% \caption{Block-wise representation of the algorithm. Each row block corresponds to polynomials of total degree $i$, from $d$ down to $1$. The left part of each rectangular matrix shows the diagonalized leading submatrix of degree-$i$ monomials, while the right part contains lower-degree terms. Each iteration produces a new rectangular matrix in this form.}\label{fig:bigmatrix}
+% \end{figure}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% NEW IMAGE
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{figure}[b!]
+\centering
+\begin{tabular}{cc}
+  \resizebox{0.60\textwidth}{!}{\input{figures/bigmatrix}} &
+  \resizebox{0.33\textwidth}{!}{\input{figures/summary.tex}}
+\end{tabular}
+\caption{\textsf{Left:} Block-wise representation of the algorithm. Each row block corresponds to polynomials of total degree $i$, from $d$ down to $1$. The left part of each rectangular matrix shows the diagonalized leading submatrix of degree-$i$ monomials, while the right part contains lower-degree terms. \textsf{Right:} Step-wise illustration of one iteration of the algorithm showing \texttt{Spoly}, \texttt{DiagA} and \texttt{DiagB}.}\label{fig:bigmatrix}
+\end{figure}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+In the polynomial system $\mathcal{F}_{\mathrm{LWE}}$ (stemming from \slwe), derived from $m = \binom{n+d-1}{d}$ samples, we identify each polynomial with its coefficient vector. The terms of each polynomial are ordered according to a fixed \emph{graded} monomial ordering by total degree. 
+% in the vector space of multivariate polynomials in $n$ variables of (total) degree at most $d$, which has dimension $w = \binom{n+d}{d}$. Fixing a graded monomial ordering induces a canonicalordering by total degree.
+This yields a matrix $M \in \mathbb{F}_q^{m \times w}$ whose rows correspond to the input polynomials and $w = \binom{n+d}{d}$.
+With high probability, these rows are linearly independent (see \Cref{pivots}) and the leading principal $m \times m$ submatrix of $M$ is invertible; diagonalizing it produces a set of polynomials with monic leading terms of degree $d$ (outlined by the first square structure in \cref{fig:bigmatrix}).
+The remaining columns form a dense block containing lower-degree monomials. Each polynomial in this representation has a unique term of degree $d$ corresponding to the leading term, and additional terms of lower degree. The leading terms are all distinct and, due to the linear independence of the rows, they cover all monomials of degree $d$.
+
+% This structure can be represented as a rectangular coefficient matrix with a block decomposition: the left part, corresponding to a square block, is diagonalized and highlighted in Figure~\ref{fig:bigmatrix}, while the remaining columns form a dense block containing lower-degree monomials. 
+% Each polynomial in this representation has a unique term of degree $d$ corresponding to the leading term, and additional terms of lower degree. 
+% The leading terms are all distinct and, due to the linear independence of the rows, they cover all monomials of degree $d$.
+
+From this system, we generate a selected set of $S$-polynomials each having total degree $ \leq d$. Next we reduce this set of $S$-polynomials by the current diagonalized system. Note that this process \emph{does not require division}, as it consists of linear combinations of the diagonalized
+polynomials. Each reduced $S$-polynomial has total degree exactly $d-1$.
+
+The coefficients of these reduced $S$-polynomials are then assembled into a new coefficient matrix.
+Provided that a sufficient number of such polynomials is generated, the leading principal submatrix of this matrix is invertible with overwhelming probability and can be diagonalized in the same manner as before.
+This yields a new diagonalized system whose leading terms are monic and cover all monomials of degree $d-1$. Then we compute a set of $S$-polynomials and their reduction as described before. 
+
+This procedure is applied recursively, decreasing the degree at each iteration. Finally, the process terminates at degree $1$, where the resulting system consists of linear polynomials of the form $(x_j - s_j)$ for $j=1,\dots,n$, and directly reveal the secret vector $\mathbf{s}$.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+% \paragraph*{NEW Intuition of the Algorithm.} 
+% Figure~\ref{fig:bigmatrix} provides a conceptual visualization of the algorithm by embedding the iterative steps into a single large matrix. Each row block corresponds to polynomials of a fixed degree $i$ ($1 \le i \le d$), with the leading principal submatrix highlighted to indicate the diagonalization of the corresponding polynomials. The remaining portion of each block represents the dense part of the polynomials formed by lower-degree monomials. 
+
+% Iterations proceed from the top block (degree $d$) to the bottom block (degree $1$). At each step, $S$-polynomials of degree $i$ are computed from the previously diagonalized polynomials, and the resulting submatrix is diagonalized independently. This block-wise representation is purely conceptual: the algorithm never operates on the full matrix at once, but rather processes one row-block at a time.
+
+% The final block, corresponding to degree $1$, produces linear polynomials of the form $\{ x_j - s_j \} _{j=1,\dots,n}$, which uniquely determine the secret vector $\mathbf{s}$ and signal the termination of the algorithm. This structured visualization emphasizes the iterative reduction of polynomial degree and the progressive diagonalization that underlies the algorithm's efficiency.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\paragraph*{Iterations (formal)}
+The main algorithm (\cref{alg:alg}) has $d-1$ iterations, processing polynomials of total degree $i+1$ at iteration-$i$, starting with $i = d-1$ and decreasing by one at each iteration until $i=1$. 
+At iteration-$i$, it performs the
+following operations:  
+
+% \begin{definition}[$\deg_i$ iteration]
+% For $1 \le i \le d-1$, the \emph{$\deg_i$ iteration} refers to the stage in which polynomials with leading terms of degree $i$ are processed. Specifically, $S$-polynomials of degree $i$ are generated and subsequently diagonalized.
+% \end{definition}
+
+% With this notation, the $\deg_i$ iteration corresponds to the $(d-i)$-th step of the algorithm. Each $\deg_i$ iteration consists of two main operations:
+
+\begin{enumerate}
+    \item \textbf{\textsf{$S$-polynomial generation.}} (\texttt{Spoly})
+    We generate $\binom{n+i-1}{i}$ $S$-polynomials, ensuring that the set contains exactly as many equations as there are monomials of degree $i$.
+
+    An $S$-polynomial between polynomials $f$ and $g$ is computed if the greatest common divisor of their (distinct) leading terms has degree $i$.
+    We recall that at this stage, \LT$(f)$ and \LT$(g)$ have degree $i+1$.
+    The resulting $S$-polynomial has the form  
+    \begin{equation}\label{eq:spoly}
+        S_{fg} = x_k\cdot f - x_\ell \cdot g
+    \end{equation}
+    for suitable indices $k,\ell \in \{1,\dots,n\}$.
+    As a consequence, $S_{fg}$ consists only of monomials of degree at most $i+1$.
+    After reduction with respect to the starting set of polynomials, all terms in $S_{fg}$ have degree at most $i$.
+
+    \item \textbf{\textsf{Diagonalization.}} (\texttt{Diag})
+    The leading principal submatrix of size $\binom{n+i-1}{i}$ is diagonalized in two stages: 
+    \begin{enumerate}
+        \item (\texttt{DiagA}) compute a row-echelon form to obtain an upper triangular matrix by eliminating entries below the diagonal;
+        \item (\texttt{DiagB}) complete the diagonalization by eliminating entries above the diagonal. 
+    \end{enumerate}
+  \end{enumerate}
+
+  \begin{algorithm}[t!]
+\caption{Main Algorithm}\label{alg:alg}
+\begin{algorithmic}[1]
+\Statex{\hspace*{-\algorithmicindent} \textbf{Input:} $\mathcal{P}_d$: initial set of samples, $n \geq 1$: secret's dimension, $d$: maximum error size}
+\Statex{\hspace*{-\algorithmicindent} \textbf{Output:} $\mathcal{D}_1$: set of $n$ linear polynomials $\{ x_j - s_j: 1 \le j \le n \}$.}
+% \Statex{}
+\State{\texttt{SET = DiagB(DiagA($\mathcal{P}_d, n, d$))}} \Comment{Initial diagonalization of the degree-$d$ samples}
+\For{$i = d-1, d-2, \dots, 1$}
+    \State{\texttt{STEP1 = Spoly(SET,$n, i$)}} \Comment{$S$-polynomial generation step: $\mathcal{P}_i$}
+    \State{\texttt{SET = DiagB(DiagA(STEP1,$n, i$))}} \Comment{Diagonalization step: $\mathcal{D}_i$}
+\EndFor{}
+\State{\Return{$\mathcal{D}_1$}} \Comment{Return the reduced set of linear polynomials}
+\end{algorithmic}
+\end{algorithm}
+
+% The next section presents the algorithm in pseudocode and proves its correctness.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

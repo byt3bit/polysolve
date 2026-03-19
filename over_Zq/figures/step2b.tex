@@ -1,0 +1,40 @@
+\begin{tikzpicture}[
+    every label/.append style={anchor=base, yshift=3pt},
+    matparens/.style={
+      inner sep=3pt,
+      left delimiter={(},   % ← metti {[} per quadre, {(} per tonde
+      right delimiter={)}   % ← metti {]} per quadre, {)} per tonde
+    }
+  ]
+  % --- PRIMO BLOCCO: ( R  T ) ---
+  \node[matparens] (block1) {
+    \begin{tikzpicture}
+      \node[lipicsGray, matrix={2}{2}, fill=white] (R) {};
+      \begin{scope}
+        \clip (R.north west) -- (R.south east) -- (R.north east) -- cycle;
+        \fill[lipicsBulletGray] (R.north west) rectangle (R.south east);
+      \end{scope}
+      \draw[lipicsGray, line width=0.70mm] (R.north west) -- (R.south east) -- cycle;
+      \node[font=\LARGE\bfseries, fill=white, draw=lipicsGray, line width=0.4pt, inner sep=2pt] at (R.center) {\LARGE$i$};
+      \node[lipicsGray, matrix={2}{2}, fill=none] (R.center) {};
+
+      \node[lipicsBulletGray, matrix={2}{3}, fill=lipicsLightGray, right=2mm of R] (T) {};
+      \node[black] at (T.center) {\LARGE$<i$};
+    \end{tikzpicture}
+    };
+  % Freccia
+  \node[eqn, right=8mm of block1] (arrow) {$\Rightarrow$};
+  % --- SECONDO BLOCCO: ( P  L ) ---
+  \node[matparens, right=8mm of arrow] (block2) {
+    \begin{tikzpicture}
+      \node[lipicsGray, matrix={2}{2}, fill=white] (P) {};
+      \draw[lipicsGray, line width=0.70mm] (P.north west) -- (P.south east) -- cycle;
+      \node[font=\LARGE\bfseries, fill=white, draw=lipicsGray, line width=0.4pt, inner sep=2pt] at (P.center) [xshift=-2mm] {\LARGE$i$};
+
+      \node[lipicsBulletGray, matrix={2}{3}, fill=lipicsLightGray, right=2mm of P] (L) {};
+      \node[black] at (L.center) [xshift=-6mm] {\LARGE$<i$};
+    \end{tikzpicture}
+  };
+\end{tikzpicture}
+
+

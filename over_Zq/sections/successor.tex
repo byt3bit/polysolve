@@ -1,0 +1,74 @@
+\subsection{Next combination in Gray code order}\label{sec:successor}
+
+\begin{algorithm}[t!]
+\caption{Next combination in Gray order}\label{alg:successor}
+\begin{algorithmic}[1]
+\Statex{\hspace*{-\algorithmicindent} \textbf{Input:} $a=(a_1,\dots,a_{n})$: $n$-tuple, $n>1$, total sum $d<n$}
+\Statex{\hspace*{-\algorithmicindent} \textbf{Output:} $b=(b_1,\dots,b_{n})$ next $n$-tuple combination in Gray order, or $\varnothing$}
+% \Statex{\hspace*{-\algorithmicindent} \textbf{Uses:} \texttt{after}, \texttt{call}: , \texttcalt{next}, \texttt{prev}: direction $mode$, one the opposite of the other ($\overline{\texttt{next}}$ denotes \texttt{prev} and vice versa)}
+\Statex{\hspace*{-\algorithmicindent} \textbf{Uses:} 
+\texttt{call} (simulate recursive call), 
+\texttt{after} (action after simulated recursion), 
+\texttt{next}/\texttt{prev} (direction to scan the current component; 
+$\overline{\texttt{next}}$ denotes \texttt{prev} and vice versa)}
+
+\Function{ComputeTail}{$m$, $s$, parity}
+  \State{\IfThen{$m \le 0$}{\Return{$\varnothing$}}}
+  \State{\IfThenElse{parity = 0}{\Return{$(\mathbf{0}^{m-1}) || (s)$}}{\Return{$(s) || (\mathbf{0}^{m-1})$}}}
+\EndFunction{}
+\Function{Successor}{$a$, $n$, $d$}
+\State{\IfThen{$a = \varnothing$}{\Return{$(\mathbf{0}^{n-1}, d)$}}}\Comment{First combination in Gray code order}
+
+
+\State{$P_k=\sum_{j<k} a_j$, for $1\le k\le n$}\Comment{Compute prefix sums}
+\State{\texttt{stack} $\gets$ $(\texttt{call},\texttt{next},0,-1)$}\Comment{Initialize stack}
+\State{\texttt{last\_ret} $\gets \varnothing$}
+
+\While{\texttt{stack} not empty}
+
+    \State{$(type,mode,k,i)$ $\gets$ \texttt{stack}.pop()}
+
+    \If{$type=\texttt{call}$}
+        \If{$k=n-1$}
+            \State{\texttt{last\_ret} $\gets \varnothing$}
+        \Else{}
+            \State{$i \gets a_k$}
+            \State{\texttt{stack}.push$((\texttt{after},mode,k,i))$}
+            \State{$mode$ $\gets$ \GetsIfThenElse{$mode$}{$i \bmod 2 = 0$}{$\overline{mode}$}}
+            \State{\texttt{stack}.push$((\texttt{call},mode,k+1, -1))$ }\Comment{Simulate recursive call at level $k+1$}
+        \EndIf{}
+
+    \Else{}
+        \State{\texttt{rem} $\gets d-P_k$}
+
+        \If{\texttt{last\_ret} $\neq \varnothing$}
+            \State{\texttt{last\_ret} $\gets (i)\ ||\ \texttt{last\_ret}$}
+        \Else{}
+            \State{\IfThenElse{$mode=\texttt{next}$}{$i \gets i+1$}{$i \gets i-1$}}
+            \If{$0 \le i \le \texttt{rem}$}
+                \State{\texttt{tail} $\gets$ \Call{ComputeTail}{$n-k-1$, $\texttt{rem}-i$, $\gets i \bmod 2$}}
+                \State{\texttt{last\_ret} $\gets (i)\ ||\ \texttt{tail}$}
+            \EndIf{}
+        \EndIf{}
+    \EndIf{}
+
+\EndWhile{}
+
+\State{\Return{\texttt{last\_ret}}}
+\EndFunction{}
+\end{algorithmic}
+\end{algorithm}
+
+% \ma{Old description, change both this and section 4 part, referring to Appendix.}
+% As shown in~\cite{DBLP:journals/cj/Takaoka99,DBLP:journals/corr/Takaoka15a}, the Gray code for combinations of a multiset~\cite{DBLP:journals/ejc/RuskeyS96} can be generated efficiently, either via a recursive procedure or its iterative variant. Moreover, these results provide a method to determine the successor of any given combination in constant time. Consequently, the admissible pairs can be generated alongside the corresponding $S$-polynomial computations, without increasing the overall computational complexity of \Cref{alg:step1}.
+
+
+Our construction follows the general idea underlying Gray code generation for multiset combinations as developed in~\cite{DBLP:journals/ejc/RuskeyS96,DBLP:journals/cj/Takaoka99,DBLP:journals/corr/Takaoka15a}, which we adapt to the requirements of our setting. 
+In particular, we define in \Cref{alg:successor} the \textsc{Successor} procedure that, given an input tuple, returns the next tuple in the Gray code ordering, equivalently along the corresponding Hamiltonian path. 
+This allows admissible pairs to be generated directly from the traversal of the Gray code ordering while preserving the efficiency of the underlying construction. 
+It has been proved that the successor of a combination can be computed in constant time, and our adaptation retains this property~\cite{DBLP:journals/cj/Takaoka99,DBLP:journals/corr/Takaoka15a}.
+Since the procedure is obtained as a direct modification of the constructions presented in the cited works, we do not address its correctness here, which follows from the same arguments.
+
+For clarity, \Cref{alg:successor} uses stack labels \texttt{call} and \texttt{after} to simulate the recursive construction, and \texttt{next}/\texttt{prev} to indicate the direction of the component scan.
+The procedure internally calls \textsc{ComputeTail} to generate the tail of the tuple (zero-padded entries) according to the remaining sum and parity.  
+For further details, we refer the reader to Algorithm 2 and Section 7 in~\cite{DBLP:journals/corr/Takaoka15a}.

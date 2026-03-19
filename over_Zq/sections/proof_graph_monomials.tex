@@ -1,0 +1,30 @@
+\section{Graph based proof for monomials association}
+
+When we define the pairs of monomials from which we compute the S-polynomials needed in the generation of subsequent polynomials, we want to ensure that given a monomial \(m_1\) it is always possible to find another monomial \(m_2\) such that \(\deg(m_1) = \deg(m_2) = d\) and \(\deg(\gcd(m_1,m_2)) = d-1\).
+By doing so we ensure that at each step we can generate enough S-polynomials to cover all the monomials of degree \(d-1\).
+
+\begin{lemma}
+\label{lem:ditance-one-monomials}
+Let \(n\) be the number of variables and \(d\) be the total degree of the considered monomials.
+Given a monomial \(m_1 = \vars{x}^\alpha = \vars{x}^\alpha = x_1^{\alpha_1}\cdots x_n^{\alpha_n}\) of degree \(d = \sum_{j = 1}^{j=n} \alpha_j\) where \(i = \max(\alpha)\), the number of monomials \(m_2\) such that \(\deg(m_2) = d\) and \(\deg(\gcd(m_1,m_2)) = d-1\) is \(\sum_{k=0}^{n-1}\binom{n}{k}\binom{n-k}{1}(n-k-1)\). Moreover, the number of monomials \(m_2 = \vars{x}^{\beta}\) such that \(\deg(m_2) = d\), \(\deg(\gcd(m_1,m_2)) = d-1\) and \(\max(\beta) = d-1\) is given as:
+\[
+
+\]
+\end{lemma}
+
+
+
+se ho x_i^d ne ho n-1 con max d-1
+
+se ho x^i^{d-1}x_j sono n-2 con max d-1 e n-1 con d-2
+
+se ho x^i{d-2}x_j^2 sono n-2 con max d-2 e n-1 con d-3
+
+se ho x^i{d-2}x_j*x_z sono 2*(n-3) con max d-2 e n-1 con d-3
+
+se ho x_i{d-3}x_j^3 
+se ho x_i{d-3}x_j^2*x_z
+se ho x_i{d-3}x_j*x_z*x_k
+ 
+
+

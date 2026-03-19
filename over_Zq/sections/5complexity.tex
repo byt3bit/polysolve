@@ -1,0 +1,314 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+We will establish the overall complexities due to the $\texttt{Spoly}$, $\texttt{DiagA}$ and $\texttt{DiagB}$ in \cref{alg:alg}. In our complexity analysis, we count the number of field multiplications.
+As field additions are of the same order, they do not affect the (asymptotic) complexity.
+%Multiplying a polynomial by a monomial $x_j$ does not introduce additional field multiplications. %depending on the corresponding implementation, this operation only updates the exponent vectors of its monomials and is therefore asymptotically negligible in our complexity model.
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% \begin{proposition}[\texttt{Spoly}]\label{thm:step1}
+%     The overall complexity of the $S$-polynomial generation over $d-1$ iterations in \Cref{alg:alg} is $\mathcal{O}\!\left(\frac{d^3}{n^3}\binom{n+d}{d}^3\right)$ field operations.    
+% \end{proposition}
+
+% STEP 1 - PROOF of the WHOLE STEP
+\begin{proof}[Proof of \Cref{thm:iterationCost} (i)]
+\textbf{\textsf{Complexity of \texttt{Spoly}.}}
+We prove overall complexity of \texttt{Spoly}, $\mathscr{C}_\texttt{Spoly}$, by first analyzing the complexity of a single call, and then summing over all $d-1$ calls. 
+Let $1 \le i \le d-1$ and consider the diagonalized set $\mathcal{D}_{i+1}$.
+
+% STEP 1 - DESCRIPTION of 1 ITERATION
+\underline{\textsf{Claim 1.}}
+% \begin{claim}
+    The cost of generating and reducing $\mathcal{P}_i$ from $\mathcal{D}_{i+1}$ at the iteration-$i$ is
+    \[
+        2\cdot \binom{n+i-1}{i}^2\cdot \left[ \binom{n+i}{i} + 1 \right].
+    \]
+% \end{claim}
+% \begin{claimproof}
+\underline{\textsf{Proof of Claim 1.}}
+Consider the iteration-$i$, with $1\le i \le d-1$, and let $\mathcal{D}_{i+1}$ be the current diagonalized set.
+We have
+\[
+|\mathcal{D}_{i+1}| = \binom{n+i}{i+1}, \qquad
+|\mathcal{P}_i| = \binom{n+i-1}{i}.
+\]
+
+Each polynomial in $\mathcal{D}_{i+1}$ contains exactly one monomial of degree $i+1$ and at most $\binom{n+i-1}{i}$ monomials of degree $i$, namely those monomials which, when multiplied by a variable, yield a monomial of degree $i+1$.
+Consequently, in the $S$-polynomial $S_{fg}$, at most $2 \cdot \binom{n+i-1}{i}$ monomials of degree $i+1$ arise, where the factor $2$ accounts for the contributions coming from both $f$ and $g$.
+
+Each of these degree-$(i+1)$ monomials is reduced using exactly one polynomial from $\mathcal{D}_{i+1}$, thanks to its diagonal structure.
+Such a polynomial contains at most $\binom{n+i}{i}+1$ monomials.
+Hence, the cost (in field multiplications) to reduce a single $S$-polynomial is
+%\[
+$2 \cdot \binom{n+i-1}{i} \cdot \left[\binom{n+i}{i}+1\right]$.
+%\]
+Since $\binom{n+i-1}{i}$ $S$-polynomials are generated at the iteration-$i$, the total cost is
+\[
+\sum_{j=1}^{\binom{n+i-1}{i}} \left[ 2 \cdot \binom{n+i-1}{i} \cdot \left[ \binom{n+i}{i} + 1 \right] \right]
+=
+2 \cdot \binom{n+i-1}{i}^2 \cdot \left[ \binom{n+i}{i} + 1 \right],
+\]
+proving the {\textsf{Claim 1.}}
+% \end{claimproof}
+
+% CONTINUATION OF MAIN PROOF
+The total complexity of the $S$-polynomial generation and reduction is obtained by summing the contribution of the $d-1$ iterations over all degrees $1\leq i \leq d-1$.
+Using the following relation $\binom{n+i}{i} =\frac{n+i}{n}\binom{n+i-1}{i}$, we have complexity $\mathscr{C}_{\texttt{Spoly}}$ as
+    \begin{align*}
+        \mathscr{C}_{\texttt{Spoly}}
+        &:=\sum_{i=1}^{d-1} \left[  2 \cdot \binom{n+i-1}{i}^2 \cdot \left[ \binom{n+i}{i} + 1 \right] \right]\\
+      % &= \sum_{i=1}^{d-1} \Bigg[ 2 \binom{n+i-1}{i}^2  \binom{n+i}{i} + 2\binom{n+i-1}{i}^2  \Bigg]
+        &= \sum_{i=1}^{d} \left[ 2\frac{n+i}{n}\binom{n+i-1}{i}^3 + 2\binom{n+i-1}{i}^2  \right],
+    \end{align*}
+which gives for $i=d-1$ the highest term.
+Observing that
+% \begin{equation*}
+%     \begin{gathered}
+        $\binom{n+d-2}{d-1} = \frac{nd}{(n+d)(n+d-1)}\binom{n+d}{d}$,
+%     \end{gathered}
+% \end{equation*}
+we obtain
+    \begin{align*}
+        &\mathcal{O}\left(2\frac{n+d-1}{n}\binom{n+d-2}{d-1}^3 + 2\binom{n+d-2}{d-1}^2\right) = \mathcal{O}\left(2\frac{n+d-1}{n}\binom{n+d-2}{d-1}^3\right) \\
+        &= \mathcal{O}\left(2\frac{n+d-1}{n}\frac{{(nd)}^3}{{(n+d)}^3{(n+d-1)}^3}\binom{n+d}{d}^3\right)\\
+        &= \mathcal{O}\left(\frac{2n^2d^3}{{(n+d)}^3{(n+d-1)}^2}\binom{n+d}{d}^3\right)= \mathcal{O}\left(\binom{n+d}{d}^3\right),
+    \end{align*}
+    where the last equality holds, under the condition \(n > d\).
+\end{proof}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{remark}[On the number of $S$-polynomials]
+The complexity estimate above assumes that exactly $\binom{n+i-1}{i}$ linearly independent $S$-polynomials are produced at the iteration-$i$ and that none of them reduces to zero.
+This assumption is justified by the density of the intermediate systems:
+at the beginning of the iteration-$i$, all monomials of degree at most $i+1$ are already present, and after completion the same property holds for degree at most $i$.
+In particular, for a generic input system over $\mathbb{F}_q$, the resulting $S$-polynomials are linearly independent with high probability (\Cref{pivots}).
+If additional $S$-polynomials were required due to linear dependencies, their number would be bounded by a constant (or grow at most linearly) with respect to $\binom{n+i-1}{i}$.
+Hence, the asymptotic complexity remains unchanged.
+\end{remark}
+
+% \begin{remark}[On the number of $S$-polynomials]
+% The above complexity estimate assumes that $\binom{n+i-1}{i}$ linearly independent $S$-polynomials are generated at the $\deg_i$ iteration and that none of them reduces to zero. This assumption is justified by the density of the intermediate systems: at the beginning of the $\deg_i$ step, all monomials of degree at most $i+1$ are present, and this property is preserved for degree at most $i$ after completion. In particular, for a generic input system over $\mathbb{F}_q$, the $S$-polynomials are linearly independent with high probability.  
+
+% If additional $S$-polynomials are required due to linear dependencies, their number is bounded by a constant (or grows at most linearly) with respect to $\binom{n+i-1}{i}$, and therefore does not affect the asymptotic complexity.
+% \end{remark}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{figure}[t]
+    \centering
+    \resizebox{0.9\linewidth}{!}{%
+        \input{figures/diagonalization.tex}%
+    }
+    \caption{\texttt{DiagA} reduction to row-echelon form, followed by \texttt{DiagB} conversion to diagonal form.}\label{fig:diagonalization}
+\end{figure}\label{fig:step2a}
+% \end{figure}
+
+% \begin{proposition}[\texttt{DiagA}]\label{thm:step2a}
+%     The overall complexity of the row-echelon from reduction over $d$ iterations in \Cref{alg:alg} is $\mathcal{O}\!\left(\frac{1}{3}\binom{n+d}{d}^3\right)$ field operations.
+% \end{proposition}
+
+% STEP 2a - PROOF of 2a ITERATION
+\begin{proof}[Proof of \Cref{thm:iterationCost} (ii)]
+\textbf{\textsf{Complexity of \texttt{DiagA}.}}
+We prove the overall complexity of \texttt{DiagA}, $\mathscr{C}_\texttt{DiagA}$, by first analyzing its complexity for a single call, and then summing over $d$ values of $i$.
+Let $1\le i \le d$ and consider $\mathcal{P}_{i}\subset \mathbb{F}_q[x_1,\dots,x_n]$.
+
+% STEP 2 - DESCRIPTION of 2a ITERATION
+\underline{\textsf{Claim 2.}}
+% \begin{claim}
+    The cost of bringing $\mathcal{P}_{i}$ to row-echelon form $\mathcal{Q}_{i}$ at the iteration-$i$ is
+    \[
+        \sum_{j=1}^{\binom{n+i-1}{i}}\left[\left[ \binom{n+i}{i} - j + 1 \right]\cdot \left[ \binom{n+i-1}{i} - j + 1 \right]\right]. 
+    \]
+% \end{claim}
+% \begin{claimproof}
+\underline{\textsf{Proof of Claim 2.}}
+Consider the iteration-$i$, with $1 \le i \le d-1$.
+At this stage, a set $\mathcal{P}_i$ of $\binom{n+i-1}{i}$ linearly independent polynomials of degree at most $i$ has been generated.
+The system is brought into row-echelon form by iteratively selecting a pivot polynomial and eliminating its leading monomial from all polynomials lying below it.
+We count the cost of this process in the worst case.
+
+Each polynomial in $\mathcal{P}_i$ may contain all monomials of degree at most $i$, hence at most $\binom{n+i}{i}$ monomials.
+Let $j = 1, \dots, \binom{n+i-1}{i}$ and consider the $j$-th pivot polynomial $f_j$.
+After the elimination steps associated with the previous $j-1$ pivots, it contains at most
+%\[
+$\binom{n+i}{i} - j + 1$
+%\]
+nonzero monomials.
+The pivot polynomial $f_j$ is then used to eliminate its leading monomial from each of the
+%\[
+$\binom{n+i-1}{i} - j + 1$
+%\]
+remaining polynomials (including the normalization of the pivot itself).
+Each such elimination requires multiplying the pivot polynomial by a field element, and therefore costs $\binom{n+i}{i} - j + 1$ field multiplications.
+
+Hence, the total cost associated with the $j$-th pivot is
+%\[
+$\left[\binom{n+i}{i} - j + 1\right]\cdot \left[\binom{n+i-1}{i} - j + 1\right]$
+%\]
+field multiplications.
+Summing over all pivot polynomials yields the total cost
+\[
+\sum_{j=1}^{\binom{n+i-1}{i}}\left[\left[ \binom{n+i}{i} - j + 1 \right]\cdot\left[ \binom{n+i-1}{i} - j + 1 \right]\right],
+\]
+proving the {\textsf{Claim 2.}}
+% \end{claimproof}
+
+% CONTINUATION OF MAIN PROOF
+The total complexity of the row-echelon form reduction is obtained by summing the contribution of the $d$ iterations over all degrees $1\leq i \leq d$:
+\begin{equation*}
+    \mathscr{C}_{\texttt{DiagA}} :=\sum_{i=1}^{d} \left[  \sum_{j=1}^{\binom{n+i-1}{i}}\left[ \left[ \binom{n+i}{i} - j+1 \right]\cdot\left[ \binom{n+i-1}{i} - j+1 \right] \right] \right].
+\end{equation*}
+Using the following relations
+\begin{equation*}
+    \begin{gathered}
+        \sum_{j=1}^k j = \frac{k(k+1)}{2}, \quad \sum_{j=1}^k j^2 = \frac{k(k+1)(2k+1)}{6},
+    \end{gathered}
+\end{equation*}
+we have complexity $\mathscr{C}_{\texttt{DiagA}}$ as
+% \begin{align*}
+%     C_{\texttt{DiagA}} 
+%     &=\sum_{i=1}^{d} \Bigg[  \sum_{j=1}^{\binom{n+i-1}{i}}\Bigg[ \binom{n+i}{i}\binom{n+i-1}{i} - j\binom{n+i}{i}\\
+%     &\qquad\qquad + \binom{n+i}{i} -j\binom{n+i-1}{i}+ j^2 -2j + \binom{n+i-1}{i} +1 \Bigg] \Bigg]\\
+%     &= \sum_{i=1}^{d} \Bigg[  \binom{n+i}{i}\binom{n+i-1}{i}^2 - \frac{1}{2}\binom{n+i}{i}\binom{n+i-1}{i}\Bigg[\binom{n+i-1}{i}+1\Bigg]\\
+%     &\qquad\qquad+\binom{n+i}{i}\binom{n+i-1}{i} -\frac{1}{2}\binom{n+i-1}{i}^2\Bigg[ \binom{n+i-1}{i}+1\Bigg]\\
+%     &\qquad\qquad+\frac{1}{6}\binom{n+i-1}{i}\Bigg[ \binom{n+i-1}{i}+1\Bigg]\Bigg[ 2\binom{n+i-1}{i}+1\Bigg]\\
+%     &\qquad\qquad-\frac{2}{2}\binom{n+i-1}{i}\Bigg[ \binom{n+i-1}{i}+1\Bigg] + \binom{n+i-1}{i}^2 +\binom{n+i-1}{i} \Bigg].
+% \end{align*}
+\begin{align*}
+\mathscr{C}_{\texttt{DiagA}} 
+&= \sum_{i=1}^{d} \bigg[ \sum_{j=1}^{\binom{n+i-1}{i}} \bigg[
+\binom{n+i}{i}\binom{n+i-1}{i} - j\binom{n+i}{i} \\
+&\qquad\qquad + \binom{n+i}{i} - j\binom{n+i-1}{i} + j^2 - 2j + \binom{n+i-1}{i} + 1
+\bigg] \bigg] \\
+&= \sum_{i=1}^{d} \bigg[
+\binom{n+i}{i}\binom{n+i-1}{i}^2 - \frac{1}{2}\binom{n+i}{i}\binom{n+i-1}{i}\left(\binom{n+i-1}{i}+1\right) \\
+&\qquad\qquad + \binom{n+i}{i}\binom{n+i-1}{i} - \frac{1}{2}\binom{n+i-1}{i}^2\left(\binom{n+i-1}{i}+1\right) \\
+&\qquad\qquad + \frac{1}{6}\binom{n+i-1}{i}\left(\binom{n+i-1}{i}+1\right)\left(2\binom{n+i-1}{i}+1\right) \\
+&\qquad\qquad - \binom{n+i-1}{i}\left(\binom{n+i-1}{i}+1\right) + \binom{n+i-1}{i}^2 + \binom{n+i-1}{i}\bigg].
+\end{align*}
+The inner sum produces several terms of different orders in $\binom{n+i}{i}$ and $\binom{n+i-1}{i}$.
+Among them, the dominant contribution is
+    \[
+    \frac{1}{2} \binom{n+i}{i} \binom{n+i-1}{i}^2 - \frac{1}{6} \binom{n+i-1}{i}^3,
+    \]
+which governs the asymptotic complexity. 
+Summing over all $i=1,\dots,d$, the largest contribution comes from $i=d$.
+Observing that $\binom{n+d-1}{d} = \frac{n}{n+d}\binom{n+d}{d}$, we obtain
+\begin{align*}
+    \mathscr{C}_{\texttt{DiagA}} 
+    &= \mathcal{O}\Bigg(\frac{1}{2}\binom{n+d}{d}\binom{n+d-1}{d}^2 - \frac{1}{6}\binom{n+d-1}{d}^3\Bigg)\\
+    &= \mathcal{O}\Bigg(\frac{1}{2}\frac{n^2}{{(n+d)}^2}\binom{n+d}{d}^3 - \frac{1}{6}\frac{n^3}{{(n+d)}^3}\binom{n+d}{d}^3\Bigg) \\
+    &= \mathcal{O}\Bigg(\frac{3n^2(n+d)-n^3}{6{(n+d)}^3}\binom{n+d}{d}^3\Bigg)= \mathcal{O}\Bigg(\binom{n+d}{d}^3\Bigg),
+\end{align*}
+    where the last equality holds, under the condition \(n > d\).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% \begin{figure}[t]
+%     \centering
+%     \resizebox{0.6\linewidth}{!}{%
+%         \input{figures/step2b}%
+%     }
+%     \caption{\texttt{DiagB}: reduction to diagonal form}\label{fig:step1b}
+% \end{figure}
+
+% \begin{proposition}[\texttt{DiagB}]\label{thm:step2b}
+%     The overall complexity of the conversion to diagonal form over $d$ iterations in \Cref{alg:alg} is $\mathcal{O}\!\left(\frac{dn^2}{{2(n+d)}^3}\binom{n+d}{d}^3\right)$.
+% \end{proposition}
+
+% STEP 2b - PROOF of 2b ITERATION
+% \begin{proof}[Proof of \Cref{thm:iterationCost} (iii)]
+
+\noindent
+\textbf{\textsf{Complexity of \texttt{DiagB}.}} We prove overall complexity of \texttt{DiagB}, $\mathscr{C}_\texttt{DiagB}$, by first analyzing the complexity of a single call, and then summing over all $d$ calls. Let $1 \le i \le d-1$ and consider the row-echelon set $\mathcal{Q}_i \subset \mathbb{F}_q[x_1,\dots,x_n]$.
+
+% STEP 2 - DESCRIPTION of 2b ITERATION
+% \begin{claim}
+\underline{\textsf{Claim 3.}}
+    The cost of reducing $\mathcal{Q}_i$ to diagonal form at the iteration-$i$ is
+    \[
+        \sum_{j=1}^{\binom{n+i-1}{i}} \Bigg[ \Bigg[ \binom{n+i-1}{i-1} +1 \Bigg] \cdot \Bigg[ \binom{n+i-1}{i} - j \Bigg] \Bigg]. 
+    \]
+% \end{claim}
+% \begin{claimproof}
+\underline{\textsf{Proof of Claim 3.}}
+Consider the iteration-$i$, with $1 \le i \le d-1$.
+At this stage, the set $\mathcal{Q}_i$ of $\binom{n+i-1}{i}$ polynomials has been reduced to row-echelon form with respect to the monomials of degree $i$.
+The diagonalization is performed by iteratively selecting a pivot polynomial and eliminating its leading monomial from all polynomials above it. 
+We now count the cost of this process in the worst case.
+
+Each pivot polynomial contains its leading monomial of degree $i$ together with all $\binom{n+i-1}{i-1}$ monomials of degree $\le i-1$, for a total of
+%\[
+$\binom{n+i-1}{i-1}+1$
+%\]
+monomials.
+Let $j = 1, \dots, \binom{n+i-1}{i}$ and consider the $j$-th pivot polynomial $g_j$ (counted from bottom to top).
+It is used to eliminate its leading monomial from each of the
+%\[
+$\binom{n+i-1}{i} - j$
+%\]
+polynomials lying above it.
+Each such elimination requires multiplying the pivot polynomial by a field element, costing $\binom{n+i-1}{i-1} + 1$ field multiplications.
+
+Hence, the total cost associated with the $j$-th pivot is
+%\[
+$\left[\binom{n+i-1}{i-1}+1\right]\cdot \left[\binom{n+i-1}{i}-j\right]$
+%\]
+field multiplications.
+Summing over all pivot polynomials yields the total cost
+\[
+\sum_{j=1}^{\binom{n+i-1}{i}} 
+\Bigg[ \Bigg[ \binom{n+i-1}{i-1}+1 \Bigg]\cdot \Bigg[\binom{n+i-1}{i}-j\Bigg] \Bigg],
+\]
+proving the {\textsf{Claim 3.}}
+% \end{claimproof}
+
+% CONTINUATION OF MAIN PROOF
+The total complexity of the conversion to diagonal form is obtained by summing the contribution of the $d$ iterations over all degrees $1\leq i \leq d$:
+\begin{equation*}
+    \mathscr{C}_{\texttt{DiagB}} :=\sum_{i=1}^{d} \sum_{j=1}^{\binom{n+i-1}{i}}\Bigg[ \Bigg[ \binom{n+i-1}{i-1} +1 \Bigg] \cdot \Bigg[ \binom{n+i-1}{i} - j \Bigg] \Bigg].
+\end{equation*}
+Recalling that $\sum_{j=1}^k j = \frac{k(k+1)}{2}$, we have complexity $C_{\texttt{DiagB}}$ as
+\begin{align*}
+    \mathscr{C}_{\texttt{DiagB}} &=
+    \sum_{i=1}^{d}  \sum_{j=1}^{\binom{n+i-1}{i}}\Bigg[ \binom{n+i-1}{i-1}\binom{n+i-1}{i} -j\binom{n+i-1}{i-1} +
+        \binom{n+i-1}{i} -j \Bigg]\\
+    &= \sum_{i=1}^{d} \Bigg[ \binom{n+i-1}{i-1}\binom{n+i-1}{i}^2 -\frac{1}{2}\binom{n+i-1}{i-1}\binom{n+i-1}{i}\Bigg[\binom{n+i-1}{i}+1\Bigg]\\
+    &\qquad\qquad +\binom{n+i-1}{i}^2 - \frac{1}{2}\binom{n+i-1}{i}\Bigg[\binom{n+i-1}{i}+1\Bigg] \Bigg].
+\end{align*}
+The inner sum produces several terms of different orders in $\binom{n+i-1}{i}$ and $\binom{n+i-1}{i-1}$.
+Among them, the dominant contribution is
+\[
+\frac{1}{2} \binom{n+i-1}{i-1} \binom{n+i-1}{i}^2,
+\]
+which governs the asymptotic complexity. 
+Summing over all $i=1,\dots,d$, the largest contribution comes from $i=d$.
+Using the following relations
+\begin{equation*}
+    \begin{gathered}
+        \binom{n+d-1}{d} = \frac{n}{n+d}\binom{n+d}{d}, \quad  \binom{n+d-1}{d-1} = \frac{d}{n+d}\binom{n+d}{d},
+    \end{gathered}
+\end{equation*}
+we obtain
+\begin{align*}
+        \mathscr{C}_{\texttt{DiagB}} 
+        &= \mathcal{O}\left(\frac{1}{2}\binom{n+d-1}{d-1}\binom{n+d-1}{d}^2\right)= \mathcal{O}\left(\frac{1}{2}\frac{d}{(n+d)}\frac{n^2}{{(n+d)}^2}\binom{n+d}{d}^3 \right)\\
+        &= \mathcal{O}\left(\frac{1}{2}\frac{dn^2}{{(n+d)}^3}\binom{n+d}{d}^3\right) = \mathcal{O}\left(\binom{n+d}{d}^3\right),
+    \end{align*}
+    where the last equality holds, under the condition \(n > d\).
+\end{proof}
+

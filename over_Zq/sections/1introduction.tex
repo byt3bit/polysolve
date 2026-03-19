@@ -1,0 +1,159 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+The Learning With Errors (LWE) problem was introduced by Oded Regev in 2005~\cite{STOC:Regev05} as a noisy generalization of the learning parity with noise problem over finite fields.
+
+\begin{definition}[LWE~\cite{EPRINT:AlbPlaSco15,STOC:Regev05}]\label{def:LWE}
+    Let $n$, $q$ be positive integers, $\chi$ be a probability distribution on $\mathbb{Z}$ and $\mathbf{s}$ be a secret vector in $\mathbb{Z}_q^n$.
+    We denote by $L_{\mathbf{s},\chi}$ the probability distribution on $\mathbb{Z}_q^n\times\mathbb{Z}_q$ obtained by choosing $\mathbf{a}\in\mathbb{Z}_q^n$ uniformly at random, choosing $e\in\mathbb{Z}$ according to $\chi$ and considering it in $\mathbb{Z}_q$, and returning $(\mathbf{a},c) = (\mathbf{a}, \langle \mathbf{a}, \mathbf{s} \rangle + e)\in\mathbb{Z}_q^n\times\mathbb{Z}_q$.
+    \begin{itemize}
+        \item Decision-LWE is the problem of deciding whether pairs $(\mathbf{a},c)\in\mathbb{Z}_q^n\times\mathbb{Z}_q$ are sampled according to $L_{\mathbf{s},\chi}$ or the uniform distribution on $\mathbb{Z}_q^n\times\mathbb{Z}_q$.
+        \item Search-LWE is the problem of recovering $\mathbf{s}$ from $(\mathbf{a},c) = (\mathbf{a}, \langle \mathbf{a}, \mathbf{s} \rangle + e)\in\mathbb{Z}_q^n\times\mathbb{Z}_q$ sampled according to $L_{\mathbf{s},\chi}$.
+    \end{itemize}
+  \end{definition}
+  
+Since its introduction, the LWE problem is investigated in algorithm and cryptography literature. In particular, LWE with \emph{bounded errors} (LWBE) was investigated in~\cite{EPRINT:ACFP14,ICALP:AroGe11,EC:NMSU25,EPRINT:Steiner24b}. Introduced by Arora and Ge~\cite{ICALP:AroGe11}, an \emph{algebraic algorithm} generates a system of error-free multivariate polynomial equations from LWE samples and solve the system using linearization technique. In~\cite{EPRINT:ACFP14}, the complexity of Arora-Ge technique was improved by using Gr{\"o}bner basis methods to solve the polynomial system of equations. Recent analysis~\cite{EC:NMSU25,EPRINT:Steiner24b} have further improved the complexity of this approach.
+
+The \emph{lattice-based algorithms}, 
+using primal and dual approaches that reduce LWE to BDD/uSVP or SIS and rely on lattice reduction techniques such as BKZ and hybrid methods~\cite{EC:Albrecht17,EPRINT:AlbPlaSco15,RSA:LinPei11}, are the most efficient algorithms for solving LWE. The \emph{combinatorial algorithms}, notably BKW-based~\cite{DCC:ACFFP15} methods, reduce the problem dimension at the cost of increased noise and are mainly effective for instances with small secrets or large sample sizes. In~\cite{EPRINT:AlbPlaSco15}, the summary of a wide range of algorithms for LWE problem were given. 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\noindent
+\textbf{\textsf{Hardness and Cryptographic Application.}}
+% Regev proved that LWE is as hard on average as worst-case lattice problems such as GapSVP and SIVP via quantum reductions~\cite{STOC:Regev05}.
+% The hardness guarantees was later extended to purely classical reductions by Brakerski et al.~\cite{STOC:BLPRS13}, under specific, but practically relevant, parameter choices. \ar{need to be specific}
+%It has been shown that worst-case GapSVP reduces to average-case LWE~\cite{STOC:BLPRS13,STOC:Regev05}.
+As established in the literature, the worst-case approximate GapSVP reduces to the average-case LWE~\cite{STOC:BLPRS13,DBLP:conf/stoc/Peikert09,STOC:Regev05,DBLP:journals/jacm/Regev09}.
+Such results established LWE as a central hardness assumption in lattice-based cryptography, leading to numerous cryptographic constructions, including post-quantum cryptographic standards.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%The LWE problem has proven to be a rich and versatile source of many innovative cryptographic constructions. 
+Examples of such constructions include secure public-key encryption schemes resilient to both chosen-plaintext~\cite{RSA:LinPei11,DBLP:conf/crypto/PeikertVW08,STOC:Regev05} and chosen-ciphertext attacks~\cite{DBLP:conf/eurocrypt/MicciancioP12,DBLP:conf/stoc/Peikert09,DBLP:conf/stoc/PeikertW08}, oblivious transfer protocols~\cite{DBLP:conf/crypto/PeikertVW08}, identity-based encryption~\cite{DBLP:conf/eurocrypt/AgrawalBB10,DBLP:conf/crypto/AgrawalBB10,DBLP:conf/eurocrypt/CashHKP10,DBLP:conf/stoc/GentryPV08}, leakage-resilient cryptography~\cite{DBLP:conf/tcc/AkaviaGV09,DBLP:conf/crypto/ApplebaumCPS09,DBLP:conf/innovations/GoldwasserKPV10}, fully homomorphic encryption~\cite{DBLP:conf/crypto/Brakerski12,DBLP:conf/innovations/BrakerskiGV12,DBLP:conf/focs/BrakerskiV11}, among many others.
+Structured variants, including Ring-LWE~\cite{EC:LyuPeiReg10} and Module-LWE~\cite{EPRINT:BraGenVai11}, improve efficiency while retaining worst-case hardness, with MLWE underlying practical schemes such as CRYSTALS-Kyber~\cite{NISTPQC:CRYSTALS-KYBER22}.
+
+
+\subsection{Our Result}
+
+We consider algebraic attacks on LWE instances with \emph{bounded errors}, which asks to recover $\mathbf{s}$ from $(\mathbf{a}_i, b_i) = (\mathbf{a}_i, \langle\mathbf{a}_i, \mathbf{s}\rangle + e_i) \in \mathbb{F}_q^n \times \mathbb{F}_q$, for $1 \leq i \leq m$, where each $e_i$ lies in a fixed set of size $d$.
+LWBE is a variant that remains as hard as standard LWE for suitable parameters~\cite{MicPei13}.
+
+In this work, we introduce a new algebraic method for solving the \slwe\ problem which differs fundamentally from existing approaches. Instead of directly applying Gr\"obner basis method,
+we use \emph{a combination of diagonalization and $S$-polynomial generation} techniques. We carry out a direct complexity analysis of our new algorithm.
+
+Unlike previous Gr{\"o}bner basis based analyses~\cite{EPRINT:ACFP14,EPRINT:Steiner24b}, our method does not rely on semi-regularity assumptions, or degree of regularity estimation for deriving the complexity bound. Thus, our algorithm and its complexity analysis is not affected by the non-existence of semi-regular system or difficulty of estimating degree of regularity (precisely). The only assumption we make is that the LWE samples are random, which allows us to rely on linear independence properties that hold with high probability. %In particular, we do not assume semi-regularity or generic behavior of the polynomial system.
+
+Despite the absence of the above mentioned assumptions, the complexity of our algorithm shows polynomial improvement (\Cref{tab:comparison}) over existing algebraic algorithms based on Gr\"obner basis method. Note that the requirement of a large number of samples for our algorithm remains the same as in existing algebraic algorithms. A detailed comparison with prior algebraic attacks is provided in Table~\ref{tab:comparison}.
+Our main result is summarized in \Cref{thm:result}:
+
+\begin{theorem}[Main Result]\label{thm:result}
+The complexity of solving a \slwe\ instance (for bounded errors) with parameters $n$, $d$ $(<n)$ and $m = \binom{n+d-1}{d}$ samples is $\mathcal{O}\!\left(\binom{n+d}{d}^3\right)$, measured in the number of field operations in $\mathbb{F}_q$, where $n$ denotes the length of the secret vector to be recovered and $d$ the size of the set from which the error is drawn.
+\end{theorem}
+
+In particular, with $m = \binom{n+d-1}{d}$ samples and error support of size $d$, our complexity bound improves upon existing algebraic algorithms~\cite{EPRINT:ACFP14,EC:NMSU25,EPRINT:Steiner24b,ACISP:SunTibAbe20} for bounded error LWE.\@
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{table}[hb!]
+    \centering
+    \renewcommand{\arraystretch}{1.4} 
+    \begin{tabular}{
+    >{\centering\arraybackslash}m{1cm}
+    >{\centering\arraybackslash}m{0.7cm}
+    >{\centering\arraybackslash}m{2.2cm}
+    >{\centering\arraybackslash}m{3.5cm}
+    >{\centering\arraybackslash}m{2cm}
+    >{\centering\arraybackslash}m{1cm}
+    }
+    \hline\hline
+Work & Error Size & No. Samples & Time Complexity & Semi-regular assumption? & Without $d_{reg}$? \\ 
+\hline\hline
+~\cite{ICALP:AroGe11} & $d$ & $\mathcal{O}(\log(q)\cdot q\cdot n^d)$ & $\mathcal{O}\Big(\log(q)\cdot q\cdot n^{\omega d}\Big)$ &\cellcolor{lipicsLightGray} \notused&\cellcolor{lipicsLightGray} \YES\\ 
+\hline
+~\cite{EPRINT:Steiner24b} & $d$ & $m>n$ & $\mathcal{O}\Big( m\cdot (d-1)\cdot n\cdot 2^{\omega\cdot{(8d\ln(4)-1)}^{1/\ln(4)}\cdot n} \Big)$ & \cellcolor{lipicsLightGray}\notused& \NO\\
+\hline
+~\cite{EPRINT:Steiner24b} & $d$ & $\mathcal{O}\Big( \binom{n+d-1}{d} \Big)$ & $\mathcal{O}\Big(d^3\cdot c_d^{{(n-1)}^{1-1/\ln(4)}}\Big)$ & \used& \NO\\
+\hline
+~\cite{EC:NMSU25} & $d$ & $\binom{n+d-1}{d}$ & $\mathcal{O}\Big(dn^{1+d\omega}\Big)$ & \cellcolor{lipicsLightGray}\notused& \NO\\
+\hline
+This Work & $d$ & $\mathcal{O}\left(\binom{n+d-1}{d}\right)$ & $\mathcal{O}\Big(\binom{n+d}{d}^3\Big) $ &\cellcolor{lipicsLightGray} \notused&\cellcolor{lipicsLightGray}\YES\\
+\hline\hline
+~\cite{EPRINT:ACFP14} & 2 & $\mathcal{O}(n\log\log n)$ & $\mathcal{O}\Big(n^2\cdot 2^{\frac{\omega n \log\log\log n}{8\log\log n}}\Big)$ & \used& \NO\\
+\hline
+~\cite{EPRINT:ACFP14} & 2 & $c\cdot n$ & $\mathcal{O}\Big(n^2\cdot 2^{\omega n(1+\beta)H_2(\beta/(1+\beta))}\Big)$ & \used& \NO\\
+\hline
+~\cite{ACISP:SunTibAbe20} & 2 & $c\cdot n^2$ & $n^{\mathcal{O}(1/c)}$ & \used& \NO\\
+\hline
+~\cite{ACISP:SunTibAbe20} & 2 & $n^{1+\alpha}$ & $2^{\widetilde{\mathcal{O}}(m^{1-\alpha})}$ & \used& \NO\\
+\hline
+~\cite{EPRINT:Steiner24b} & 2 & $\mathcal{O}({n^2})$ & $\mathcal{O}\Big( n^2\cdot \binom{n+3}{3}^{\omega +2} \Big)$ & \used& \NO\\
+\hline
+This Work & $2$ & $\mathcal{O}\left(\frac{n(n-1)}{2}\right)$ & $\mathcal{O}\Big(\binom{n+2}{2}^3\Big) $ &\cellcolor{lipicsLightGray} \notused&\cellcolor{lipicsLightGray} \YES\\
+\hline\hline\\
+    \end{tabular}
+    \caption{An overview of the complexities of algebraic attacks on LWBE with secret $\mathbf{s}$ of length $n$, $m$ samples, and error entries drawn from a set of size $d$.  
+      $H_2(x) = -x \log x - (1-x) \log(1-x)$ is the binary entropy function, $\ln$ is the natural logarithm, $\omega$ is the linear algebra constant ($2 \le \omega \le 3$), $c_d = 2^{(\omega+3)\cdot 2^{1/\ln(2)}\cdot {(2d-1)}^{1/\ln(4)}}$, and $\beta = c-0.5-\sqrt{c(c-1)}$. The last two columns indicate whether semi-regularity assumption and/or degree of regularity $d_{reg}$  were used for the complexity bounds estimation.}\label{tab:comparison}
+    % \caption{Modified version of Table 2 in~\cite{EC:NMSU25}, providing an overview of the complexities of algebraic attacks on LWBE with secret $\mathbf{s}$ of length $k$, $m$ samples, and error entries drawn from a set of size $d$.  
+    % To simplify notation, we write $H_2(x) = -x \log x - (1-x) \log(1-x)$ for the binary entropy function, $\ln$ for the natural logarithm, $\omega$ for the linear algebra constant ($2 \le \omega \le 3$), $c_d = 2^{(\omega+3)\cdot 2^{1/\ln(2)}\cdot (2d-1)^{1/\ln(4)}}$, and $\beta = c-0.5-\sqrt{c(c-1)}$.  
+    % The last two columns emphasise whether heuristic assumptions were used in the time complexity estimation, and whether the estimates rely on bounds derived from the degree of regularity $d_{reg}$.}\label{tab:comparison}
+\end{table}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\subsection{Overview of Previous Algebraic Algorithms}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\noindent
+\textbf{\textsf{Linearization Technique~\cite{ICALP:AroGe11}.}} 
+Each sample $(\mathbf{a}_i, b_i) = (\mathbf{a}_i, \langle\mathbf{a}_i, \mathbf{s}\rangle + e_i) \in \mathbb{F}_q^n \times \mathbb{F}_q$, for $1 \leq i \leq m$, allows to generate a non-linear equation of degree $d$ in the $n$ components of the secret $\mathbf{s}$. %which holds with probability $1 - e^{\mathcal{O}({-t^2})}$.
+Considering that a common choice for the error distribution is the discrete Gaussian with mean $0$ and standard deviation $\sigma$, denoted as $\mathcal{N}(0,\sigma)$,
+we have
+\[
+\mathbb{P}\big[ e \overset{\scriptscriptstyle\$}{\gets} \chi : |e| > t \cdot \sigma \big] \leq \frac{2}{t\sqrt{2\pi}} e^{-t^2/2}\in e^{\mathcal{O}({-t^2})}, \quad \textrm{for all } t>0.
+\]
+A sample from a Gaussian distribution take values on the interval $[-t\cdot\sigma,\dots,t\cdot\sigma]$ of $\mathbb{F}_q$ with probability $1 - e^{\mathcal{O}({-t^2})}$ when representing elements in $\mathbb{F}_q$ as integers in $[-\lfloor q/2 \rfloor, \dots, \lfloor q/2 \rfloor]$.
+When $e \overset{\scriptscriptstyle \$}{\gets} \mathcal{N}(0,\sigma)$ then $f(e)=0$ for $f(x) = x \cdot \prod_{i=1}^{t\cdot\sigma} (x+i)(x-i)$ with probability at least $1 - e^{\mathcal{O}({-t^2})}$.
+The degree of $f$ is $d := 2 \cdot t \sigma + 1 < q$. %We denote by $n$ the dimension of the secret. %and by $m$ the number of samples. %and $d := 2 \cdot t + 1$.
+The resulting polynomial system $\mathcal{F}_{\mathrm{LWE}}$ is solved using the linearization method, namely by replacing monomials with a new linearized variable and then solving the resulting linear system of equations. %The \belwe\ where $\mathbf{e} \in \{0,1\}^m$ was introduced in~\cite{MicPei13}. 
+The \belwe\, in which $\mathbf{e} \in \{0,1\}^m$, is a particular instance and was introduced in~\cite{MicPei13}.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\noindent
+\textbf{\textsf{Gr{\"o}bner Basis and Degree of Regularity.}}
+In~\cite{EPRINT:ACFP14} Gr{\"o}bner basis algorithm was applied %F4~\cite{faugere:F4} and F5~\cite{faugere:F5} can be applied
+to solve the (error free) polynomial system, resulting in significant speed-up over the Arora-Ge algorithm. 
+%For applying Gr{\"o}bner algorithm, or its variants, one should work over $\mathbb{F}_q$
+The \emph{degree of regularity} ($d_{reg}$) and semi-regularity plays an important role in the complexity analysis of the existing algebraic algorithms (for LWE) that
+uses Gr{\"o}bner basis method. 
+While computing $d_{reg}$ for a polynomial system is difficult, for semi-regular system one can estimate it.  
+Assuming that the polynomial system (from LWE) is semi-regular, the complexity analysis (of Gr{\"o}bner basis algorithm) in~\cite{EPRINT:ACFP14}, provides estimates of the degree of
+regularity. Under the same assumption,~\cite{ACISP:SunTibAbe20} estimates $d_{reg}$ using Hilbert polynomial. While most random systems of polynomials are semi-regular, Fr\"oberg
+showed~\cite{DBLP:journals/jsc/FrobergH94} that there are polynomial systems that can never be semi-regular, and~\cite{HODGES2017519} showed that (for certain parameter choices) semi-regular sequence
+can never exist.  
+% Understanding and analyzing the degree of regularity is crucial for deriving fine-grained complexity bounds for Gr\"obner basis computations, and has therefore been the focus of several works aiming at increasingly accurate complexity estimates.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+Recently,~\cite{EPRINT:Steiner24b} provided a refined complexity analysis using solving degree and assuming the degree of regularity to be same as the degree of polynomial. While this result does not make semi-regularity assumption, still relies on the assumption of degree of regularity. In~\cite{EC:NMSU25}, under semi-regularity assumption, the $d_{reg}$ was shown to be $d$ with high probability. 
+% and consequently gives a refined complexity analysis of LWE (by taking into account key parameters such as the modulus $q$, noise distribution, dimension $n$, and number of samples $m$). 
+% Using concepts of \emph{generic coordinates} and \emph{solving degree}, this work reduces reliance on the semi-regularity assumptions of earlier analyses~\cite{EPRINT:ACFP14}.
+% %Despite these refinements, the degree of regularity remains high for standard cryptographic parameters, implying very large algebraic complexity.
+% In particular, the main contribution relies on providing a tighter bound on the estimate of the complexity of computing Gr\"obner basis.
+
+We emphasize that our approach does not aim at improving existing bounds on the degree of regularity; instead, we avoid this notion altogether by providing a fine-grained complexity directly in terms of the LWE parameters.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+

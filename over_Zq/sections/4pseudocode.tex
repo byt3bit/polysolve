@@ -1,0 +1,338 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% For clarity, we introduce a few notations for the sets of polynomials, arising at the various stages of a $\deg_i$ iteration.
+For $1 \le i \le d-1$, let $\mathcal{D}_i$ denote the set of polynomials obtained after the diagonalization at iteration-$i$ and $\mathcal{D}_d$ denotes the first diagonalized set.
+For $1 \le i \le d-1$, let $\mathcal{P}_i$ denote the set of $S$-polynomials generated from $\mathcal{D}_{i+1}$, where $\mathcal{P}_d$ denotes the initial sample set, and let $\mathcal{Q}_i$ denote the set obtained from $\mathcal{P}_i$ after the row-echelon transformation (\texttt{DiagA}). For each iteration-$i$, these sets have the same cardinality:
+$|\mathcal{P}_i| = |\mathcal{Q}_i| = |\mathcal{D}_i| = \binom{n+i-1}{i}$.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\Cref{alg:step1} generates a set of $S$-polynomials $\mathcal{P}_i$ from the set of the diagonalized polynomials $\mathcal{D}_{i+1}$. This process selects a number of
+admissible pairs (\cref{def:admissible-pair}) $(f,g)$ to compute $S_{fg}$ (having degree $i+1$), and removes all monomials of degree $i+1$ by reducing w.r.t.\ the polynomial set $\mathcal{D}_{i+1}$.
+\Cref{alg:step2a} converts a set of polynomials $\mathcal{P}_i$ into row-echelon form $\mathcal{Q}_i$ by iteratively normalizing leading terms and reducing the remaining polynomials.
+\Cref{alg:step2b} transforms a set of polynomials in row-echelon form $\mathcal{Q}_i$ into diagonal form $\mathcal{D}_i$ by iteratively eliminating leading terms from the remaining polynomials.
+% The main algorithm, \Cref{alg:alg}, iteratively applies $S$-polynomial generation and diagonalization steps to reduce the initial set of polynomials $\mathcal{P}_d$ to a set of $n$ linear polynomials of the form $\{x_j - s_j\} _{j=1}^n$.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{S-polynomial generation and reduction}\label{sec:onspoly}
+\begin{definition}[Admissible Pair]\label{def:admissible-pair}
+    Given two tuples of integers \(\alpha, \beta \in \mathbb{Z}_{\ge 0}^n\) such that \(|\alpha|=|\beta|=t\), the pair \((\alpha, \beta)\) is called an \emph{admissible pair} if and only if there exist two distinct standard basis vectors \(e_j, e_k \in \mathbb{Z}_{\ge 0}^n\) with \(j \neq k\) such that \(\alpha_j > 0\) and \(\beta = \alpha - e_j + e_k\). Equivalently, we say that two polynomials \(f, g\) with \(\mathrm{LM}(f) = \mathbf{x}^\alpha\) and \(\mathrm{LM}(g) = \mathbf{x}^\beta\) form an \emph{admissible pair} of polynomials if and only if the pair \((\alpha, \beta)\) is admissible. In other words, if \(|\alpha|=|\beta|=t\), then \(\deg(\gcd(\LM(f),\LM(g))) = t-1\).
+\end{definition}
+% The $S$-polynomial generation (in \Cref{alg:step1}) selects admissible pairs (\cref{def:admissible-pair}) of polynomials from the set $\mathcal{D}_{i+1}$ and computes their corresponding $S$-polynomials. Then the $S$-polynomials are reduced by removing all monomials of degree $i+1$ to produce $\mathcal{P}_i$.
+
+% \begin{algorithm}[t]
+% \caption{(\texttt{Spoly}) --- $S$-polynomials generation}\label{alg:step1}
+% \begin{algorithmic}[1]
+% \Statex{\hspace*{-\algorithmicindent} \textbf{Input:} $\mathcal{D}_{i+1}$: diagonal polynomial set, $n \ge 1$: dimension, $1\le i\le d-1$: current degree}
+% \Statex{\hspace*{-\algorithmicindent} \textbf{Output:} $\mathcal{P}_i$: set of reduced $S$-polynomials of degree $i$}
+% \Statex{}
+% \State{$\mathcal{P}_i \gets \emptyset$}
+% \State\texttt{PAIRS} $\gets$ admissible pairs from $\mathcal{D}_{i+1}$ \Comment{see~\Cref{def:admissible-pair} and \Cref{lemma:spoly_number}}
+% \For{each $(f,g) \in \texttt{PAIRS}$}
+%     \State{$S_{fg} \gets S_{fg}$}
+%     \State{Remove all monomials of degree $i+1$ from $S_{fg}$}
+%     \State{$\mathcal{P}_i \gets \mathcal{P}_i \cup \{S_{fg}\}$}
+% \EndFor{}
+% \State{\Return{$\mathcal{P}_i$}}
+% \end{algorithmic}
+% \end{algorithm}
+
+\begin{algorithm}[b]
+\caption{(\texttt{NextAdmissiblePair}) --- Next admissible pair generation}\label{alg:next-admissible-pair}
+\begin{algorithmic}[1]
+\Statex{\hspace*{-\algorithmicindent} \textbf{Input:} $\ell_j$: $n$-tuple, last component of previous pair, $n \ge 1$: dimension, $2 \le i\le d$: current degree}
+\Statex{\hspace*{-\algorithmicindent} \textbf{Output:} $(\ell_{j+1}, \ell_{j+2})$: next admissible pair}
+\Statex{\hspace*{-\algorithmicindent} \textbf{Uses:} \textsc{Successor}: get next combination in Gray code order}\Comment{See Appendix~\ref{sec:successor}}
+% ~\cite{DBLP:journals/cj/Takaoka99,DBLP:journals/corr/Takaoka15a}
+% \If{$\ell_j == \varnothing$}
+%     \State{$\ell_{j+1} \gets$ (0, 0, \ldots, 0, $i$)} \Comment{First combination in Gray code order~\cite{DBLP:journals/ejc/RuskeyS96}}
+% \Else
+    \State{$\ell_{j+1} \gets$ \textsc{Successor}($\ell_j$, $n$, $i$)} 
+% \EndIf
+\State{$\ell_{j+2} \gets$ \textsc{Successor}($\ell_{j+1}$, $n$, $i$)} 
+% \State{\texttt{PAIR} $\gets$ $(\ell_{j+1}, \ell_{j+2})$}
+% \State{\Return{\texttt{PAIR}}}
+\State{\Return{$(\ell_{j+1}, \ell_{j+2})$}}
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}[t]
+\caption{(\texttt{Spoly}) --- $S$-polynomials generation}\label{alg:step1}
+\begin{algorithmic}[1]
+\Statex{\hspace*{-\algorithmicindent} \textbf{Input:} $\mathcal{D}_{i+1}$: diagonal polynomial set, $n \ge 1$: dimension, $1\le i\le d-1$: current degree}
+\Statex{\hspace*{-\algorithmicindent} \textbf{Output:} $\mathcal{P}_i$: set of reduced $S$-polynomials of degree $i$}
+
+\State{$\mathcal{P}_i \gets \emptyset$}\Comment{Initialize the set of $S$-polynomials}
+\State{PrevCombination $\gets \varnothing$}
+% \State\texttt{PAIRS} $\gets$ admissible pairs from $\mathcal{D}_{i+1}$ \Comment{see~\Cref{def:admissible-pair} and \Cref{lemma:spoly_number}}
+\For{$k\gets1$ to $\binom{n+i-1}{i}$ by $1$}
+    \State{$(\ell_{2k-1}, \ell_{2k}) \gets$ \texttt{NextAdmissiblePair}(PrevCombination, $n$, $i+1$)} 
+    \State{PrevCombination $\gets \ell_{2k}$}
+    % \State{Select $(\ell_{2k-1}, \ell_{2k})$} \Comment{see~\Cref{def:admissible-pair} and \Cref{lemma:spoly_number}}
+    \State{Select $(f,g) \in \mathcal{D}_{i+1}$ such that \(\LM(f) = \mathbf{x}^{{\ell}_{2k-1}}\) and \(\LM(g) = \mathbf{x}^{\ell_{2k}}\)} 
+    \State{Compute $S_{fg}$} \Comment{See \Cref{eq:spoly}}
+    \State{Reduce $S_{fg}$ with the polynomials in $\mathcal{D}_{i+1}$} 
+    \State{$\mathcal{P}_i \gets \mathcal{P}_i \cup \{S_{fg}\}$}
+\EndFor{}
+\State{\Return{$\mathcal{P}_i$}}
+\end{algorithmic}
+\end{algorithm}
+
+% We now specify the criterion used to select admissible pairs of polynomials for $S$-polynomial generation and explain the motivation behind this choice.
+%\paragraph*{}\label{paragraph:criterion}
+Consider the iteration-$i$. Note that given a monomial $m$ of degree \(i+1\), due to the diagonal form of $\mathcal{D}_{i+1}$ there exist a unique polynomial $f \in \mathcal{D}_{i+1}$ such that \(\LM(f) = m\). Hence, given two monomials $m_1, m_2$ that form an admissible pair, the corresponding admissible pair of polynomials can be uniquely determined. Let \(f,g\) be those two polynomials, the resulting $S$-polynomial \(S_{fg}\) admits the simplified form given in \Cref{eq:spoly}.
+
+Since they form an admissible pair, the least common multiple of the leading terms has degree $i+2$.
+Consequently, recalling that $\deg(\mathrm{LM}(f))=\deg(\mathrm{LM}(g))=i+1$, both $\frac{\mathbf{x}^\gamma}{\mathrm{LT}(f)}$ and $\frac{\mathbf{x}^\gamma}{\mathrm{LT}(g)}$ (in \Cref{eq:spoly-expanded}) are monomials of degree one. Using the notation of Section~\ref{sec:background}, we decompose
+\[
+    f = f^{(i+1)} + f^{(i)} + \cdots + f^{(1)} + f^{(0)}.
+\] 
+Each polynomial in $\mathcal{D}_{i+1}$ contains a unique monomial of degree $i+1$, namely $\mathrm{LM}(f)$.
+Multiplication by a variable $x_k$ therefore yields
+\[
+    x_k \cdot f = f^{(i+2)} + f^{(i+1)} + \cdots + f^{(1)},
+\]
+where $f^{(i+2)}$ consists of a single monomial, namely $x_k \cdot \mathrm{LM}(f)$.
+As a result, when forming the $S$-polynomial of two such polynomials, the degree-$(i+2)$ terms cancel, and we obtain
+\[
+    S_{fg} = {S_{fg}}^{(i+1)} + {S_{fg}}^{(i)} + \cdots + {S_{fg}}^{(2)} + {S_{fg}}^{(1)}.
+\]
+Thus, $S_{fg}$ contains only monomials of degree at most $i+1$.
+Since the leading terms of the polynomials in $\mathcal{D}_{i+1}$ exhaust all monomials of degree $i+1$, these terms can be eliminated by reduction with respect to $\mathcal{D}_{i+1}$, yielding a polynomial of degree at most $i$.
+
+Consequently, this reduction involves only linear operations and no divisions.
+This property is guaranteed by the chosen criterion and ensures that the reduced $S$-polynomial has the form
+\[
+    S_{fg} = {S_{fg}}^{(i)} + {S_{fg}}^{(i-1)} + \cdots + {S_{fg}}^{(1)} + {S_{fg}}^{(0)}.
+\]
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\noindent
+\textbf{\textsf{Existence and construction of admissible pairs.}} 
+\Cref{lemma:spoly_number} guarantees the existence of a sufficient number of admissible pairs to generate all required $S$-polynomials, while preventing the formation of redundant pairs.
+% or linearly dependent $S$-polynomials.
+
+\begin{lemma}[Feasibility condition]\label{lemma:spoly_number}
+% Given a degree $2\le i< n$, and \(\mathcal{D}_i\) (a set of $\binom{n+i-1}{i}$ diagonals polynomials of degree $i$), it is always possible to group them in at least $\binom{n+i-2}{i-1}$ distinct admissible pairs.
+
+Let $1 \le i < n-1$, and let $\mathcal{D}_{i+1}$ be the set of diagonal polynomials of degree $i+1$, with $|\mathcal{D}_{i+1}| = \binom{n+i}{i+1}$.
+Then there exists a collection of (at least) $\binom{n+i-1}{i}$ pairwise disjoint admissible pairs of elements of $\mathcal{D}_{i+1}$.
+
+%Following the described criterion, \Cref{alg:pairs-construction} generates at least \(\binom{n+d-2}{d-1}\) \(S\)-polynomials, starting from $\mathcal{D}_{i+1}$ at $\deg_i$ iteration.
+% Given a degree \(d\), a number of variables \(n\), and a polynomial set of size \(\binom{n+d-1}{d}\) whose leading monomials exhaust all monomials of degree \(d\), \Cref{alg:pairs-construction} generates at least \(\binom{n+d-2}{d-1}\) \(S\)-polynomials if and only if \(d \le n-1\).
+\end{lemma}
+
+\begin{proof}
+In order to prove this result, we first establish \textcolor{lipicsGray}{\textbf{\textsf{(i)}}} a necessary condition for the existence of a sufficient number of admissible pairs, and then show \textcolor{lipicsGray}{\textbf{\textsf{(ii)}}} that this condition is also sufficient by providing an explicit construction of such pairs.
+
+
+\begin{romanenumerate}
+    \item To generate at least \(\binom{n+i-1}{i}\) \emph{pairwise disjoint} pairs, at least \(2\binom{n+i-1}{i}\) are required. 
+    Hence, a necessary condition is
+    \[
+    \begin{split}
+       \binom{n + i}{i+1} &\ge 2\binom{n+i-1}{i} \implies \frac{(n+i)!}{(n-1)!(i+1)!} \ge 2\frac{(n+i-1)!}{(n-1)!(i)!}\\
+       \implies \frac{n+i}{i+1} &\ge 2 \implies n+i \ge 2(i+1) \implies  n \ge i+2 \implies n > i+1
+    \end{split}
+    \] where \(i+1\), in the analyzed problem, can be at maximum \(d\). As a result, if \(n > d\), we can generate enough distinct pairs. 
+
+    % \item Consider a degree $i$ such that $2\le i < n$, and the corresponding set of diagonal polynomials $D_{i}$. We construct the set \(\mathcal{A} := \{ \alpha \colon \exists f \in \mathcal{D}_i \ \left(\LM(f) = \mathbf{x}^\alpha \right)\}\). Given \(\alpha, \beta \in \mathcal{A}\), we say that \(\alpha\) and \(\beta\) are an \emph{admissible pair} if and only if there exist two standard basis vectors \(e_j, e_k\) where \(j \neq k\) such that \(\alpha_j > 0\) and \(\beta = \alpha - e_j + e_k\). This configuration was already considered by~\cite{DBLP:journals/ejc/RuskeyS96}. More specifically, \(\mathcal{A}\) can be seen as the set of all combinations of \(n\) elements chosen \(i\) at a time. In other words the elements of \set{A} can be regarded as placements of \(i\) identical balls into \(n\) distinct boxes where each box can hold at most \(i\) balls. As a result, the elements of \set{A} can be listed in such a way that consecutive elements form admissible pairs. Such listing is known as \emph{Gray Code for combinations of a multiset}~\cite{DBLP:journals/ejc/RuskeyS96} and it can be interpreted as a Hamiltonian path in the \emph{graph} where the vertices are the elements of \set{A} and two vertices are connected if and only if they form an admissible pair. By definition, a Hamiltonian path covers all the vertices of the graph, hence we can generate at least \(\left\lfloor\frac{\binom{n+i-1}{i}}{2}\right\rfloor\) distinct admissible pairs. Let \(\ell_j\) for \(1 \le j \le \binom{n+i-1}{i}\) be the elements in the constructed Hamiltonian path, we can construct \((\ell_{2k-1}, \ell_{2k})\) for \(1 \le k \le \left\lfloor\frac{\binom{n+i-1}{i}}{2}\right\rfloor\). This way, as shown in \textbf{\textsf{(i)}}, when \(n > d\) we can generate at least \(\binom{n+i-2}{i-1}\) distinct admissible pairs.
+
+    \item Let $1 \le i < n-1$ and let $\mathcal{D}_{i+1}$ be the set of diagonal polynomials of degree $i+1$.
+    We define $\mathcal{A} := \{ \alpha \in \mathbb{Z}_{\ge 0}^n \colon \exists f \in \mathcal{D}_{i+1} \text{ with } \LM(f) = \mathbf{x}^\alpha \}$ i.e., the set of all multi-indices corresponding to the leading monomials of polynomials in $\mathcal{D}_{i+1}$.
+    % For $\alpha, \beta \in \mathcal{A}$, we say that $(\alpha,\beta)$ is an \emph{admissible pair} if and only if there exist two distinct standard basis vectors $e_j, e_k$ such that $\alpha_j > 0$ and $\beta = \alpha - e_j + e_k$. 
+    Following~\cite{DBLP:journals/ejc/RuskeyS96}, we observe that $\mathcal{A}$ can be viewed as the set of all combinations of $n$ elements chosen $i+1$ at a time, or as placements of $i+1$ identical balls into $n$ distinct boxes, with each box containing at most $i+1$ balls. In this perspective, the elements of $\mathcal{A}$ can be ordered so that consecutive elements form admissible pairs. Such an ordering is known as a \emph{Gray code for combinations of a multiset}~\cite{DBLP:journals/ejc/RuskeyS96}.  
+    This Gray code can be interpreted as a Hamiltonian path in the graph whose vertices are the elements of $\mathcal{A}$, with edges connecting pairs of vertices if and only if they form an admissible pair. By definition, a Hamiltonian path covers all vertices of the graph, which allows us to generate at most $\left\lfloor {\binom{n+i}{i+1}}/{2} \right\rfloor$ distinct admissible pairs. Denoting the elements along the path by $\ell_j$, $1 \le j \le \binom{n+i}{i+1}$, we may form the pairs $(\ell_{2k-1}, \ell_{2k})$ for $1 \le k \le \left\lfloor {\binom{n+i}{i+1}}/{2} \right\rfloor$.
+    This ensures that each polynomial appears in at most one pair and that all pairs are admissible.
+    Hence, as shown in \textcolor{lipicsGray}{\textbf{\textsf{(i)}}}, when $n>i+1$ we can generate (at least) $\binom{n+i-1}{i}$ pairwise distinct \emph{admissible} pairs.
+\end{romanenumerate}
+\end{proof} 
+% As shown in~\cite{DBLP:journals/cj/Takaoka99,DBLP:journals/corr/Takaoka15a}, the Gray code for combinations of a multiset~\cite{DBLP:journals/ejc/RuskeyS96} can be generated efficiently, either via a recursive procedure or its iterative variant. Moreover, these results provide a method to determine the successor of any given combination in constant time. Consequently, the admissible pairs can be generated alongside the corresponding $S$-polynomial computations, without increasing the overall computational complexity of \Cref{alg:step1}.
+
+% Gray codes for combinations of a multiset can be generated efficiently, either via recursive or iterative procedures, as shown in~\cite{DBLP:journals/cj/Takaoka99,DBLP:journals/corr/Takaoka15a,DBLP:journals/ejc/RuskeyS96}. In particular, these constructions allow the successor of a given combination to be computed in constant time. In our algorithm, the \texttt{Successor} functionality is used to generate admissible pairs on the fly during the $S$-polynomial computations, without increasing the overall computational complexity of \Cref{alg:step1}. Details on the adapted successor procedure used in this work are provided in \Cref{alg:successor} in Appendix \ref{sec:successor}.
+
+
+\emph{Gray codes for combinations of a multiset}~\cite{DBLP:journals/ejc/RuskeyS96} admit a constant-time successor computation algorithm~\cite{DBLP:journals/cj/Takaoka99,DBLP:journals/corr/Takaoka15a}. This successor procedure can be used to efficiently determine the Hamiltonian path of the adjacency graph described in the proof of \Cref{lemma:spoly_number}. Consequently, admissible pairs can be generated incrementally and on-demand during the $S$-polynomial generation phase, without increasing the asymptotic complexity of~\Cref{alg:step1}.
+For the sake of completeness, a pseudocode description of the \textsc{Successor} procedure is given as \Cref{alg:successor} in Appendix~\ref{sec:successor}.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% \noindent
+% \textbf{\textsf{Diagonalization and reduction.}} 
+
+
+\begin{algorithm}[t!]
+\caption{(\texttt{DiagA}) --- Diagonalization: conversion to row-echelon form}\label{alg:step2a}
+\begin{algorithmic}[1]
+\Statex{\hspace*{-\algorithmicindent} \textbf{Input:} $\mathcal{P}_i$: set of polynomials, $n \geq 1$: secret's dimension, $1\leq i\leq d$: current degree}
+\Statex{\hspace*{-\algorithmicindent} \textbf{Output:} $\mathcal{Q}_i$: set of polynomials in row-echelon form}
+
+\State{$\mathcal{Q}_i \gets \emptyset$}
+\For{each polynomial $f \in \mathcal{P}_i$}
+    \If{$f \neq 0$}
+        \State{Normalize $f$, making it monic}
+        \State{Append $f$ to $\mathcal{Q}_i$ and remove it from $\mathcal{P}_i$}
+        \State{Reduce all remaining polynomials in $\mathcal{P}_i$ with respect to $f$}
+    \EndIf{}
+\EndFor{}
+\State{\Return{$\mathcal{Q}_i$}}
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}[t!]
+\caption{(\texttt{DiagB}) --- Diagonalization: conversion to diagonal form}\label{alg:step2b}
+\begin{algorithmic}[1]
+\Statex{\hspace*{-\algorithmicindent} \textbf{Input:} $\mathcal{Q}_i$: set of polynomials, $n \geq 1$: secret's dimension, $1\leq i\leq d$: current degree}
+\Statex{\hspace*{-\algorithmicindent} \textbf{Output:} $\mathcal{D}_i$: set of polynomials in diagonal form}
+
+\State{$\mathcal{D}_i \gets \emptyset$}
+\For{each polynomial $f \in \mathcal{Q}_i$ (processed in reverse order)}
+    \If{$f \neq 0$}
+        \State{Append $f$ to $\mathcal{D}_i$ and remove it from $\mathcal{Q}_i$}
+        \State{Reduce all remaining polynomials in $\mathcal{Q}_i$ with respect to $f$}
+    \EndIf{}
+\EndFor{}
+\State{\Return{$\mathcal{D}_i$}}
+\end{algorithmic}
+\end{algorithm}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Computational Complexity}
+\begin{theorem}\label{thm:iterationCost}
+    In \Cref{alg:alg} the complexity due to $\texttt{Spoly}$, $\texttt{DiagA}$ and $\texttt{DiagB}$ are as follows:
+    \begin{romanenumerate}
+        \item $\mathscr{C}_{\texttt{Spoly}} = \mathcal{O}\!\left(\dbinom{n+d}{d}^3\right)$ over $d-1$ iterations,
+        \item $\mathscr{C}_{\texttt{DiagA}} = \mathcal{O}\!\left(\dbinom{n+d}{d}^3\right)$, $\mathscr{C}_{\texttt{DiagB}} = \mathcal{O}\!\left(\dbinom{n+d}{d}^3\right)$, over $d$ iterations.
+        %\item $C_{\texttt{DiagB}} = \mathcal{O}\!\left(\dfrac{dn^2}{2{(n+d)}^3}\dbinom{n+d}{d}^3\right)$, over $d$ iterations.
+    \end{romanenumerate}
+    % The overall complexity of \Cref{alg:alg} is given by the sum of the complexities (over $1\le i\le d-1$ for \texttt{Spoly} and $1\le i\le d$ for \texttt{DiagA} and \texttt{DiagB}) of:
+    % \begin{itemize}
+    %     \item $S$-polynomial generation and reduction:
+    %         $C_{\texttt{Spoly}}(i) = 2\cdot \binom{n+i-1}{i}^2\cdot \!\left[ \binom{n+i}{i} + 1 \right]$,
+    %     \item conversion to row-echelon form: $C_{\texttt{DiagA}}(i) =\sum_{j=1}^{\binom{n+i-1}{i}}\!\left[\!\left[ \binom{n+i}{i} - j + 1 \right]\cdot \!\left[ \binom{n+i-1}{i} - j + 1 \right]\right]$,
+    %     \item conversion to diagonal form: $C_{\texttt{DiagB}}(i) =\sum_{j=1}^{\binom{n+i-1}{i}} \!\left[\!\left[ \binom{n+i-1}{i-1} +1 \right] \cdot \!\left[ \binom{n+i-1}{i} - j \right]\right]$.
+    % \end{itemize}
+\end{theorem}
+
+%The proofs of the \cref{thm:step1,thm:step2a,thm:step2b} are given in \Cref{sec:cc}.
+\begin{proof}
+    % Follows directly from the complexity analyses of the individual steps, provided in \Cref{thm:step1,thm:step2a,thm:step2b} in \Cref{sec:cc}.
+    The complete proof is given in \Cref{sec:cc}.    
+\end{proof}
+
+% As stated in \Cref{thm:result}, the complexity of \Cref{alg:alg} is $\mathcal{O}\!\left(\frac{1}{3}\binom{n+d}{d}^3\right)$ field operations.
+
+\begin{proof}[Proof of \Cref{thm:result}]
+    The complexity $\mathscr{C}_{tot}$ of \Cref{alg:alg} follows immediately by adding the complexities of the three main procedures, as given in \Cref{thm:iterationCost}, i.e.
+    \begin{align*}
+        \mathscr{C}_{tot} &:= \mathscr{C}_{\texttt{Spoly}} + \mathscr{C}_{\texttt{DiagA}} + \mathscr{C}_{\texttt{DiagB}} = \mathcal{O}\left(\binom{n+d}{d}^3\right)
+        %&= \mathcal{O}\left(\binom{n+d}{d}^3\right) + \mathcal{O}\left(\binom{n+d}{d}^3\right) + \mathcal{O}\left(\binom{n+d}{d}^3\right) = \mathcal{O}\left(\binom{n+d}{d}^3\right).
+    \end{align*}
+    The correctness of the algorithm is proven in \cref{sec:correct}.
+\end{proof}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\noindent
+\textbf{\belwe.} For this case, our generic analysis for degree $d$ can be applied directly with $d = 2$. Thus, we require $\mathcal{O}\left(\frac{n(n+1)}{2}\right)$ samples and the complexity is
+\[
+  \mathcal{O}\left(\binom{n+2}{2}^3 \right) = \mathcal{O}\left(\frac{1}{8}\cdot n^6 \right).
+\]
+
+\noindent
+\textbf{\bslwe.} For this case, we add the constraint set $\{ x_j^2 - x_j = 0: 1 \le j \le n\}$ to the polynomial system. Consequently, all monomials are of the form $x_1^{\alpha_1}\cdots x_n^{\alpha_n}$, where $\alpha_j \in \{0,1\}$ for ${1\le j\le n}$. The number of samples required in this case is $\binom{n}{d}$ and the complexity is $\mathcal{O}(\binom{n}{d}^3)$. A slighlty more detailed discussion is given in the Appendix~\ref{sec:binarysecret}.
+%$\mathcal{O}((^nC_k)^3)$
+
+\subsection{Correctness}\label{sec:correct}
+
+Throughout this section, we assume that the error terms satisfy the prescribed bound. Thus, the secret $\mathbf{s}$ is a common zero of all polynomials in the initial set of samples $\mathcal{P}_d$.
+
+\begin{proposition}[Preservation of the LWE secret]\label{prop:preservation}
+At each iteration-$i$ of \Cref{alg:alg}, with $1 \le i \le d-1$, the secret $\mathbf{s}$ is a common zero of all polynomials in $\mathcal{D}_i$.
+\end{proposition}
+
+\begin{proof}
+\textbf{\textsf{Base case.}}  
+$\mathcal{D}_d$ is obtained from $\mathcal{P}_d$ via diagonalization (\texttt{Diag}), which consists of linear combinations of polynomials in $\mathcal{P}_d$.  
+Since $\mathbf{s}$ is a common zero of all polynomials in $\mathcal{P}_d$, it is also a zero of all polynomials in $\mathcal{D}_d$.
+
+We proceed by induction on $i$, decreasing from $i=d-1$ to $i=1$.
+
+\noindent
+\textbf{\textsf{Inductive step.}}  
+% Assume that $\mathbf{s}$ is a common zero of all polynomials in $\mathcal{D}_{i+1}$, for $1 \le i \le d-1$. Consider the iteration-$i$:
+Assume that, at iteration-$i$, $\mathbf{s}$ is a common zero of all polynomials in $\mathcal{D}_{i+1}$.
+The following steps are performed:
+\begin{enumerate}
+    \item \emph{$S$-polynomial generation.} Let $f,g\in\mathcal{D}_{i+1}$. By the inductive hypothesis, they vanish at $\mathbf{s}$. By definition (\Cref{eq:spoly-expanded}), also their $S$-polynomial vanishes at $\mathbf{s}$.
+
+    \item \emph{$S$-polynomial reduction, and diagonalization.} We showed in \Cref{sec:onspoly} that reductions do not involve polynomial divisions.
+    Therefore these steps only consist of linear combinations of previously
+    generated polynomials. Since all such polynomials vanish at
+    $\mathbf{s}$, the resulting polynomials also vanish at $\mathbf{s}$.
+\end{enumerate}
+Therefore, $\mathbf{s}$ is a common zero of all polynomials in $\mathcal{D}_i$, for all $1 \le i \le d$.
+\end{proof}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+% \begin{corollary}[Recovery of the secret]\label{cor:secret_recovery}
+% At the last iteration, the secret $\mathbf{s}$ is a common zero of the linear equations in $\mathcal{D}_1$.
+% Each equation, due to diagonalization process, is of the form $ x_i - s_i$ for $i \in \{1,\dots,n\}$, and the secret is uniquely determined as $\mathbf{s} = (s_1, \dots, s_n)$.
+% \end{corollary}
+
+% \begin{proof}
+% By \Cref{prop:preservation}, the property of vanishing at $\mathbf{s}$ is preserved throughout all iterations.
+% At the last iteration, all polynomials have degree $1$, and in particular they are linear and monic.
+% Each polynomial is therefore of the form $x_i - s_i$ for some $i$, and the secret vector $\mathbf{s}$ is uniquely recovered as $\mathbf{s} = (s_1, \dots, s_n)$.
+% \end{proof}
+
+
+By \Cref{prop:preservation}, $\mathbf{s}$ remains the zero of the polynomials through all iterations.
+In particular, at the last iteration, all polynomials in $\mathcal{D}_1$ are linear, monic and of degree $1$.
+Each equation, due to diagonalization process, is of the form $x_i - s_i$ for $i \in \{1,\dots,n\}$, and the secret is uniquely determined as $\mathbf{s} = (s_1, \dots, s_n)$.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{proposition}[Termination]\label{prop:termination}
+\Cref{alg:alg} terminates after a finite number of iterations.
+\end{proposition}
+
+\begin{proof}
+  At each iteration of the algorithm the total degree is decreased by $1$. Thus, the algorithm stops after $d-1$ iterations, yielding linear equations. 
+% Consider the iteration-$i$ of \Cref{alg:alg}.  
+% At this iteration, \texttt{Spoly} (\Cref{alg:step1}) generates $S$-polynomials of degree at most $i$ from the degree-$(i+1)$ polynomials in $\mathcal{D}_{i+1}$.  
+% Consequently, the maximum total degree of the polynomials strictly decreases at each iteration.  
+% Since the degree is a non-negative integer and the algorithm halts once degree one is reached, the process terminates after at most $d$ iterations.
+\end{proof}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+% \begin{remark}[On the solution set]
+% \Cref{alg:alg} does not, in general, preserve the full solution set of the LWE polynomial system.  
+% Its design ensures that the LWE secret $\mathbf{s}$ is preserved, which is the unique solution of interest for the \slwe\ problem.
+% \end{remark}
+
+
