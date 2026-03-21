@@ -132,10 +132,10 @@ Then there exists a collection of (at least) $\binom{n+i-1}{i}$ pairwise disjoin
 \end{lemma}
 
 \begin{proof}
-In order to prove this result, we first establish \textcolor{lipicsGray}{\textbf{\textsf{(i)}}} a necessary condition for the existence of a sufficient number of admissible pairs, and then show \textcolor{lipicsGray}{\textbf{\textsf{(ii)}}} that this condition is also sufficient by providing an explicit construction of such pairs.
+In order to prove this result, we first establish \textcolor{gray}{\textbf{\textsf{(i)}}} a necessary condition for the existence of a sufficient number of admissible pairs, and then show \textcolor{gray}{\textbf{\textsf{(ii)}}} that this condition is also sufficient by providing an explicit construction of such pairs.
 
 
-\begin{romanenumerate}
+\begin{enumerate}
     \item To generate at least \(\binom{n+i-1}{i}\) \emph{pairwise disjoint} pairs, at least \(2\binom{n+i-1}{i}\) are required. 
     Hence, a necessary condition is
     \[
@@ -153,8 +153,8 @@ In order to prove this result, we first establish \textcolor{lipicsGray}{\textbf
     Following~\cite{DBLP:journals/ejc/RuskeyS96}, we observe that $\mathcal{A}$ can be viewed as the set of all combinations of $n$ elements chosen $i+1$ at a time, or as placements of $i+1$ identical balls into $n$ distinct boxes, with each box containing at most $i+1$ balls. In this perspective, the elements of $\mathcal{A}$ can be ordered so that consecutive elements form admissible pairs. Such an ordering is known as a \emph{Gray code for combinations of a multiset}~\cite{DBLP:journals/ejc/RuskeyS96}.  
     This Gray code can be interpreted as a Hamiltonian path in the graph whose vertices are the elements of $\mathcal{A}$, with edges connecting pairs of vertices if and only if they form an admissible pair. By definition, a Hamiltonian path covers all vertices of the graph, which allows us to generate at most $\left\lfloor {\binom{n+i}{i+1}}/{2} \right\rfloor$ distinct admissible pairs. Denoting the elements along the path by $\ell_j$, $1 \le j \le \binom{n+i}{i+1}$, we may form the pairs $(\ell_{2k-1}, \ell_{2k})$ for $1 \le k \le \left\lfloor {\binom{n+i}{i+1}}/{2} \right\rfloor$.
     This ensures that each polynomial appears in at most one pair and that all pairs are admissible.
-    Hence, as shown in \textcolor{lipicsGray}{\textbf{\textsf{(i)}}}, when $n>i+1$ we can generate (at least) $\binom{n+i-1}{i}$ pairwise distinct \emph{admissible} pairs.
-\end{romanenumerate}
+    Hence, as shown in \textcolor{gray}{\textbf{\textsf{(i)}}}, when $n>i+1$ we can generate (at least) $\binom{n+i-1}{i}$ pairwise distinct \emph{admissible} pairs.
+\end{enumerate}
 \end{proof} 
 % As shown in~\cite{DBLP:journals/cj/Takaoka99,DBLP:journals/corr/Takaoka15a}, the Gray code for combinations of a multiset~\cite{DBLP:journals/ejc/RuskeyS96} can be generated efficiently, either via a recursive procedure or its iterative variant. Moreover, these results provide a method to determine the successor of any given combination in constant time. Consequently, the admissible pairs can be generated alongside the corresponding $S$-polynomial computations, without increasing the overall computational complexity of \Cref{alg:step1}.
 
@@ -213,11 +213,11 @@ For the sake of completeness, a pseudocode description of the \textsc{Successor}
 \subsection{Computational Complexity}
 \begin{theorem}\label{thm:iterationCost}
     In \Cref{alg:alg} the complexity due to $\texttt{Spoly}$, $\texttt{DiagA}$ and $\texttt{DiagB}$ are as follows:
-    \begin{romanenumerate}
+    \begin{enumerate}
         \item $\mathscr{C}_{\texttt{Spoly}} = \mathcal{O}\!\left(\dbinom{n+d}{d}^3\right)$ over $d-1$ iterations,
         \item $\mathscr{C}_{\texttt{DiagA}} = \mathcal{O}\!\left(\dbinom{n+d}{d}^3\right)$, $\mathscr{C}_{\texttt{DiagB}} = \mathcal{O}\!\left(\dbinom{n+d}{d}^3\right)$, over $d$ iterations.
         %\item $C_{\texttt{DiagB}} = \mathcal{O}\!\left(\dfrac{dn^2}{2{(n+d)}^3}\dbinom{n+d}{d}^3\right)$, over $d$ iterations.
-    \end{romanenumerate}
+    \end{enumerate}
     % The overall complexity of \Cref{alg:alg} is given by the sum of the complexities (over $1\le i\le d-1$ for \texttt{Spoly} and $1\le i\le d$ for \texttt{DiagA} and \texttt{DiagB}) of:
     % \begin{itemize}
     %     \item $S$-polynomial generation and reduction:

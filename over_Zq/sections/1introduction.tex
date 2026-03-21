@@ -70,15 +70,15 @@ In particular, with $m = \binom{n+d-1}{d}$ samples and error support of size $d$
     \hline\hline
 Work & Error Size & No. Samples & Time Complexity & Semi-regular assumption? & Without $d_{reg}$? \\ 
 \hline\hline
-~\cite{ICALP:AroGe11} & $d$ & $\mathcal{O}(\log(q)\cdot q\cdot n^d)$ & $\mathcal{O}\Big(\log(q)\cdot q\cdot n^{\omega d}\Big)$ &\cellcolor{lipicsLightGray} \notused&\cellcolor{lipicsLightGray} \YES\\ 
+~\cite{ICALP:AroGe11} & $d$ & $\mathcal{O}(\log(q)\cdot q\cdot n^d)$ & $\mathcal{O}\Big(\log(q)\cdot q\cdot n^{\omega d}\Big)$ &\cellcolor{lightgray} \notused&\cellcolor{lightgray} \YES\\ 
 \hline
-~\cite{EPRINT:Steiner24b} & $d$ & $m>n$ & $\mathcal{O}\Big( m\cdot (d-1)\cdot n\cdot 2^{\omega\cdot{(8d\ln(4)-1)}^{1/\ln(4)}\cdot n} \Big)$ & \cellcolor{lipicsLightGray}\notused& \NO\\
+~\cite{EPRINT:Steiner24b} & $d$ & $m>n$ & $\mathcal{O}\Big( m\cdot (d-1)\cdot n\cdot 2^{\omega\cdot{(8d\ln(4)-1)}^{1/\ln(4)}\cdot n} \Big)$ & \cellcolor{lightgray}\notused& \NO\\
 \hline
 ~\cite{EPRINT:Steiner24b} & $d$ & $\mathcal{O}\Big( \binom{n+d-1}{d} \Big)$ & $\mathcal{O}\Big(d^3\cdot c_d^{{(n-1)}^{1-1/\ln(4)}}\Big)$ & \used& \NO\\
 \hline
-~\cite{EC:NMSU25} & $d$ & $\binom{n+d-1}{d}$ & $\mathcal{O}\Big(dn^{1+d\omega}\Big)$ & \cellcolor{lipicsLightGray}\notused& \NO\\
+~\cite{EC:NMSU25} & $d$ & $\binom{n+d-1}{d}$ & $\mathcal{O}\Big(dn^{1+d\omega}\Big)$ & \cellcolor{lightgray}\notused& \NO\\
 \hline
-This Work & $d$ & $\mathcal{O}\left(\binom{n+d-1}{d}\right)$ & $\mathcal{O}\Big(\binom{n+d}{d}^3\Big) $ &\cellcolor{lipicsLightGray} \notused&\cellcolor{lipicsLightGray}\YES\\
+This Work & $d$ & $\mathcal{O}\left(\binom{n+d-1}{d}\right)$ & $\mathcal{O}\Big(\binom{n+d}{d}^3\Big) $ &\cellcolor{lightgray} \notused&\cellcolor{lightgray}\YES\\
 \hline\hline
 ~\cite{EPRINT:ACFP14} & 2 & $\mathcal{O}(n\log\log n)$ & $\mathcal{O}\Big(n^2\cdot 2^{\frac{\omega n \log\log\log n}{8\log\log n}}\Big)$ & \used& \NO\\
 \hline
@@ -90,7 +90,7 @@ This Work & $d$ & $\mathcal{O}\left(\binom{n+d-1}{d}\right)$ & $\mathcal{O}\Big(
 \hline
 ~\cite{EPRINT:Steiner24b} & 2 & $\mathcal{O}({n^2})$ & $\mathcal{O}\Big( n^2\cdot \binom{n+3}{3}^{\omega +2} \Big)$ & \used& \NO\\
 \hline
-This Work & $2$ & $\mathcal{O}\left(\frac{n(n-1)}{2}\right)$ & $\mathcal{O}\Big(\binom{n+2}{2}^3\Big) $ &\cellcolor{lipicsLightGray} \notused&\cellcolor{lipicsLightGray} \YES\\
+This Work & $2$ & $\mathcal{O}\left(\frac{n(n-1)}{2}\right)$ & $\mathcal{O}\Big(\binom{n+2}{2}^3\Big) $ &\cellcolor{lightgray} \notused&\cellcolor{lightgray} \YES\\
 \hline\hline\\
     \end{tabular}
     \caption{An overview of the complexities of algebraic attacks on LWBE with secret $\mathbf{s}$ of length $n$, $m$ samples, and error entries drawn from a set of size $d$.  
