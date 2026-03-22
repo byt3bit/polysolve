@@ -13,7 +13,7 @@ The resulting polynomial system $\mathcal{F}_{\mathrm{LWE}}$ is solved using the
 The \belwe\, in which $\mathbf{e} \in \{0,1\}^m$, is a particular instance and was introduced in~\cite{MicPei13}.
 
 \subsubsection{Reduction of RingLWE to the LWE Polynomial System.}
-The reduction of RingLWE to the LWE polynomial system is straightforward. Given a RingLWE instance, we can represent the secret and the samples as vectors of coefficients with respect to a fixed basis of the underlying ring. This allows us to express the RingLWE problem as a system of polynomial equations in the coefficients of the secret, which can then be solved using linearization techniques.
+The reduction of RingLWE to the LWE polynomial system is straightforward. Given a RingLWE instance, we can represent the secret and the samples as vectors of coefficients with respect to a fixed basis of the underlying ring. This allows us to express the RingLWE problem as a system of polynomial equations in the coefficients of the secret, which can then be solved using linearization techniques~\cite{EC:LyuPeiReg10}.
 
 For example, considering \(a_1, s_1, e_1 \in \Z_q[x]/(x^N + 1)\) as the elements of a RingLWE sample, we can write them in terms of their coefficients as follows:
 \[a_1 = a_{1,0} + a_{1,1}x + \dots + a_{1,N-1}x^{N-1},\]
