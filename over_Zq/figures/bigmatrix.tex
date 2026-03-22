@@ -1,7 +1,7 @@
 \begin{tikzpicture}[
     every label/.append style={anchor=base, yshift=3pt},
-    every left delimiter/.style={gray},
-    every right delimiter/.style={gray},
+    every left delimiter/.style={lipicsBulletGray},
+    every right delimiter/.style={lipicsBulletGray},
     hugeblock/.style={
         inner sep=6pt,
         left delimiter={(},
@@ -18,7 +18,7 @@
 \node[font=\LARGE, fill=white, draw=gray, line width=0.4pt, inner sep=2pt] at (d.center) {deg $d$};
 
 % <d BLOCK
-\node[gray, matrix={2.5}{10}, fill=lipicsLightGray, right=2mm of d] (ld) {};
+\node[lipicsBulletGray, matrix={2.5}{10}, fill=lipicsLightGray, right=2mm of d] (ld) {};
 \node[font=\LARGE] at (ld.center) {degree $<d$};
 
 \node[draw, dotted, thick, rounded corners, inner sep=4pt, fit=(d)(ld)] (boxd) {};
@@ -29,7 +29,7 @@
 \node[font=\Large, fill=white, draw=gray, line width=0.4pt, inner sep=2pt] at (d1.center) {deg $d{-}1$};
 
 % <d-1 BLOCK
-\node[gray, matrix={2.5}{7.3}, fill=lipicsLightGray, right=2mm of d1] (ld1) {};
+\node[lipicsBulletGray, matrix={2.5}{7.3}, fill=lipicsLightGray, right=2mm of d1] (ld1) {};
 \node[font=\Large] at (ld1.center) {degree $<d{-}1$};
 
 \node[draw, dotted, thick, rounded corners, inner sep=4pt, fit=(d1)(ld1)] (boxd1) {};
@@ -40,13 +40,13 @@
 \node[font=\normalsize, fill=white, draw=gray, line width=0.4pt, inner sep=2pt] at (d2.center) {deg $d{-}2$};
 
 % <d-2 BLOCK
-\node[gray, matrix={2}{5.1}, fill=lipicsLightGray, right=2mm of d2] (ld2) {};
+\node[lipicsBulletGray, matrix={2}{5.1}, fill=lipicsLightGray, right=2mm of d2] (ld2) {};
 \node[font=\normalsize] at (ld2.center) {degree $<d{-}2$};
 
 \node[draw, dotted, thick, rounded corners, inner sep=4pt, fit=(d2)(ld2)] (boxd2) {};
 
 % DOTS
-\node[inner sep=0pt, draw=gray, outer sep=0pt, matrix={0.8}{5.1}, fill=none, below=2mm of ld2, label=center:$\ddots$] (dots) {};
+\node[inner sep=0pt, draw=lipicsBulletGray, outer sep=0pt, matrix={0.8}{5.1}, fill=none, below=2mm of ld2, label=center:$\ddots$] (dots) {};
 
 % 1 BLOCK
 \node[gray, matrix={0.5}{0.5}, fill=none, below=2mm of dots.south east, anchor=north east] (d1block) {};

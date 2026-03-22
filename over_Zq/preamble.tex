@@ -86,6 +86,22 @@
 \newcommand{\ipos}{\ensuremath{\mathtt{IPoS}}}
 \newcommand{\matrixdef}[1]{\ensuremath{#1}}
 
+\usetikzlibrary{fit}
+
+\algnewcommand{\IfThenElse}[3]{% \IfThenElse{<if>}{<then>}{<else>}
+   \algorithmicif\ #1\ \algorithmicthen\ #2\ \algorithmicelse\ #3}
+
+\algnewcommand{\GetsIfThenElse}[3]{% \IfThenElse{<if>}{<then>}{<else>}
+   #1\ \algorithmicif\ #2 \algorithmicelse\ #3}
+
+
+\algnewcommand{\IfThen}[2]{% \IfThenElse{<if>}{<then>}{<else>}
+   \algorithmicif\ #1\ \algorithmicthen\ #2}
+
+
+
+
+
 %% For polynomial division
 
 %% for multivariate polynomial division

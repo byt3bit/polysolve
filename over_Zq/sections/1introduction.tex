@@ -11,6 +11,39 @@ The Learning With Errors (LWE) problem was introduced by Oded Regev in 2005~\cit
         \item Search-LWE is the problem of recovering $\mathbf{s}$ from $(\mathbf{a},c) = (\mathbf{a}, \langle \mathbf{a}, \mathbf{s} \rangle + e)\in\mathbb{Z}_q^n\times\mathbb{Z}_q$ sampled according to $L_{\mathbf{s},\chi}$.
     \end{itemize}
   \end{definition}
+
+
+\begin{definition}[RingLWE~\cite{}]
+Let $n$ be a power of $2$, $q \in \mathbb{Z}^+$, and let
+$R_q = \mathbb{Z}_q[x]/\langle \Phi_n(x) \rangle$
+be the quotient ring, where $\Phi_n(x) = x^n + 1$ is the $2n$-th cyclotomic polynomial.
+Let $\chi$ be an error distribution over $R_q$.
+For a secret $s \in R_q$, the Ring-LWE distribution
+$A^R_{s,\chi}$ produces samples $(a, b) \in R_q \times R_q$ where:
+\[
+    a \xleftarrow{\$} R_q, \quad e \leftarrow \chi, \quad b = a \cdot s + e \in R_q.
+\]
+The \emph{search} variant asks to recover $s$ given arbitrarily many samples from
+$A^R_{s,\chi}$. The \emph{decision} variant asks to distinguish
+$A^R_{s,\chi}$ from the uniform distribution over $R_q \times R_q$.
+\end{definition}
+
+\begin{definition}[ModuleLWE~\cite{}]
+    Let $n$ be a power of $2$, $k, q \in \mathbb{Z}^+$, and let
+$R_q = \mathbb{Z}_q[x]/\langle x^n + 1 \rangle$.
+Let $\chi$ be an error distribution over $R_q$.
+For a secret vector $\mathbf{s} \in R_q^k$, the Module-LWE distribution
+$A^M_{\mathbf{s},\chi}$ produces samples $(\mathbf{a}, b) \in R_q^k \times R_q$ where:
+\[
+    \mathbf{a} \xleftarrow{\$} R_q^k, \quad e \leftarrow \chi, \quad
+    b = \langle \mathbf{a}, \mathbf{s} \rangle + e \in R_q.
+\]
+The \emph{search} variant asks to recover $\mathbf{s}$ given arbitrarily many samples from
+$A^M_{\mathbf{s},\chi}$. The \emph{decision} variant asks to distinguish
+$A^M_{\mathbf{s},\chi}$ from the uniform distribution over $R_q^k \times R_q$.
+\end{definition}
+
+
   
 Since its introduction, the LWE problem is investigated in algorithm and cryptography literature. In particular, LWE with \emph{bounded errors} (LWBE) was investigated in~\cite{EPRINT:ACFP14,ICALP:AroGe11,EC:NMSU25,EPRINT:Steiner24b}. Introduced by Arora and Ge~\cite{ICALP:AroGe11}, an \emph{algebraic algorithm} generates a system of error-free multivariate polynomial equations from LWE samples and solve the system using linearization technique. In~\cite{EPRINT:ACFP14}, the complexity of Arora-Ge technique was improved by using Gr{\"o}bner basis methods to solve the polynomial system of equations. Recent analysis~\cite{EC:NMSU25,EPRINT:Steiner24b} have further improved the complexity of this approach.
 

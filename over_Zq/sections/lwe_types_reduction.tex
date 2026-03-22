@@ -1,0 +1,41 @@
+The relation between LWE, RingLWE and Module LWE is well known, and it is often possible to reduce one problem to another.
+\[
+\text{LWE} \;\xrightarrow{\; k=1,\; n=1 \;}\; \text{Module-LWE} \;\xrightarrow{\; k=1 \;}\; \text{Ring-LWE}
+\]
+
+\subsection{The LWE Polynomial System}
+Each sample $(\mathbf{a}_i, b_i) = (\mathbf{a}_i, \langle\mathbf{a}_i, \mathbf{s}\rangle + e_i) \in \mathbb{F}_q^n \times \mathbb{F}_q$, for $1 \leq i \leq m$, allows to generate a non-linear equation of degree $d$ in the $n$ components of the secret $\mathbf{s}$. %which holds with probability $1 - e^{\mathcal{O}({-t^2})}$.
+Considering that a common choice for the error distribution is the discrete Gaussian with mean $0$ and standard deviation $\sigma$, denoted as $\mathcal{N}(0,\sigma)$,
+we have
+\[
+\mathbb{P}\big[ e \overset{\scriptscriptstyle\$}{\gets} \chi : |e| > t \cdot \sigma \big] \leq \frac{2}{t\sqrt{2\pi}} e^{-t^2/2}\in e^{\mathcal{O}({-t^2})}, \quad \textrm{for all } t>0.
+\]
+A sample from a Gaussian distribution take values on the interval $[-t\cdot\sigma,\dots,t\cdot\sigma]$ of $\mathbb{F}_q$ with probability $1 - e^{\mathcal{O}({-t^2})}$ when representing elements in $\mathbb{F}_q$ as integers in $[-\lfloor q/2 \rfloor, \dots, \lfloor q/2 \rfloor]$.
+When $e \overset{\scriptscriptstyle \$}{\gets} \mathcal{N}(0,\sigma)$ then $f(e)=0$ for $f(x) = x \cdot \prod_{i=1}^{t\cdot\sigma} (x+i)(x-i)$ with probability at least $1 - e^{\mathcal{O}({-t^2})}$.
+The degree of $f$ is $d := 2 \cdot t \sigma + 1 < q$. %We denote by $n$ the dimension of the secret. %and by $m$ the number of samples. %and $d := 2 \cdot t + 1$.
+The resulting polynomial system $\mathcal{F}_{\mathrm{LWE}}$ is solved using the linearization method, namely by replacing monomials with a new linearized variable and then solving the resulting linear system of equations. %The \belwe\ where $\mathbf{e} \in \{0,1\}^m$ was introduced in~\cite{MicPei13}. 
+The \belwe\, in which $\mathbf{e} \in \{0,1\}^m$, is a particular instance and was introduced in~\cite{MicPei13}.
+
+\subsection{Reduction of RingLWE to the LWE Polynomial System}
+The reduction of RingLWE to the LWE polynomial system is straightforward. Given a RingLWE instance, we can represent the secret and the samples as vectors of coefficients with respect to a fixed basis of the underlying ring. This allows us to express the RingLWE problem as a system of polynomial equations in the coefficients of the secret, which can then be solved using linearization techniques.
+
+For example, considering \(a_1, s_1, e_1 \in \Z_q[x]/(x^n + 1)\) as the elements of a RingLWE sample, we can write them in terms of their coefficients as follows:
+\[a_1 = a_{1,0} + a_{1,1}x + \dots + a_{1,n-1}x^{n-1},\]
+\[s_1 = s_{1,0} + s_{1,1}x + \dots + s_{1,n-1}x^{n-1},\]
+\[e_1 = e_{1,0} + e_{1,1}x + \dots + e_{1,n-1}x^{n-1}.\]
+The RingLWE equation \(b_1 = a_1 \cdot s_1 + e_1\) can then be expanded and rearranged to yield a system of polynomial equations in the coefficients \(s_{1,0}, s_{1,1}, \dots, s_{1,n-1}\) of the secret \(s_1\) which will denote the target unknowns. How to get those relations between the coefficients?
+
+Let's consider the product \(a_1 \cdot s_1\) in the ring \(\Z_q[x]/(x^n + 1)\). The product can be computed as follows:
+\[a_1 \cdot s_1 = (a_{1,0} + a_{1,1}x + \dots + a_{1,n-1}x^{n-1})(s_{1,0} + s_{1,1}x + \dots + s_{1,n-1}x^{n-1}).\]
+Expanding this product and applying the relation \(x^n = -1\) (since we are working in the cyclotomic ring), we can express the result as a linear combination of the basis elements \(1, x, \dots, x^{n-1}\). Specifically, the coefficient of \(x^k\) in the product can be computed as:
+\[\sum_{i=0}^{n-1} a_{1,i} s_{1,(k-i) \mod n}.\]
+This gives us a system of polynomial equations in the coefficients of the secret \(s_1\) and the known coefficients of \(a_1\) and \(b_1\). 
+
+The final liner relation, for \(0 \le k < n\), is:
+\[b_{1,k} - \sum_{i=0}^{n-1} a_{1,i} s_{1,(k-i) \mod n} = e_{1,k}.\]
+
+We know that the coefficients of the error term \(e_1\) are small and sampled from a discrete Gaussian distribution. Therefore, assume the error coefficients \(e_{1,k}\) lie in \([-t,t]\), we can construct a polynomial \(f(x) = x \cdot \prod_{i=1}^{t} (x+i)(x-i)\) that vanishes on all possible values of the error coefficients. This means that \(f(e_{1,k}) = 0\) for all \(k\), that is \[f\left(b_{1,k} - \sum_{i=0}^{n-1} a_{1,i} s_{1,(k-i) \mod n}\right) = 0.\]
+
+
+\subsection{Reduction of Module LWE to the LWE Polynomial System}
+The reduction of Module LWE to the LWE polynomial system is similar to the reduction of RingLWE. Given a Module LWE instance, we can represent the secret and the samples as vectors of coefficients with respect to a fixed basis of the underlying module. This allows us to express the Module LWE problem as a system of polynomial equations in the coefficients of the secret, which can then be solved using linearization techniques.
