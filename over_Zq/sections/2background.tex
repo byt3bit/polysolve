@@ -4,17 +4,19 @@
 
 \noindent
 \textbf{Polynomials and Solving Polynomial System.}
-For $\alpha = (\alpha_1,\dots,\alpha_n) \in \mathbb{Z}_{\ge 0}^n$ we define $\mathbf{x}^{\alpha} := x_1^{\alpha_1}\cdots x_n^{\alpha_n}$. The total degree of $\mathbf{x}^{\alpha}$ is $|\alpha|$, where $|\alpha| := \sum_{i=1}^n \alpha_i$. For a polynomial $f \in \mathbb{F}_q[x_1,\dots,x_n]$ of total degree $d$, we adopt the following degree decomposition:
+For $\alpha = (\alpha_1,\dots,\alpha_n) \in \mathbb{Z}_{\ge 0}^n$ we define $\mathbf{x}^{\alpha} := x_1^{\alpha_1}\cdots x_n^{\alpha_n}$. The total degree of $\mathbf{x}^{\alpha}$ is $|\alpha|$, where $|\alpha| := \sum_{i=1}^n \alpha_i$. For a polynomial $f \in \Z_q[x_1,\dots,x_n]$ of total degree $d$, we adopt the following degree decomposition:
 \[
 f = f^{(d)} + f^{(d-1)} + \cdots + f^{(1)} + f^{(0)},
 \]
 where $f^{(k)}$ denotes the sum of all monomials in $f$ of total degree exactly $k$.
-For a fixed monomial order $\prec$ on $\mathbb{F}_q[x_1,\dots,x_n]$, \LM$(f)$ and \LT$(f)$ denote respectively the leading monomial and leading term of $f$ with respect to $\prec$. The notion of $S$-polynomial for $f, g \in \mathbb{F}_q[x_1,\dots,x_n]$, fundamental to the Gr\"obner basis method, is defined as
+For a fixed monomial order $\prec$ on $\Z_q[x_1,\dots,x_n]$, \LM$(f)$ and \LT$(f)$ denote respectively the leading monomial and leading term of $f$ with respect to $\prec$. The notion of $S$-polynomial is well-known in the context of Gr\"obner bases, especially when coefficients of polynomials lie in a field. When coefficients are in a ring, the $S$-polynomial computation must be adapted. Initiated by Bruno Buchberger, the study of Gr{\"o}bner basis on rings has gained more attention. Indeed, Gr{\"o}bner basis theory has been extended to the so-called \emph{reduction rings}. 
+
+It is well-known that \emph{Euclidean rings}, e.g. \(\Z, \Z_q, \F_q[x]\), are always reduction rings. In this context, for $f, g \in \Z_q[x_1,\dots,x_n]$, the $S$-polynomial is defined as
 \begin{equation}\label{eq:spoly-expanded}
-    S_{fg} := \frac{\mathbf{x}^\gamma}{\mathrm{LT}(f)} \cdot f
-              - \frac{\mathbf{x}^\gamma}{\mathrm{LT}(g)} \cdot g,
+    S_{fg} := \frac{\mathbf{c}}{\lc(f)}\frac{\mathbf{x}^\gamma}{\mathrm{LM}(f)} \cdot f
+              - \frac{\mathbf{c}}{\lc(g)}\frac{\mathbf{x}^\gamma}{\mathrm{LM}(g)} \cdot g,
 \end{equation}
-where $\mathbf{x}^\gamma$ denotes the least common multiple of $\mathrm{LM}(f)$ and $\mathrm{LM}(g)$. The Gr\"obner basis method is a well-known technique for solving a system of polynomials. For a complete introduction to the topic of Gr\"obner basis we refer the reader to~\cite{Cox2015Ideals}.
+where $\mathbf{x}^\gamma  = \texttt{lcm}(\mathrm{LM}(f), \mathrm{LM}(g))$ and $\mathbf{c} = \texttt{lcm}(\lc(f), \lc(g))$. The Gr\"obner basis method is a well-known technique for solving a system of polynomials. For a complete introduction to the topic of Gr\"obner basis we refer the reader to~\cite{Cox2015Ideals}.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
