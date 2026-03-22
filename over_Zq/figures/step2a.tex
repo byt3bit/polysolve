@@ -13,9 +13,9 @@
       %\draw[lipicsGray] (R.north west) -- (R.north east) -- (R.south east) -- cycle;
       \draw[lipicsGray, line width=0.70mm] (R.north west) -- (R.south east) -- cycle;
       %\node[black] at (R.center) {\LARGE$i$};
-      \node[font=\LARGE\bfseries, fill=white, draw=lipicsGray, line width=0.4pt, inner sep=2pt] at (R.center) {$i$};
+      \node[font=\LARGE\bfseries, fill=white, draw=gray!30, line width=0.4pt, inner sep=2pt] at (R.center) {$i$};
 
-      \node[lipicsBulletGray, matrix={2}{3}, fill=lipicsLightGray, right=2mm of R] (T) {};
+      \node[gray, matrix={2}{3}, fill=gray, right=2mm of R] (T) {};
       \node[black] at (T.center) {\LARGE$<i$};
     \end{tikzpicture}
   };
@@ -31,11 +31,11 @@
         \clip (P.north west) -- (P.south east) -- (P.north east) -- cycle; % triangolo sopra la diagonale
         \fill[lipicsBulletGray] (P.north west) rectangle (P.south east);
       \end{scope}
-      \draw[lipicsGray, line width=0.70mm] (P.north west) -- (P.south east) -- cycle; % diagonale
-      \node[font=\LARGE\bfseries, fill=white, draw=lipicsGray, line width=0.4pt, inner sep=2pt] at (P.center) [xshift=-2mm] {\LARGE$i$};
+      \draw[gray, line width=0.70mm] (P.north west) -- (P.south east) -- cycle; % diagonale
+      \node[font=\LARGE\bfseries, fill=white, draw=gray!30, line width=0.4pt, inner sep=2pt] at (P.center) [xshift=-2mm] {\LARGE$i$};
       \node[lipicsGray, matrix={2}{2}, fill=none] (P.center) {};
 
-      \node[lipicsBulletGray, matrix={2}{3}, fill=lipicsLightGray, right=2mm of P] (L) {};
+      \node[gray, matrix={2}{3}, fill=gray, right=2mm of P] (L) {};
       \node[black] at (L.center) [xshift=-6mm] {\LARGE$<i$};
     \end{tikzpicture}
   };
