@@ -15,11 +15,11 @@
 % -------------------
 \node[matparens] (A1) {
     \begin{tikzpicture}
-        \node[lipicsGray, matrix={1}{1}, fill=lipicsBulletGray] (R) {};
-        \draw[lipicsGray, line width=0.70mm] (R.north west) -- (R.south east) -- cycle;
-        \node[font=\footnotesize, fill=white, draw=lipicsGray, line width=0.4pt, inner sep=1pt] at (R.center) {$i+1$};
+        \node[gray, matrix={1}{1}, fill=lipicsBulletGray] (R) {};
+        \draw[gray, line width=0.70mm] (R.north west) -- (R.south east) -- cycle;
+        \node[font=\footnotesize, fill=white, draw=gray, line width=0.4pt, inner sep=1pt] at (R.center) {$i+1$};
 
-        \node[lipicsBulletGray, matrix={1}{3}, fill=lipicsLightGray, right=1mm of R] (T) {};
+        \node[gray, matrix={1}{3}, fill=gray, right=1mm of R] (T) {};
         \node[black, align=center, text width=21mm, anchor=center] at (T.center) {degree $<i+1$};
 
         \node[draw, dotted, thick, rounded corners, inner sep=3pt, fit=(R)(T)] (boxd) {};
@@ -56,11 +56,11 @@
 % -------------------
 \node[matparens, below=of A1] (B2) {
     \begin{tikzpicture}
-        \node[lipicsGray, matrix={1}{1}, fill=white] (P) {};
-        \draw[lipicsGray, line width=0.70mm] (P.north west) -- (P.south east) -- cycle;
-        \node[font=\footnotesize, fill=white, draw=lipicsGray, line width=0.4pt, inner sep=1pt, anchor=center] at (P.center) {$i+1$};
+        \node[gray, matrix={1}{1}, fill=white] (P) {};
+        \draw[gray, line width=0.70mm] (P.north west) -- (P.south east) -- cycle;
+        \node[font=\footnotesize, fill=white, draw=gray, line width=0.4pt, inner sep=1pt, anchor=center] at (P.center) {$i+1$};
 
-        \node[lipicsBulletGray, matrix={1}{3}, fill=lipicsLightGray, right=1mm of P] (L) {};
+        \node[gray, matrix={1}{3}, fill=gray, right=1mm of P] (L) {};
         \node[black, align=center, text width=21mm, anchor=center] at (L.center) {degree $<i+1$};
 
         \node[draw, dotted, thick, rounded corners, inner sep=3pt, fit=(P)(L)] (boxd) {};
@@ -78,15 +78,15 @@
 % -------------------
 \node[matparens, below=of B2] (A1b) {
 \begin{tikzpicture}
-    \node[lipicsGray, matrix={0.7}{1}, fill=lipicsBulletGray] (K) {};
+    \node[gray, matrix={0.7}{1}, fill=gray] (K) {};
     \node[font=\footnotesize, fill=white, draw=lipicsGray, line width=0.4pt, inner sep=1pt, anchor=center] at (K.center) {$i+1$};
     
-    \node[lipicsGray, matrix={0.7}{0.7}, fill=lipicsBulletGray, right=1mm of K] (R) {};
-    \draw[lipicsGray, line width=0.70mm] (R.north west) -- (R.south east) -- cycle;
+    \node[gray, matrix={0.7}{0.7}, fill=gray, right=1mm of K] (R) {};
+    \draw[gray, line width=0.70mm] (R.north west) -- (R.south east) -- cycle;
     \node[font=\footnotesize, fill=white, draw=lipicsGray, line width=0.4pt, inner sep=1pt, anchor=center] at (R.center) {$i$};
 
 
-    \node[lipicsBulletGray, matrix={0.7}{2.2}, fill=lipicsLightGray, right=1mm of R] (T) {};
+    \node[gray, matrix={0.7}{2.2}, fill=gray, right=1mm of R] (T) {};
     \node[black, align=center, text width=16mm, anchor=center, font=\footnotesize] at (T.center) {degree $<i$};
 
     \node[draw, dotted, thick, rounded corners, inner sep=3pt, fit=(K)(R)(T)] (boxd) {};
@@ -104,11 +104,11 @@
     %\node[draw=lipicsGray, dashed, line width=0.6pt, fill=none, matrix={0.7}{1}] (K) {};
     \node[matrix={0.7}{1}, draw=none, fill=none] (K) {};
 
-    \node[lipicsGray, matrix={0.7}{0.7}, fill=lipicsBulletGray, right=1mm of K] (R) {};
-    \draw[lipicsGray, line width=0.70mm] (R.north west) -- (R.south east) -- cycle;
-    \node[font=\footnotesize, fill=white, draw=lipicsGray, line width=0.4pt, inner sep=1pt, anchor=center] at (R.center) {$i$};
+    \node[gray, matrix={0.7}{0.7}, fill=gray, right=1mm of K] (R) {};
+    \draw[gray, line width=0.70mm] (R.north west) -- (R.south east) -- cycle;
+    \node[font=\footnotesize, fill=white, draw=gray, line width=0.4pt, inner sep=1pt, anchor=center] at (R.center) {$i$};
 
-    \node[lipicsBulletGray, matrix={0.7}{2.2}, fill=lipicsLightGray, right=1mm of R] (T) {};
+    \node[gray, matrix={0.7}{2.2}, fill=gray, right=1mm of R] (T) {};
     \node[black, align=center, text width=16mm, anchor=center, font=\footnotesize] at (T.center) {degree $<i$};
 
     \node[draw, dotted, thick, rounded corners, inner sep=3pt, fit=(R)(T)] (boxd) {};
@@ -126,11 +126,11 @@
         % \node[draw=lipicsGray, dashed, line width=0.6pt, fill=none, matrix={0.7}{1}] (K) {};
         \node[matrix={0.7}{1}, draw=none, fill=none] (K) {};
 
-        \node[lipicsGray, matrix={0.7}{0.7}, fill=white, right=1mm of K] (P) {};
-        \draw[lipicsGray, line width=0.70mm] (P.north west) -- (P.south east) -- cycle;
-        \node[font=\footnotesize, fill=white, draw=lipicsGray, line width=0.4pt, inner sep=1pt, anchor=center] at (P.center) {$i$};
+        \node[gray, matrix={0.7}{0.7}, fill=white, right=1mm of K] (P) {};
+        \draw[gray, line width=0.70mm] (P.north west) -- (P.south east) -- cycle;
+        \node[font=\footnotesize, fill=white, draw=gray, line width=0.4pt, inner sep=1pt, anchor=center] at (P.center) {$i$};
 
-        \node[lipicsBulletGray, matrix={0.7}{2.2}, fill=lipicsLightGray, right=1mm of P] (L) {};
+        \node[gray, matrix={0.7}{2.2}, fill=gray, right=1mm of P] (L) {};
         \node[font=\footnotesize, black, align=center, text width=16mm, anchor=center] at (L.center) {degree $<i$};
 
         \node[draw, dotted, thick, rounded corners, inner sep=3pt, fit=(P)(L)] (boxd) {};
