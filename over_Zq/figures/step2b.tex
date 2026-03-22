@@ -15,7 +15,7 @@
         \fill[lipicsBulletGray] (R.north west) rectangle (R.south east);
       \end{scope}
       \draw[lipicsGray, line width=0.70mm] (R.north west) -- (R.south east) -- cycle;
-      \node[font=\LARGE\bfseries, fill=white, draw=lipicsGray, line width=0.4pt, inner sep=2pt] at (R.center) {\LARGE$i$};
+      \node[font=\LARGE\bfseries, fill=white, draw=gray, line width=0.4pt, inner sep=2pt] at (R.center) {\LARGE$i$};
       \node[lipicsGray, matrix={2}{2}, fill=none] (R.center) {};
 
       \node[lipicsBulletGray, matrix={2}{3}, fill=lipicsLightGray, right=2mm of R] (T) {};
@@ -27,11 +27,11 @@
   % --- SECONDO BLOCCO: ( P  L ) ---
   \node[matparens, right=8mm of arrow] (block2) {
     \begin{tikzpicture}
-      \node[lipicsGray, matrix={2}{2}, fill=white] (P) {};
-      \draw[lipicsGray, line width=0.70mm] (P.north west) -- (P.south east) -- cycle;
-      \node[font=\LARGE\bfseries, fill=white, draw=lipicsGray, line width=0.4pt, inner sep=2pt] at (P.center) [xshift=-2mm] {\LARGE$i$};
+      \node[gray, matrix={2}{2}, fill=white] (P) {};
+      \draw[gray, line width=0.70mm] (P.north west) -- (P.south east) -- cycle;
+      \node[font=\LARGE\bfseries, fill=white, draw=gray, line width=0.4pt, inner sep=2pt] at (P.center) [xshift=-2mm] {\LARGE$i$};
 
-      \node[lipicsBulletGray, matrix={2}{3}, fill=lipicsLightGray, right=2mm of P] (L) {};
+      \node[gray!40, matrix={2}{3}, fill=gray!20, right=2mm of P] (L) {};
       \node[black] at (L.center) [xshift=-6mm] {\LARGE$<i$};
     \end{tikzpicture}
   };
