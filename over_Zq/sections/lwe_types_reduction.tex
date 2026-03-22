@@ -1,5 +1,5 @@
 
-\subsection{The LWE Polynomial System}
+\subsubsection{The LWE Polynomial System.}
 Each sample $(\mathbf{a}_i, b_i) = (\mathbf{a}_i, \langle\mathbf{a}_i, \mathbf{s}\rangle + e_i) \in \Z_q^n \times \Z_q$, for $1 \leq i \leq m$, allows to generate a non-linear equation of degree $d$ in the $n$ components of the secret $\mathbf{s}$. %which holds with probability $1 - e^{\mathcal{O}({-t^2})}$.
 Considering that a common choice for the error distribution is the discrete Gaussian with mean $0$ and standard deviation $\sigma$, denoted as $\mathcal{N}(0,\sigma)$,
 we have
@@ -12,7 +12,7 @@ The degree of $f$ is $d := 2 \cdot t \sigma + 1 < q$. %We denote by $n$ the dime
 The resulting polynomial system $\mathcal{F}_{\mathrm{LWE}}$ is solved using the linearization method, namely by replacing monomials with a new linearized variable and then solving the resulting linear system of equations. %The \belwe\ where $\mathbf{e} \in \{0,1\}^m$ was introduced in~\cite{MicPei13}. 
 The \belwe\, in which $\mathbf{e} \in \{0,1\}^m$, is a particular instance and was introduced in~\cite{MicPei13}.
 
-\subsection{Reduction of RingLWE to the LWE Polynomial System}
+\subsubsection{Reduction of RingLWE to the LWE Polynomial System.}
 The reduction of RingLWE to the LWE polynomial system is straightforward. Given a RingLWE instance, we can represent the secret and the samples as vectors of coefficients with respect to a fixed basis of the underlying ring. This allows us to express the RingLWE problem as a system of polynomial equations in the coefficients of the secret, which can then be solved using linearization techniques.
 
 For example, considering \(a_1, s_1, e_1 \in \Z_q[x]/(x^n + 1)\) as the elements of a RingLWE sample, we can write them in terms of their coefficients as follows:
@@ -35,7 +35,7 @@ We know that the coefficients of the error term \(e_1\) are small and sampled fr
 
 As a result, the parameters of the resulting polynomial system are \(n\) (the number of coefficients of the secret), \(m\) (the number of samples), and \(d\) (the degree of the polynomial \(f\)). 
 
-\subsection{Reduction of Module LWE to the LWE Polynomial System}
+\subsubsection{Reduction of Module LWE to the LWE Polynomial System.}
 The reduction of Module LWE to the LWE polynomial system is similar to the reduction of RingLWE. Given a Module LWE instance, we can represent the secret and the samples as vectors of coefficients with respect to a fixed basis of the underlying module. This allows us to express the Module LWE problem as a system of polynomial equations in the coefficients of the secret, which can then be solved using linearization techniques.
 
 Let \(\mathbf{a}, \mathbf{s} \in R_q^k\) and \(e, b \in R_q\) be the elements of a Module LWE sample. Module LWE can be expresses as:
@@ -55,3 +55,28 @@ The final liner relation, for \(0 \le k < n\), is:
 We know that the coefficients of the error polynomial \(e\) are small and sampled from a discrete Gaussian distribution. Therefore, assume the error coefficients \(e_k\) lie in \([-t,t]\), we can construct a polynomial \(f(x) = x \cdot \prod_{i=1}^{t} (x+i)(x-i)\) that vanishes on all possible values of the error coefficients. This means that \(f(e_k) = 0\) for all \(k\), that is \[f\left(b_k - \sum_{j=1}^k \sum_{i=0}^{n-1} a_{j,i} s_{j,(k-i) \mod n}\right) = 0.\]
 
 As a result, the parameters of the resulting polynomial system are \(nk\) (the number of coefficients of each secret), \(m\) (the number of samples) and \(d\) (the degree of the polynomial \(f\)).
+
+
+\begin{table}
+    [hb!]
+    \centering
+    \renewcommand{\arraystretch}{1.4} 
+    \begin{tabular}{
+    >{\centering\arraybackslash}m{1cm}
+    >{\centering\arraybackslash}m{0.7cm}
+    >{\centering\arraybackslash}m{2.2cm}
+    >{\centering\arraybackslash}m{3.5cm}
+    >{\centering\arraybackslash}m{2cm}
+    >{\centering\arraybackslash}m{1cm}
+    }
+    \hline
+    \textbf{Problem} & \textbf{\#variables} & \textbf{\#equations} & \textbf{Degree}\\
+    \hline
+    LWE & $n$ & $1$ & $d$\\
+    \hline
+    RingLWE & $n$ & $n$ & $d$\\
+    \hline
+    ModuleLWE & $nk$ & $n$ & $d$\\
+    \end{tabular}
+    \caption{This table summarizes the information gathered from one sample for different LWE variants.}\label{tab:information_from_one_sample}
+\end{table}

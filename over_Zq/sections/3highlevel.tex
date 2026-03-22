@@ -1,12 +1,6 @@
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% \subsection{NEW Overview}
-% A Polynomial System Solving (PoSSo) problem can be represented as a linear algebra problem by associating each polynomial with its coefficient vector in the vector space of multivariate polynomials of degree at most $d$ in $n$ variables, of dimension $w = \binom{n+d}{d}$. In this work, we adopt a graded monomial ordering, which prioritizes monomials by total degree without fixing a specific ordering among monomials of the same degree.
-
-% For an LWE polynomial system $\mathcal{F}_{\mathrm{LWE}}$ with $m = \binom{n+d-1}{d}$ samples, this representation yields a matrix $M \in \Z_q^{m \times w}$. With high probability, the rows of $M$ are linearly independent and its leading principal submatrix is invertible. Diagonalizing this submatrix produces a set of polynomials with monic leading terms of degree $d$.
-
-% We iteratively compute $S$-polynomials of decreasing degree and diagonalize the resulting matrices at each step, reducing the maximal degree by one at each iteration. This process continues until degree $1$, yielding a reduced Gr\"obner basis of linear polynomials $\{x_j - s_j\} _{j=1,\dots,n}$ that directly reveals the secret vector $\mathbf{s}$.  
+\subsection{Generating the polynomial system}
+\input{sections/lwe_types_reduction.tex}
 
 
 
@@ -21,6 +15,7 @@
 % \caption{Block-wise representation of the algorithm. Each row block corresponds to polynomials of total degree $i$, from $d$ down to $1$. The left part of each rectangular matrix shows the diagonalized leading submatrix of degree-$i$ monomials, while the right part contains lower-degree terms. Each iteration produces a new rectangular matrix in this form.}\label{fig:bigmatrix}
 % \end{figure}
 
+\subsection{High-level Intuition of the Algorithm}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % NEW IMAGE
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
