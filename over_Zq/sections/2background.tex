@@ -16,7 +16,12 @@ It is well-known that \emph{Euclidean rings}, e.g. \(\Z, \Z_q, \F_q[x]\), are al
     S_{fg} := \frac{\mathbf{c}}{\lc(f)}\frac{\mathbf{x}^\gamma}{\mathrm{LM}(f)} \cdot f
               - \frac{\mathbf{c}}{\lc(g)}\frac{\mathbf{x}^\gamma}{\mathrm{LM}(g)} \cdot g,
 \end{equation}
-where $\mathbf{x}^\gamma  = \texttt{lcm}(\mathrm{LM}(f), \mathrm{LM}(g))$ and $\mathbf{c} = \texttt{lcm}(\lc(f), \lc(g))$. The Gr\"obner basis method is a well-known technique for solving a system of polynomials. For a complete introduction to the topic of Gr\"obner basis we refer the reader to~\cite{Cox2015Ideals}.
+where $\mathbf{x}^\gamma  = \texttt{lcm}(\mathrm{LM}(f), \mathrm{LM}(g))$ and $\mathbf{c} = \texttt{lcm}(\lc(f), \lc(g))$. 
+
+The main issue in Gr\"obner basis computations over rings arises during the $S$-polynomial reduction, e.g. multivariate polynomial division, where the leading term of the divisor may not divide the leading term of the dividend. In this case, the reduction process is not straightforward and may require additional steps to ensure that the resulting polynomial is reduced with respect to the given set of polynomials. This can lead to increased computational complexity and may require more sophisticated algorithms to handle these cases effectively. 
+In our algorithm we will devise a strategy to avoid multivariate polynomial division and thus the issues related to it. More specifically, the divisions will be replaced by simple linear algebra operations which can be efficiently implemented on rings too.
+
+The Gr\"obner basis method is a well-known technique for solving a system of polynomials. For a complete introduction to the topic of Gr\"obner basis and its applications on reduction rings, we refer the reader to~\cite{Cox2015Ideals}. % add citation reduction ring
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
