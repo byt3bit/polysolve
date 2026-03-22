@@ -14,7 +14,7 @@ The Learning With Errors (LWE) problem was introduced by Oded Regev in 2005~\cit
 
 
 \begin{definition}[RingLWE~\cite{}]
-Let $n$ be a power of $2$, $q \in \mathbb{Z}^+$, and let
+Let $n \in \mathbb{N}$ (usually a power of $2$), $q \in \mathbb{Z}^+$, and let
 $R_q = \mathbb{Z}_q[x]/\langle \Phi_n(x) \rangle$
 be the quotient ring, where $\Phi_n(x) = x^n + 1$ is the $2n$-th cyclotomic polynomial.
 Let $\chi$ be an error distribution over $R_q$.
@@ -29,7 +29,7 @@ $A^R_{s,\chi}$ from the uniform distribution over $R_q \times R_q$.
 \end{definition}
 
 \begin{definition}[ModuleLWE~\cite{}]
-    Let $n$ be a power of $2$, $k, q \in \mathbb{Z}^+$, and let
+    Let $n \in \mathbb{N}$ (usually a power of $2$), $k, q \in \mathbb{Z}^+$, and let
 $R_q = \mathbb{Z}_q[x]/\langle x^n + 1 \rangle$.
 Let $\chi$ be an error distribution over $R_q$.
 For a secret vector $\mathbf{s} \in R_q^k$, the Module-LWE distribution

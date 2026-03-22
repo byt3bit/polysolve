@@ -37,5 +37,25 @@ The final liner relation, for \(0 \le k < n\), is:
 We know that the coefficients of the error term \(e_1\) are small and sampled from a discrete Gaussian distribution. Therefore, assume the error coefficients \(e_{1,k}\) lie in \([-t,t]\), we can construct a polynomial \(f(x) = x \cdot \prod_{i=1}^{t} (x+i)(x-i)\) that vanishes on all possible values of the error coefficients. This means that \(f(e_{1,k}) = 0\) for all \(k\), that is \[f\left(b_{1,k} - \sum_{i=0}^{n-1} a_{1,i} s_{1,(k-i) \mod n}\right) = 0.\]
 
 
+As a result, the parameters of the resulting polynomial system are \(n\) (the number of coefficients of the secret), \(m\) (the number of samples), and \(d\) (the degree of the polynomial \(f\)). 
+
 \subsection{Reduction of Module LWE to the LWE Polynomial System}
 The reduction of Module LWE to the LWE polynomial system is similar to the reduction of RingLWE. Given a Module LWE instance, we can represent the secret and the samples as vectors of coefficients with respect to a fixed basis of the underlying module. This allows us to express the Module LWE problem as a system of polynomial equations in the coefficients of the secret, which can then be solved using linearization techniques.
+
+Let \(\mathbf{a}, \mathbf{s} \in R_q^k\) and \(e, b \in R_q\) be the elements of a Module LWE sample. Module LWE can be expresses as:
+\[b = \langle \mathbf{a}, \mathbf{s} \rangle + e = \sum_{j=1}^k a_j s_j + e.\]
+Each \(a_j\) and \(s_j\) can be expressed in terms of their coefficients as follows:
+\[a_j = a_{j,0} + a_{j,1}x + \dots + a_{j,n-1}x^{n-1},\]
+\[s_j = s_{j,0} + s_{j,1}x + \dots + s_{j,n-1}x^{n-1}.\]
+
+From the Ring LWE reduction, we know how to express the product \(a_j s_j\) as a linear combination of the basis elements. After the sum \(\sum_{j=1}^k a_j s_j\) is computed, the coefficients of the resulting polynomial can be expressed as linear combinations of the coefficients of the secrets \(s_{j,i}\) and the known coefficients of \(a_j\). 
+More specifically, the coefficient of \(x^k\) in the sum can be computed as:
+\[\sum_{j=1}^k \sum_{i=0}^{n-1} a_{j,i} s_{j,(k-i) \mod n}.\]
+
+The final liner relation, for \(0 \le k < n\), is:
+\[b_k - \sum_{j=1}^k \sum_{i=0}^{n-1} a_{j,i} s_{j,(k-i) \mod n} = e_k.\]
+
+
+We know that the coefficients of the error polynomial \(e\) are small and sampled from a discrete Gaussian distribution. Therefore, assume the error coefficients \(e_k\) lie in \([-t,t]\), we can construct a polynomial \(f(x) = x \cdot \prod_{i=1}^{t} (x+i)(x-i)\) that vanishes on all possible values of the error coefficients. This means that \(f(e_k) = 0\) for all \(k\), that is \[f\left(b_k - \sum_{j=1}^k \sum_{i=0}^{n-1} a_{j,i} s_{j,(k-i) \mod n}\right) = 0.\]
+
+As a result, the parameters of the resulting polynomial system are \(nk\) (the number of coefficients of each secret), \(m\) (the number of samples) and \(d\) (the degree of the polynomial \(f\)).
