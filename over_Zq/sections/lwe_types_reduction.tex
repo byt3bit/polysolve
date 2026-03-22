@@ -1,7 +1,5 @@
 The relation between LWE, RingLWE and Module LWE is well known, and it is often possible to reduce one problem to another.
-\[
-\text{LWE} \;\xrightarrow{\; k=1,\; n=1 \;}\; \text{Module-LWE} \;\xrightarrow{\; k=1 \;}\; \text{Ring-LWE}
-\]
+
 
 \subsection{The LWE Polynomial System}
 Each sample $(\mathbf{a}_i, b_i) = (\mathbf{a}_i, \langle\mathbf{a}_i, \mathbf{s}\rangle + e_i) \in \mathbb{F}_q^n \times \mathbb{F}_q$, for $1 \leq i \leq m$, allows to generate a non-linear equation of degree $d$ in the $n$ components of the secret $\mathbf{s}$. %which holds with probability $1 - e^{\mathcal{O}({-t^2})}$.
