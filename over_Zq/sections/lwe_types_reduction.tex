@@ -1,12 +1,12 @@
 
 \subsection{The LWE Polynomial System}
-Each sample $(\mathbf{a}_i, b_i) = (\mathbf{a}_i, \langle\mathbf{a}_i, \mathbf{s}\rangle + e_i) \in \mathbb{F}_q^n \times \mathbb{F}_q$, for $1 \leq i \leq m$, allows to generate a non-linear equation of degree $d$ in the $n$ components of the secret $\mathbf{s}$. %which holds with probability $1 - e^{\mathcal{O}({-t^2})}$.
+Each sample $(\mathbf{a}_i, b_i) = (\mathbf{a}_i, \langle\mathbf{a}_i, \mathbf{s}\rangle + e_i) \in \Z_q^n \times \Z_q$, for $1 \leq i \leq m$, allows to generate a non-linear equation of degree $d$ in the $n$ components of the secret $\mathbf{s}$. %which holds with probability $1 - e^{\mathcal{O}({-t^2})}$.
 Considering that a common choice for the error distribution is the discrete Gaussian with mean $0$ and standard deviation $\sigma$, denoted as $\mathcal{N}(0,\sigma)$,
 we have
 \[
 \mathbb{P}\big[ e \overset{\scriptscriptstyle\$}{\gets} \chi : |e| > t \cdot \sigma \big] \leq \frac{2}{t\sqrt{2\pi}} e^{-t^2/2}\in e^{\mathcal{O}({-t^2})}, \quad \textrm{for all } t>0.
 \]
-A sample from a Gaussian distribution take values on the interval $[-t\cdot\sigma,\dots,t\cdot\sigma]$ of $\mathbb{F}_q$ with probability $1 - e^{\mathcal{O}({-t^2})}$ when representing elements in $\mathbb{F}_q$ as integers in $[-\lfloor q/2 \rfloor, \dots, \lfloor q/2 \rfloor]$.
+A sample from a Gaussian distribution take values on the interval $[-t\cdot\sigma,\dots,t\cdot\sigma]$ of $\Z_q$ with probability $1 - e^{\mathcal{O}({-t^2})}$ when representing elements in $\Z_q$ as integers in $[-\lfloor q/2 \rfloor, \dots, \lfloor q/2 \rfloor]$.
 When $e \overset{\scriptscriptstyle \$}{\gets} \mathcal{N}(0,\sigma)$ then $f(e)=0$ for $f(x) = x \cdot \prod_{i=1}^{t\cdot\sigma} (x+i)(x-i)$ with probability at least $1 - e^{\mathcal{O}({-t^2})}$.
 The degree of $f$ is $d := 2 \cdot t \sigma + 1 < q$. %We denote by $n$ the dimension of the secret. %and by $m$ the number of samples. %and $d := 2 \cdot t + 1$.
 The resulting polynomial system $\mathcal{F}_{\mathrm{LWE}}$ is solved using the linearization method, namely by replacing monomials with a new linearized variable and then solving the resulting linear system of equations. %The \belwe\ where $\mathbf{e} \in \{0,1\}^m$ was introduced in~\cite{MicPei13}. 

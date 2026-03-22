@@ -62,7 +62,7 @@ The Gr\"obner basis method is a well-known technique for solving a system of pol
 % In particular, by choosing $t$ sufficiently large, the error values are bounded by $|e| \le t \cdot \sigma$ with overwhelming probability.
 % This assumption is standard in algebraic encodings of LWE and will be used to derive the corresponding polynomial system.
 
-% Define the univariate polynomial $f(x) = x \cdot \prod_{i=1}^{t} (x+i)(x-i) \in \mathbb{F}_q[x]$ as in~\cite{ICALP:AroGe11}.
+% Define the univariate polynomial $f(x) = x \cdot \prod_{i=1}^{t} (x+i)(x-i) \in \Z_q[x]$ as in~\cite{ICALP:AroGe11}.
 % By construction, every error value in the above interval is a root of $f$, and $f$ is square-free. In particular, $f$ divides the field equation $x^q - x$.
 
 % Given an LWE sample $(\mathbf{a}_i, c_i) = (\mathbf{a}_i, \mathbf{a}_i^T \mathbf{s} + e_i) \in \mathbb{Z}_q^n \times \mathbb{Z}_q$, we obtain a polynomial equation in the unknown secret variables $\mathbf{x} = (x_1,\dots,x_n)$:
@@ -70,5 +70,5 @@ The Gr\"obner basis method is a well-known technique for solving a system of pol
 % \label{eq:lwe_poly_sistem}
 % f(c_i - \mathbf{a}_i^T \mathbf{x}) = 0
 % \end{equation}
-% which holds in $\mathbb{F}_q[x_1,\dots,x_n]$ with probability at least 
+% which holds in $\Z_q[x_1,\dots,x_n]$ with probability at least 
 % $1 - \frac{2}{t\sqrt{2\pi}} \exp\Big(-\frac{t^2}{2}\Big)$.

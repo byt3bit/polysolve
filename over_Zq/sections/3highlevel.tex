@@ -4,7 +4,7 @@
 % \subsection{NEW Overview}
 % A Polynomial System Solving (PoSSo) problem can be represented as a linear algebra problem by associating each polynomial with its coefficient vector in the vector space of multivariate polynomials of degree at most $d$ in $n$ variables, of dimension $w = \binom{n+d}{d}$. In this work, we adopt a graded monomial ordering, which prioritizes monomials by total degree without fixing a specific ordering among monomials of the same degree.
 
-% For an LWE polynomial system $\mathcal{F}_{\mathrm{LWE}}$ with $m = \binom{n+d-1}{d}$ samples, this representation yields a matrix $M \in \mathbb{F}_q^{m \times w}$. With high probability, the rows of $M$ are linearly independent and its leading principal submatrix is invertible. Diagonalizing this submatrix produces a set of polynomials with monic leading terms of degree $d$.
+% For an LWE polynomial system $\mathcal{F}_{\mathrm{LWE}}$ with $m = \binom{n+d-1}{d}$ samples, this representation yields a matrix $M \in \Z_q^{m \times w}$. With high probability, the rows of $M$ are linearly independent and its leading principal submatrix is invertible. Diagonalizing this submatrix produces a set of polynomials with monic leading terms of degree $d$.
 
 % We iteratively compute $S$-polynomials of decreasing degree and diagonalize the resulting matrices at each step, reducing the maximal degree by one at each iteration. This process continues until degree $1$, yielding a reduced Gr\"obner basis of linear polynomials $\{x_j - s_j\} _{j=1,\dots,n}$ that directly reveals the secret vector $\mathbf{s}$.  
 
@@ -38,7 +38,7 @@
 
 In the polynomial system $\mathcal{F}_{\mathrm{LWE}}$ (stemming from \slwe), derived from $m = \binom{n+d-1}{d}$ samples, we identify each polynomial with its coefficient vector. The terms of each polynomial are ordered according to a fixed \emph{graded} monomial ordering by total degree. 
 % in the vector space of multivariate polynomials in $n$ variables of (total) degree at most $d$, which has dimension $w = \binom{n+d}{d}$. Fixing a graded monomial ordering induces a canonicalordering by total degree.
-This yields a matrix $M \in \mathbb{F}_q^{m \times w}$ whose rows correspond to the input polynomials and $w = \binom{n+d}{d}$.
+This yields a matrix $M \in \Z_q^{m \times w}$ whose rows correspond to the input polynomials and $w = \binom{n+d}{d}$.
 With high probability, these rows are linearly independent (see \Cref{pivots}) and the leading principal $m \times m$ submatrix of $M$ is invertible; diagonalizing it produces a set of polynomials with monic leading terms of degree $d$ (outlined by the first square structure in \cref{fig:bigmatrix}).
 The remaining columns form a dense block containing lower-degree monomials. Each polynomial in this representation has a unique term of degree $d$ corresponding to the leading term, and additional terms of lower degree. The leading terms are all distinct and, due to the linear independence of the rows, they cover all monomials of degree $d$.
 
