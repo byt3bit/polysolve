@@ -76,49 +76,6 @@ In particular, with $m = \binom{n+d-1}{d}$ samples and error support of size $d$
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-\begin{table}[hb!]
-    \centering
-    \renewcommand{\arraystretch}{1.4} 
-    \begin{tabular}{
-    >{\centering\arraybackslash}m{1cm}
-    >{\centering\arraybackslash}m{0.7cm}
-    >{\centering\arraybackslash}m{2.2cm}
-    >{\centering\arraybackslash}m{3.5cm}
-    >{\centering\arraybackslash}m{2cm}
-    >{\centering\arraybackslash}m{1cm}
-    }
-    \hline\hline
-Work & Error Size & No. Samples & Time Complexity & Semi-regular assumption? & Without $d_{reg}$? \\ 
-\hline\hline
-~\cite{ICALP:AroGe11} & $d$ & $\mathcal{O}(\log(q)\cdot q\cdot n^d)$ & $\mathcal{O}\Big(\log(q)\cdot q\cdot n^{\omega d}\Big)$ &\cellcolor{lightgray} \notused&\cellcolor{lightgray} \YES\\ 
-\hline
-~\cite{EPRINT:Steiner24b} & $d$ & $m>n$ & $\mathcal{O}\Big( m\cdot (d-1)\cdot n\cdot 2^{\omega\cdot{(8d\ln(4)-1)}^{1/\ln(4)}\cdot n} \Big)$ & \cellcolor{lightgray}\notused& \NO\\
-\hline
-~\cite{EPRINT:Steiner24b} & $d$ & $\mathcal{O}\Big( \binom{n+d-1}{d} \Big)$ & $\mathcal{O}\Big(d^3\cdot c_d^{{(n-1)}^{1-1/\ln(4)}}\Big)$ & \used& \NO\\
-\hline
-~\cite{EC:NMSU25} & $d$ & $\binom{n+d-1}{d}$ & $\mathcal{O}\Big(dn^{1+d\omega}\Big)$ & \cellcolor{lightgray}\notused& \NO\\
-\hline
-This Work & $d$ & $\mathcal{O}\left(\binom{n+d-1}{d}\right)$ & $\mathcal{O}\Big(\binom{n+d}{d}^3\Big) $ &\cellcolor{lightgray} \notused&\cellcolor{lightgray}\YES\\
-\hline\hline
-~\cite{EPRINT:ACFP14} & 2 & $\mathcal{O}(n\log\log n)$ & $\mathcal{O}\Big(n^2\cdot 2^{\frac{\omega n \log\log\log n}{8\log\log n}}\Big)$ & \used& \NO\\
-\hline
-~\cite{EPRINT:ACFP14} & 2 & $c\cdot n$ & $\mathcal{O}\Big(n^2\cdot 2^{\omega n(1+\beta)H_2(\beta/(1+\beta))}\Big)$ & \used& \NO\\
-\hline
-~\cite{ACISP:SunTibAbe20} & 2 & $c\cdot n^2$ & $n^{\mathcal{O}(1/c)}$ & \used& \NO\\
-\hline
-~\cite{ACISP:SunTibAbe20} & 2 & $n^{1+\alpha}$ & $2^{\widetilde{\mathcal{O}}(m^{1-\alpha})}$ & \used& \NO\\
-\hline
-~\cite{EPRINT:Steiner24b} & 2 & $\mathcal{O}({n^2})$ & $\mathcal{O}\Big( n^2\cdot \binom{n+3}{3}^{\omega +2} \Big)$ & \used& \NO\\
-\hline
-This Work & $2$ & $\mathcal{O}\left(\frac{n(n-1)}{2}\right)$ & $\mathcal{O}\Big(\binom{n+2}{2}^3\Big) $ &\cellcolor{lightgray} \notused&\cellcolor{lightgray} \YES\\
-\hline\hline\\
-    \end{tabular}
-    \caption{An overview of the complexities of algebraic attacks on LWBE with secret $\mathbf{s}$ of length $n$, $m$ samples, and error entries drawn from a set of size $d$.  
-      $H_2(x) = -x \log x - (1-x) \log(1-x)$ is the binary entropy function, $\ln$ is the natural logarithm, $\omega$ is the linear algebra constant ($2 \le \omega \le 3$), $c_d = 2^{(\omega+3)\cdot 2^{1/\ln(2)}\cdot {(2d-1)}^{1/\ln(4)}}$, and $\beta = c-0.5-\sqrt{c(c-1)}$. The last two columns indicate whether semi-regularity assumption and/or degree of regularity $d_{reg}$  were used for the complexity bounds estimation.}\label{tab:comparison}
-    % \caption{Modified version of Table 2 in~\cite{EC:NMSU25}, providing an overview of the complexities of algebraic attacks on LWBE with secret $\mathbf{s}$ of length $k$, $m$ samples, and error entries drawn from a set of size $d$.  
-    % To simplify notation, we write $H_2(x) = -x \log x - (1-x) \log(1-x)$ for the binary entropy function, $\ln$ for the natural logarithm, $\omega$ for the linear algebra constant ($2 \le \omega \le 3$), $c_d = 2^{(\omega+3)\cdot 2^{1/\ln(2)}\cdot (2d-1)^{1/\ln(4)}}$, and $\beta = c-0.5-\sqrt{c(c-1)}$.  
-    % The last two columns emphasise whether heuristic assumptions were used in the time complexity estimation, and whether the estimates rely on bounds derived from the degree of regularity $d_{reg}$.}\label{tab:comparison}
-\end{table}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
