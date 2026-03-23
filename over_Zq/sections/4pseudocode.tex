@@ -22,7 +22,7 @@ admissible pairs (\cref{def:admissible-pair}) $(f,g)$ to compute $S_{fg}$ (havin
 
 \subsection{S-polynomial generation and reduction}\label{sec:onspoly}
 \begin{definition}[Admissible Pair]\label{def:admissible-pair}
-    Given two tuples of integers \(\alpha, \beta \in \mathbb{Z}_{\ge 0}^n\) such that \(|\alpha|=|\beta|=t\), the pair \((\alpha, \beta)\) is called an \emph{admissible pair} if and only if there exist two distinct standard basis vectors \(e_j, e_k \in \mathbb{Z}_{\ge 0}^n\) with \(j \neq k\) such that \(\alpha_j > 0\) and \(\beta = \alpha - e_j + e_k\). Equivalently, we say that two polynomials \(f, g\) with \(\mathrm{LM}(f) = \mathbf{x}^\alpha\) and \(\mathrm{LM}(g) = \mathbf{x}^\beta\) form an \emph{admissible pair} of polynomials if and only if the pair \((\alpha, \beta)\) is admissible. In other words, if \(|\alpha|=|\beta|=t\), then \(\deg(\gcd(\LM(f),\LM(g))) = t-1\).
+    Given two tuples of integers \(\alpha, \beta \in \mathbb{Z}_{\ge 0}^n\) such that \(|\alpha|=|\beta|=t\), the pair \((\alpha, \beta)\) is called an \emph{admissible pair} if and only if there exist two distinct standard basis vectors \(e_j, e_k \in \mathbb{Z}_{\ge 0}^n\) with \(j \neq k\) such that \(\alpha_j > 0\) and \(\beta = \alpha - e_j + e_k\). Equivalently, we say that two polynomials \(f, g\) with \(\mathrm{LM}(f) = \vars{x}^\alpha\) and \(\mathrm{LM}(g) = \vars{x}^\beta\) form an \emph{admissible pair} of polynomials if and only if the pair \((\alpha, \beta)\) is admissible. In other words, if \(|\alpha|=|\beta|=t\), then \(\deg(\gcd(\LM(f),\LM(g))) = t-1\).
 \end{definition}
 % The $S$-polynomial generation (in \Cref{alg:step1}) selects admissible pairs (\cref{def:admissible-pair}) of polynomials from the set $\mathcal{D}_{i+1}$ and computes their corresponding $S$-polynomials. Then the $S$-polynomials are reduced by removing all monomials of degree $i+1$ to produce $\mathcal{P}_i$.
 
@@ -75,7 +75,7 @@ admissible pairs (\cref{def:admissible-pair}) $(f,g)$ to compute $S_{fg}$ (havin
     \State{$(\ell_{2k-1}, \ell_{2k}) \gets$ \texttt{NextAdmissiblePair}(PrevCombination, $n$, $i+1$)} 
     \State{PrevCombination $\gets \ell_{2k}$}
     % \State{Select $(\ell_{2k-1}, \ell_{2k})$} \Comment{see~\Cref{def:admissible-pair} and \Cref{lemma:spoly_number}}
-    \State{Select $(f,g) \in \mathcal{D}_{i+1}$ such that \(\LM(f) = \mathbf{x}^{{\ell}_{2k-1}}\) and \(\LM(g) = \mathbf{x}^{\ell_{2k}}\)} 
+    \State{Select $(f,g) \in \mathcal{D}_{i+1}$ such that \(\LM(f) = \vars{x}^{{\ell}_{2k-1}}\) and \(\LM(g) = \vars{x}^{\ell_{2k}}\)} 
     \State{Compute $S_{fg}$} \Comment{See \Cref{eq:spoly}}
     \State{Reduce $S_{fg}$ with the polynomials in $\mathcal{D}_{i+1}$} 
     \State{$\mathcal{P}_i \gets \mathcal{P}_i \cup \{S_{fg}\}$}
@@ -89,7 +89,7 @@ admissible pairs (\cref{def:admissible-pair}) $(f,g)$ to compute $S_{fg}$ (havin
 Consider the iteration-$i$. Note that given a monomial $m$ of degree \(i+1\), due to the diagonal form of $\mathcal{D}_{i+1}$ there exist a unique polynomial $f \in \mathcal{D}_{i+1}$ such that \(\LM(f) = m\). Hence, given two monomials $m_1, m_2$ that form an admissible pair, the corresponding admissible pair of polynomials can be uniquely determined. Let \(f,g\) be those two polynomials, the resulting $S$-polynomial \(S_{fg}\) admits the simplified form given in \Cref{eq:spoly}.
 
 Since they form an admissible pair, the least common multiple of the leading terms has degree $i+2$.
-Consequently, recalling that $\deg(\mathrm{LM}(f))=\deg(\mathrm{LM}(g))=i+1$, both $\frac{\mathbf{x}^\gamma}{\mathrm{LT}(f)}$ and $\frac{\mathbf{x}^\gamma}{\mathrm{LT}(g)}$ (in \Cref{eq:spoly-expanded}) are monomials of degree one. Using the notation of Section~\ref{sec:background}, we decompose
+Consequently, recalling that $\deg(\mathrm{LM}(f))=\deg(\mathrm{LM}(g))=i+1$, both $\frac{\vars{x}^\gamma}{\mathrm{LT}(f)}$ and $\frac{\vars{x}^\gamma}{\mathrm{LT}(g)}$ (in \Cref{eq:spoly-expanded}) are monomials of degree one. Using the notation of Section~\ref{sec:background}, we decompose
 \[
     f = f^{(i+1)} + f^{(i)} + \cdots + f^{(1)} + f^{(0)}.
 \] 
@@ -145,10 +145,10 @@ In order to prove this result, we first establish \textcolor{gray}{\textbf{\text
     \end{split}
     \] where \(i+1\), in the analyzed problem, can be at maximum \(d\). As a result, if \(n > d\), we can generate enough distinct pairs. 
 
-    % \item Consider a degree $i$ such that $2\le i < n$, and the corresponding set of diagonal polynomials $D_{i}$. We construct the set \(\mathcal{A} := \{ \alpha \colon \exists f \in \mathcal{D}_i \ \left(\LM(f) = \mathbf{x}^\alpha \right)\}\). Given \(\alpha, \beta \in \mathcal{A}\), we say that \(\alpha\) and \(\beta\) are an \emph{admissible pair} if and only if there exist two standard basis vectors \(e_j, e_k\) where \(j \neq k\) such that \(\alpha_j > 0\) and \(\beta = \alpha - e_j + e_k\). This configuration was already considered by~\cite{DBLP:journals/ejc/RuskeyS96}. More specifically, \(\mathcal{A}\) can be seen as the set of all combinations of \(n\) elements chosen \(i\) at a time. In other words the elements of \set{A} can be regarded as placements of \(i\) identical balls into \(n\) distinct boxes where each box can hold at most \(i\) balls. As a result, the elements of \set{A} can be listed in such a way that consecutive elements form admissible pairs. Such listing is known as \emph{Gray Code for combinations of a multiset}~\cite{DBLP:journals/ejc/RuskeyS96} and it can be interpreted as a Hamiltonian path in the \emph{graph} where the vertices are the elements of \set{A} and two vertices are connected if and only if they form an admissible pair. By definition, a Hamiltonian path covers all the vertices of the graph, hence we can generate at least \(\left\lfloor\frac{\binom{n+i-1}{i}}{2}\right\rfloor\) distinct admissible pairs. Let \(\ell_j\) for \(1 \le j \le \binom{n+i-1}{i}\) be the elements in the constructed Hamiltonian path, we can construct \((\ell_{2k-1}, \ell_{2k})\) for \(1 \le k \le \left\lfloor\frac{\binom{n+i-1}{i}}{2}\right\rfloor\). This way, as shown in \textbf{\textsf{(i)}}, when \(n > d\) we can generate at least \(\binom{n+i-2}{i-1}\) distinct admissible pairs.
+    % \item Consider a degree $i$ such that $2\le i < n$, and the corresponding set of diagonal polynomials $D_{i}$. We construct the set \(\mathcal{A} := \{ \alpha \colon \exists f \in \mathcal{D}_i \ \left(\LM(f) = \vars{x}^\alpha \right)\}\). Given \(\alpha, \beta \in \mathcal{A}\), we say that \(\alpha\) and \(\beta\) are an \emph{admissible pair} if and only if there exist two standard basis vectors \(e_j, e_k\) where \(j \neq k\) such that \(\alpha_j > 0\) and \(\beta = \alpha - e_j + e_k\). This configuration was already considered by~\cite{DBLP:journals/ejc/RuskeyS96}. More specifically, \(\mathcal{A}\) can be seen as the set of all combinations of \(n\) elements chosen \(i\) at a time. In other words the elements of \set{A} can be regarded as placements of \(i\) identical balls into \(n\) distinct boxes where each box can hold at most \(i\) balls. As a result, the elements of \set{A} can be listed in such a way that consecutive elements form admissible pairs. Such listing is known as \emph{Gray Code for combinations of a multiset}~\cite{DBLP:journals/ejc/RuskeyS96} and it can be interpreted as a Hamiltonian path in the \emph{graph} where the vertices are the elements of \set{A} and two vertices are connected if and only if they form an admissible pair. By definition, a Hamiltonian path covers all the vertices of the graph, hence we can generate at least \(\left\lfloor\frac{\binom{n+i-1}{i}}{2}\right\rfloor\) distinct admissible pairs. Let \(\ell_j\) for \(1 \le j \le \binom{n+i-1}{i}\) be the elements in the constructed Hamiltonian path, we can construct \((\ell_{2k-1}, \ell_{2k})\) for \(1 \le k \le \left\lfloor\frac{\binom{n+i-1}{i}}{2}\right\rfloor\). This way, as shown in \textbf{\textsf{(i)}}, when \(n > d\) we can generate at least \(\binom{n+i-2}{i-1}\) distinct admissible pairs.
 
     \item Let $1 \le i < n-1$ and let $\mathcal{D}_{i+1}$ be the set of diagonal polynomials of degree $i+1$.
-    We define $\mathcal{A} := \{ \alpha \in \mathbb{Z}_{\ge 0}^n \colon \exists f \in \mathcal{D}_{i+1} \text{ with } \LM(f) = \mathbf{x}^\alpha \}$ i.e., the set of all multi-indices corresponding to the leading monomials of polynomials in $\mathcal{D}_{i+1}$.
+    We define $\mathcal{A} := \{ \alpha \in \mathbb{Z}_{\ge 0}^n \colon \exists f \in \mathcal{D}_{i+1} \text{ with } \LM(f) = \vars{x}^\alpha \}$ i.e., the set of all multi-indices corresponding to the leading monomials of polynomials in $\mathcal{D}_{i+1}$.
     % For $\alpha, \beta \in \mathcal{A}$, we say that $(\alpha,\beta)$ is an \emph{admissible pair} if and only if there exist two distinct standard basis vectors $e_j, e_k$ such that $\alpha_j > 0$ and $\beta = \alpha - e_j + e_k$. 
     Following~\cite{DBLP:journals/ejc/RuskeyS96}, we observe that $\mathcal{A}$ can be viewed as the set of all combinations of $n$ elements chosen $i+1$ at a time, or as placements of $i+1$ identical balls into $n$ distinct boxes, with each box containing at most $i+1$ balls. In this perspective, the elements of $\mathcal{A}$ can be ordered so that consecutive elements form admissible pairs. Such an ordering is known as a \emph{Gray code for combinations of a multiset}~\cite{DBLP:journals/ejc/RuskeyS96}.  
     This Gray code can be interpreted as a Hamiltonian path in the graph whose vertices are the elements of $\mathcal{A}$, with edges connecting pairs of vertices if and only if they form an admissible pair. By definition, a Hamiltonian path covers all vertices of the graph, which allows us to generate at most $\left\lfloor {\binom{n+i}{i+1}}/{2} \right\rfloor$ distinct admissible pairs. Denoting the elements along the path by $\ell_j$, $1 \le j \le \binom{n+i}{i+1}$, we may form the pairs $(\ell_{2k-1}, \ell_{2k})$ for $1 \le k \le \left\lfloor {\binom{n+i}{i+1}}/{2} \right\rfloor$.
@@ -259,33 +259,33 @@ For the sake of completeness, a pseudocode description of the \textsc{Successor}
 
 \subsection{Correctness}\label{sec:correct}
 
-Throughout this section, we assume that the error terms satisfy the prescribed bound. Thus, the secret $\mathbf{s}$ is a common zero of all polynomials in the initial set of samples $\mathcal{P}_d$.
+Throughout this section, we assume that the error terms satisfy the prescribed bound. Thus, the secret $\vars{s}$ is a common zero of all polynomials in the initial set of samples $\mathcal{P}_d$.
 
 \begin{proposition}[Preservation of the LWE secret]\label{prop:preservation}
-At each iteration-$i$ of \Cref{alg:alg}, with $1 \le i \le d-1$, the secret $\mathbf{s}$ is a common zero of all polynomials in $\mathcal{D}_i$.
+At each iteration-$i$ of \Cref{alg:alg}, with $1 \le i \le d-1$, the secret $\vars{s}$ is a common zero of all polynomials in $\mathcal{D}_i$.
 \end{proposition}
 
 \begin{proof}
 \textbf{Base case.}  
 $\mathcal{D}_d$ is obtained from $\mathcal{P}_d$ via diagonalization (\texttt{Diag}), which consists of linear combinations of polynomials in $\mathcal{P}_d$.  
-Since $\mathbf{s}$ is a common zero of all polynomials in $\mathcal{P}_d$, it is also a zero of all polynomials in $\mathcal{D}_d$.
+Since $\vars{s}$ is a common zero of all polynomials in $\mathcal{P}_d$, it is also a zero of all polynomials in $\mathcal{D}_d$.
 
 We proceed by induction on $i$, decreasing from $i=d-1$ to $i=1$.
 
 \noindent
 \textbf{Inductive step.}  
-% Assume that $\mathbf{s}$ is a common zero of all polynomials in $\mathcal{D}_{i+1}$, for $1 \le i \le d-1$. Consider the iteration-$i$:
-Assume that, at iteration-$i$, $\mathbf{s}$ is a common zero of all polynomials in $\mathcal{D}_{i+1}$.
+% Assume that $\vars{s}$ is a common zero of all polynomials in $\mathcal{D}_{i+1}$, for $1 \le i \le d-1$. Consider the iteration-$i$:
+Assume that, at iteration-$i$, $\vars{s}$ is a common zero of all polynomials in $\mathcal{D}_{i+1}$.
 The following steps are performed:
 \begin{enumerate}
-    \item \emph{$S$-polynomial generation.} Let $f,g\in\mathcal{D}_{i+1}$. By the inductive hypothesis, they vanish at $\mathbf{s}$. By definition (\Cref{eq:spoly-expanded}), also their $S$-polynomial vanishes at $\mathbf{s}$.
+    \item \emph{$S$-polynomial generation.} Let $f,g\in\mathcal{D}_{i+1}$. By the inductive hypothesis, they vanish at $\vars{s}$. By definition (\Cref{eq:spoly-expanded}), also their $S$-polynomial vanishes at $\vars{s}$.
 
     \item \emph{$S$-polynomial reduction, and diagonalization.} We showed in \Cref{sec:onspoly} that reductions do not involve polynomial divisions.
     Therefore these steps only consist of linear combinations of previously
     generated polynomials. Since all such polynomials vanish at
-    $\mathbf{s}$, the resulting polynomials also vanish at $\mathbf{s}$.
+    $\vars{s}$, the resulting polynomials also vanish at $\vars{s}$.
 \end{enumerate}
-Therefore, $\mathbf{s}$ is a common zero of all polynomials in $\mathcal{D}_i$, for all $1 \le i \le d$.
+Therefore, $\vars{s}$ is a common zero of all polynomials in $\mathcal{D}_i$, for all $1 \le i \le d$.
 \end{proof}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -293,20 +293,20 @@ Therefore, $\mathbf{s}$ is a common zero of all polynomials in $\mathcal{D}_i$, 
 
 
 % \begin{corollary}[Recovery of the secret]\label{cor:secret_recovery}
-% At the last iteration, the secret $\mathbf{s}$ is a common zero of the linear equations in $\mathcal{D}_1$.
-% Each equation, due to diagonalization process, is of the form $ x_i - s_i$ for $i \in \{1,\dots,n\}$, and the secret is uniquely determined as $\mathbf{s} = (s_1, \dots, s_n)$.
+% At the last iteration, the secret $\vars{s}$ is a common zero of the linear equations in $\mathcal{D}_1$.
+% Each equation, due to diagonalization process, is of the form $ x_i - s_i$ for $i \in \{1,\dots,n\}$, and the secret is uniquely determined as $\vars{s} = (s_1, \dots, s_n)$.
 % \end{corollary}
 
 % \begin{proof}
-% By \Cref{prop:preservation}, the property of vanishing at $\mathbf{s}$ is preserved throughout all iterations.
+% By \Cref{prop:preservation}, the property of vanishing at $\vars{s}$ is preserved throughout all iterations.
 % At the last iteration, all polynomials have degree $1$, and in particular they are linear and monic.
-% Each polynomial is therefore of the form $x_i - s_i$ for some $i$, and the secret vector $\mathbf{s}$ is uniquely recovered as $\mathbf{s} = (s_1, \dots, s_n)$.
+% Each polynomial is therefore of the form $x_i - s_i$ for some $i$, and the secret vector $\vars{s}$ is uniquely recovered as $\vars{s} = (s_1, \dots, s_n)$.
 % \end{proof}
 
 
-By \Cref{prop:preservation}, $\mathbf{s}$ remains the zero of the polynomials through all iterations.
+By \Cref{prop:preservation}, $\vars{s}$ remains the zero of the polynomials through all iterations.
 In particular, at the last iteration, all polynomials in $\mathcal{D}_1$ are linear, monic and of degree $1$.
-Each equation, due to diagonalization process, is of the form $x_i - s_i$ for $i \in \{1,\dots,n\}$, and the secret is uniquely determined as $\mathbf{s} = (s_1, \dots, s_n)$.
+Each equation, due to diagonalization process, is of the form $x_i - s_i$ for $i \in \{1,\dots,n\}$, and the secret is uniquely determined as $\vars{s} = (s_1, \dots, s_n)$.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -332,7 +332,7 @@ Each equation, due to diagonalization process, is of the form $x_i - s_i$ for $i
 
 % \begin{remark}[On the solution set]
 % \Cref{alg:alg} does not, in general, preserve the full solution set of the LWE polynomial system.  
-% Its design ensures that the LWE secret $\mathbf{s}$ is preserved, which is the unique solution of interest for the \slwe\ problem.
+% Its design ensures that the LWE secret $\vars{s}$ is preserved, which is the unique solution of interest for the \slwe\ problem.
 % \end{remark}
 
 

@@ -48,7 +48,7 @@ The coefficients of these reduced $S$-polynomials are then assembled into a new 
 Provided that a sufficient number of such polynomials is generated, the leading principal submatrix of this matrix is invertible with overwhelming probability and can be diagonalized in the same manner as before.
 This yields a new diagonalized system whose leading terms are monic and cover all monomials of degree $d-1$. Then we compute a set of $S$-polynomials and their reduction as described before. 
 
-This procedure is applied recursively, decreasing the degree at each iteration. Finally, the process terminates at degree $1$, where the resulting system consists of linear polynomials of the form $(x_j - s_j)$ for $j=1,\dots,n$, and directly reveal the secret vector $\mathbf{s}$.
+This procedure is applied recursively, decreasing the degree at each iteration. Finally, the process terminates at degree $1$, where the resulting system consists of linear polynomials of the form $(x_j - s_j)$ for $j=1,\dots,n$, and directly reveal the secret vector $\vars{s}$.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -60,7 +60,7 @@ This procedure is applied recursively, decreasing the degree at each iteration. 
 
 % Iterations proceed from the top block (degree $d$) to the bottom block (degree $1$). At each step, $S$-polynomials of degree $i$ are computed from the previously diagonalized polynomials, and the resulting submatrix is diagonalized independently. This block-wise representation is purely conceptual: the algorithm never operates on the full matrix at once, but rather processes one row-block at a time.
 
-% The final block, corresponding to degree $1$, produces linear polynomials of the form $\{ x_j - s_j \} _{j=1,\dots,n}$, which uniquely determine the secret vector $\mathbf{s}$ and signal the termination of the algorithm. This structured visualization emphasizes the iterative reduction of polynomial degree and the progressive diagonalization that underlies the algorithm's efficiency.
+% The final block, corresponding to degree $1$, produces linear polynomials of the form $\{ x_j - s_j \} _{j=1,\dots,n}$, which uniquely determine the secret vector $\vars{s}$ and signal the termination of the algorithm. This structured visualization emphasizes the iterative reduction of polynomial degree and the progressive diagonalization that underlies the algorithm's efficiency.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
