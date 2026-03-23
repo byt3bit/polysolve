@@ -17,9 +17,9 @@ In this context, for $f, g \in \Z_q[x_1,\dots,x_n]$, the $S$-polynomial is defin
 \end{equation}
 where $\vars{x}^\gamma  = \texttt{lcm}(\mathrm{LM}(f), \mathrm{LM}(g))$ and $\vars{c} = \texttt{lcm}(\lc(f), \lc(g))$. 
 
-The main issue in Gr\"obner basis computations over rings arises during the $S$-polynomial reduction, e.g. multivariate polynomial division. In our algorithm we completely avoid multivariate polynomial division and thus the issues related to it. More specifically, divisions will be replaced by simple linear algebra operations which can be efficiently implemented on rings too.
+The main issue in Gr\"obner basis computations over rings arises during the $S$-polynomial reduction, e.g. multivariate polynomial division. In our algorithm we completely avoid multivariate polynomial division and thus the issues related to it. More specifically, divisions will be replaced by simple linear algebra operations which can be efficiently implemented on rings.
 
-Further details on Gr\"obner basis theory and its extension on reduction rings is given in~\cite{Cox2015Ideals}
+Further details on Gr\"obner basis theory and its extension on reduction rings is given in~\cite{Cox2015Ideals,buchberger1983critical}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
