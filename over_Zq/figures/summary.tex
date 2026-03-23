@@ -15,7 +15,11 @@
 % -------------------
 \node[matparens] (A1) {
     \begin{tikzpicture}
+% <<<<<<< HEAD
+%         \node[gray, matrix={1}{1}, fill=gray] (R) {};
+% =======
         \node[gray, matrix={1}{1}, fill=lightgray] (R) {};
+
         \draw[gray, line width=0.70mm] (R.north west) -- (R.south east) -- cycle;
         \node[font=\footnotesize, fill=white, draw=gray, line width=0.4pt, inner sep=1pt] at (R.center) {$i+1$};
 
@@ -78,12 +82,16 @@
 % -------------------
 \node[matparens, below=of B2] (A1b) {
 \begin{tikzpicture}
+% <<<<<<< HEAD
+%     \node[gray, matrix={0.7}{1}, fill=gray] (K) {};
+%     \node[font=\footnotesize, fill=white, draw=gray, line width=0.4pt, inner sep=1pt, anchor=center] at (K.center) {$i+1$};
+% =======
     \node[gray, matrix={0.7}{1}, fill=lightgray] (K) {};
     \node[font=\footnotesize, fill=white, draw=lipicsGray, line width=0.4pt, inner sep=1pt, anchor=center] at (K.center) {$i+1$};
     
     \node[gray, matrix={0.7}{0.7}, fill=lightgray, right=1mm of K] (R) {};
     \draw[gray, line width=0.70mm] (R.north west) -- (R.south east) -- cycle;
-    \node[font=\footnotesize, fill=white, draw=lipicsGray, line width=0.4pt, inner sep=1pt, anchor=center] at (R.center) {$i$};
+    \node[font=\footnotesize, fill=white, draw=gray, line width=0.4pt, inner sep=1pt, anchor=center] at (R.center) {$i$};
 
 
     \node[gray, matrix={0.7}{2.2}, fill=lightgray, right=1mm of R] (T) {};

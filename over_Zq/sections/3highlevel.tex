@@ -93,11 +93,11 @@ following operations:
     After reduction with respect to the starting set of polynomials, all terms in $S_{fg}$ have degree at most $i$.
 
     \item \textbf{Diagonalization.} (\texttt{Diag}) \mlf{All in one step.}
-    The leading principal submatrix of size $\binom{n+i-1}{i}$ is diagonalized in two stages: 
-    \begin{enumerate}
-        \item (\texttt{DiagA}) compute a row-echelon form to obtain an upper triangular matrix by eliminating entries below the diagonal;
-        \item (\texttt{DiagB}) complete the diagonalization by eliminating entries above the diagonal. 
-    \end{enumerate}
+    The leading principal submatrix of size $\binom{n+i-1}{i}$ is diagonalized by computing the corresponding Hermite form.  
+    % \begin{enumerate}
+    %     \item (\texttt{DiagA}) compute a row-echelon form to obtain an upper triangular matrix by eliminating entries below the diagonal;
+    %     \item (\texttt{DiagB}) complete the diagonalization by eliminating entries above the diagonal. 
+    % \end{enumerate}
   \end{enumerate}
 
   \begin{algorithm}[t!]
@@ -106,10 +106,10 @@ following operations:
 \Statex{\hspace*{-\algorithmicindent} \textbf{Input:} $\mathcal{P}_d$: initial set of samples, $n \geq 1$: secret's dimension, $d$: maximum error size}
 \Statex{\hspace*{-\algorithmicindent} \textbf{Output:} $\mathcal{D}_1$: set of $n$ linear polynomials $\{ x_j - s_j: 1 \le j \le n \}$.}
 % \Statex{}
-\State{\texttt{SET = DiagB(DiagA($\mathcal{P}_d, n, d$))}} \Comment{Initial diagonalization of the degree-$d$ samples}
+\State{\texttt{SET = Diag($\mathcal{P}_d, n, d$)}} \Comment{Initial diagonalization of the degree-$d$ samples}
 \For{$i = d-1, d-2, \dots, 1$}
     \State{\texttt{STEP1 = Spoly(SET,$n, i$)}} \Comment{$S$-polynomial generation step: $\mathcal{P}_i$}
-    \State{\texttt{SET = DiagB(DiagA(STEP1,$n, i$))}} \Comment{Diagonalization step: $\mathcal{D}_i$}
+    \State{\texttt{SET = Diag(STEP1,$n, i$)}} \Comment{Diagonalization step: $\mathcal{D}_i$}
 \EndFor{}
 \State{\Return{$\mathcal{D}_1$}} \Comment{Return the reduced set of linear polynomials}
 \end{algorithmic}
