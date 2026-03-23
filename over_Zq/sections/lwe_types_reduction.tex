@@ -1,57 +1,74 @@
 
-\subsection{The LWE Polynomial System}
-Each sample $(\mathbf{a}_i, b_i) = (\mathbf{a}_i, \langle\mathbf{a}_i, \mathbf{s}\rangle + e_i) \in \mathbb{F}_q^n \times \mathbb{F}_q$, for $1 \leq i \leq m$, allows to generate a non-linear equation of degree $d$ in the $n$ components of the secret $\mathbf{s}$. %which holds with probability $1 - e^{\mathcal{O}({-t^2})}$.
+\subsubsection{The LWE Polynomial System.}
+Each sample $(\vars{a}_i, b_i) = (\vars{a}_i, \langle\vars{a}_i, \vars{s}\rangle + e_i) \in \Z_q^n \times \Z_q$, for $1 \leq i \leq m$, allows to generate a non-linear equation of degree $d$ in the $n$ components of the secret $\vars{s}$. %which holds with probability $1 - e^{\mathcal{O}({-t^2})}$.
 Considering that a common choice for the error distribution is the discrete Gaussian with mean $0$ and standard deviation $\sigma$, denoted as $\mathcal{N}(0,\sigma)$,
 we have
 \[
 \mathbb{P}\big[ e \overset{\scriptscriptstyle\$}{\gets} \chi : |e| > t \cdot \sigma \big] \leq \frac{2}{t\sqrt{2\pi}} e^{-t^2/2}\in e^{\mathcal{O}({-t^2})}, \quad \textrm{for all } t>0.
 \]
-A sample from a Gaussian distribution take values on the interval $[-t\cdot\sigma,\dots,t\cdot\sigma]$ of $\mathbb{F}_q$ with probability $1 - e^{\mathcal{O}({-t^2})}$ when representing elements in $\mathbb{F}_q$ as integers in $[-\lfloor q/2 \rfloor, \dots, \lfloor q/2 \rfloor]$.
+A sample from a Gaussian distribution take values on the interval $[-t\cdot\sigma,\dots,t\cdot\sigma]$ of $\Z_q$ with probability $1 - e^{\mathcal{O}({-t^2})}$ when representing elements in $\Z_q$ as integers in $[-\lfloor q/2 \rfloor, \dots, \lfloor q/2 \rfloor]$.
 When $e \overset{\scriptscriptstyle \$}{\gets} \mathcal{N}(0,\sigma)$ then $f(e)=0$ for $f(x) = x \cdot \prod_{i=1}^{t\cdot\sigma} (x+i)(x-i)$ with probability at least $1 - e^{\mathcal{O}({-t^2})}$.
 The degree of $f$ is $d := 2 \cdot t \sigma + 1 < q$. %We denote by $n$ the dimension of the secret. %and by $m$ the number of samples. %and $d := 2 \cdot t + 1$.
-The resulting polynomial system $\mathcal{F}_{\mathrm{LWE}}$ is solved using the linearization method, namely by replacing monomials with a new linearized variable and then solving the resulting linear system of equations. %The \belwe\ where $\mathbf{e} \in \{0,1\}^m$ was introduced in~\cite{MicPei13}. 
-The \belwe\, in which $\mathbf{e} \in \{0,1\}^m$, is a particular instance and was introduced in~\cite{MicPei13}.
+The resulting polynomial system $\mathcal{F}_{\mathrm{LWE}}$ is solved using the linearization method, namely by replacing monomials with a new linearized variable and then solving the resulting linear system of equations. %The \belwe\ where $\vars{e} \in \{0,1\}^m$ was introduced in~\cite{MicPei13}. 
+The \belwe\, in which $\vars{e} \in \{0,1\}^m$, is a particular instance and was introduced in~\cite{MicPei13}.
 
-\subsection{Reduction of RingLWE to the LWE Polynomial System}
-The reduction of RingLWE to the LWE polynomial system is straightforward. Given a RingLWE instance, we can represent the secret and the samples as vectors of coefficients with respect to a fixed basis of the underlying ring. This allows us to express the RingLWE problem as a system of polynomial equations in the coefficients of the secret, which can then be solved using linearization techniques.
+\subsubsection{Reduction of \rlwe\ to the LWE Polynomial System.}
+The reduction of \rlwe\ to the LWE polynomial system is straightforward and is also given in~\cite{EC:LyuPeiReg10}. Given a \rlwe\ instance, we can represent the secret and the samples as vectors of coefficients with respect to a fixed basis of the underlying ring. This allows us to express the \rlwe\ problem as a system of polynomial equations in the coefficients of the secret.
 
-For example, considering \(a_1, s_1, e_1 \in \Z_q[x]/(x^n + 1)\) as the elements of a RingLWE sample, we can write them in terms of their coefficients as follows:
-\[a_1 = a_{1,0} + a_{1,1}x + \dots + a_{1,n-1}x^{n-1},\]
-\[s_1 = s_{1,0} + s_{1,1}x + \dots + s_{1,n-1}x^{n-1},\]
-\[e_1 = e_{1,0} + e_{1,1}x + \dots + e_{1,n-1}x^{n-1}.\]
-The RingLWE equation \(b_1 = a_1 \cdot s_1 + e_1\) can then be expanded and rearranged to yield a system of polynomial equations in the coefficients \(s_{1,0}, s_{1,1}, \dots, s_{1,n-1}\) of the secret \(s_1\) which will denote the target unknowns. How to get those relations between the coefficients?
+For example, consider a sample \(a, s, e \in \Z_q[x]/(x^N + 1)\), we can write them in terms of their coefficients as follows:
+\[a = a_0 + a_1 x + \dots + a_{N-1} x^{N-1},\]
+\[s = s_0 + s_1 x + \dots + s_{N-1} x^{N-1},\]
+\[e = e_0 + e_1 x + \dots + e_{N-1} x^{N-1}.\]
+The \rlwe\ equation \(b = a \cdot s + e\) can then be expanded and rearranged to yield a system of polynomial equations in the coefficients \(s_0, s_1, \dots, s_{N-1}\) of the secret \(s\) which will denote the target unknowns. How to get those relations between the coefficients?
 
-Let's consider the product \(a_1 \cdot s_1\) in the ring \(\Z_q[x]/(x^n + 1)\). The product can be computed as follows:
-\[a_1 \cdot s_1 = (a_{1,0} + a_{1,1}x + \dots + a_{1,n-1}x^{n-1})(s_{1,0} + s_{1,1}x + \dots + s_{1,n-1}x^{n-1}).\]
-Expanding this product and applying the relation \(x^n = -1\) (since we are working in the cyclotomic ring), we can express the result as a linear combination of the basis elements \(1, x, \dots, x^{n-1}\). Specifically, the coefficient of \(x^k\) in the product can be computed as:
-\[\sum_{i=0}^{n-1} a_{1,i} s_{1,(k-i) \mod n}.\]
-This gives us a system of polynomial equations in the coefficients of the secret \(s_1\) and the known coefficients of \(a_1\) and \(b_1\). 
+Let's consider the product \(a \cdot s\) in the cyclotomic ring \(\Z_q[x]/(x^N + 1)\):
+\[a \cdot s = (a_0 + a_1 x + \dots + a_{N-1} x^{N-1})(s_0 + s_1 x + \dots + s_{N-1} x^{N-1}).\]
+Expanding this product and reducing by the relation \(x^N = -1\) (since we are working in the cyclotomic ring), we can express the coefficients of the result as a linear combination of \(s\). Specifically, the coefficient of \(x^k\) in the product can be computed as:
+\[\sum_{i=0}^{N-1} a_i s_{(k-i) \mod N}.\]
+This gives us a system of polynomial equations in the coefficients of the secret \(s\) and the known coefficients of \(a\) and \(b\): for \(0 \le k < N\), 
+\[b_k - \sum_{i=0}^{N-1} a_i s_{(k-i) \mod{N}} = e_k.\]
 
-The final liner relation, for \(0 \le k < n\), is:
-\[b_{1,k} - \sum_{i=0}^{n-1} a_{1,i} s_{1,(k-i) \mod n} = e_{1,k}.\]
+The coefficients of the error term \(e\) are small and sampled from a discrete Gaussian distribution. Therefore, assume the error coefficients \(e_k\) lie in \([-t,t]\), we can construct a polynomial \(f(x) = x \cdot \prod_{i=1}^{t} (x+i)(x-i)\) that vanishes on all possible values of the error coefficients. This means that \(f(e_k) = 0\) for all \(k\), that is \[f\left(b_k - \sum_{i=0}^{N-1} a_i s_{(k-i) \mod N}\right) = 0.\]
 
-We know that the coefficients of the error term \(e_1\) are small and sampled from a discrete Gaussian distribution. Therefore, assume the error coefficients \(e_{1,k}\) lie in \([-t,t]\), we can construct a polynomial \(f(x) = x \cdot \prod_{i=1}^{t} (x+i)(x-i)\) that vanishes on all possible values of the error coefficients. This means that \(f(e_{1,k}) = 0\) for all \(k\), that is \[f\left(b_{1,k} - \sum_{i=0}^{n-1} a_{1,i} s_{1,(k-i) \mod n}\right) = 0.\]
+For one sample, the resulting polynomial system has \(N\) equations of degree \(d := 2t+1\) in \(N\) variables (the coefficients of the secret).
 
+\subsubsection{Reduction of \mlwe\ to the LWE Polynomial System.}
+The reduction of \mlwe\ to the LWE polynomial system is similar to the reduction of \rlwe. Again, we express the \mlwe\ problem as a system of polynomial equations in the coefficients of the secret.
 
-As a result, the parameters of the resulting polynomial system are \(n\) (the number of coefficients of the secret), \(m\) (the number of samples), and \(d\) (the degree of the polynomial \(f\)). 
+Let \(\vars{a}, \vars{s} \in R_q^k\) and \(e, b \in R_q\) be the elements of one \mlwe\ sample. The \mlwe\ relation is given by:
+\[b = \langle \vars{a}, \vars{s} \rangle + e = \sum_{j=1}^k a_j s_j + e.\]
+For \(1 \le j \le k\), \(a_j\) and \(s_j\) can be expressed in terms of their coefficients:
+\[a_j = a_{j,0} + a_{j,1}x + \dots + a_{j,N-1}x^{N-1},\]
+\[s_j = s_{j,0} + s_{j,1}x + \dots + s_{j,N-1}x^{N-1}.\]
 
-\subsection{Reduction of Module LWE to the LWE Polynomial System}
-The reduction of Module LWE to the LWE polynomial system is similar to the reduction of RingLWE. Given a Module LWE instance, we can represent the secret and the samples as vectors of coefficients with respect to a fixed basis of the underlying module. This allows us to express the Module LWE problem as a system of polynomial equations in the coefficients of the secret, which can then be solved using linearization techniques.
+From the \rlwe\ reduction, we know how to express the product \(a_j s_j\) as a linear combination of the secret coefficients of \(s_j\). After the sum \(\sum_{j=1}^k a_j s_j\) is computed, the coefficients of the resulting polynomial can be expressed as linear combinations of the coefficients of all the secret polynomials \(s_1, \dots, s_k\) and the known coefficients of \(a_1, \dots, a_k\). 
+More specifically, the coefficient of \(x^k\) in the final sum can be computed as:
+\[\sum_{j=1}^k \sum_{i=0}^{N-1} a_{j,i} s_{j,(k-i) \mod N}.\]
 
-Let \(\mathbf{a}, \mathbf{s} \in R_q^k\) and \(e, b \in R_q\) be the elements of a Module LWE sample. Module LWE can be expresses as:
-\[b = \langle \mathbf{a}, \mathbf{s} \rangle + e = \sum_{j=1}^k a_j s_j + e.\]
-Each \(a_j\) and \(s_j\) can be expressed in terms of their coefficients as follows:
-\[a_j = a_{j,0} + a_{j,1}x + \dots + a_{j,n-1}x^{n-1},\]
-\[s_j = s_{j,0} + s_{j,1}x + \dots + s_{j,n-1}x^{n-1}.\]
-
-From the Ring LWE reduction, we know how to express the product \(a_j s_j\) as a linear combination of the basis elements. After the sum \(\sum_{j=1}^k a_j s_j\) is computed, the coefficients of the resulting polynomial can be expressed as linear combinations of the coefficients of the secrets \(s_{j,i}\) and the known coefficients of \(a_j\). 
-More specifically, the coefficient of \(x^k\) in the sum can be computed as:
-\[\sum_{j=1}^k \sum_{i=0}^{n-1} a_{j,i} s_{j,(k-i) \mod n}.\]
-
-The final liner relation, for \(0 \le k < n\), is:
-\[b_k - \sum_{j=1}^k \sum_{i=0}^{n-1} a_{j,i} s_{j,(k-i) \mod n} = e_k.\]
+For \(0 \le k < N\), the \mlwe\ relation can be rewritten as: $b_k - \sum_{j=1}^k \sum_{i=0}^{N-1} a_{j,i} s_{j,(k-i) \mod N} = e_k.$
 
 
-We know that the coefficients of the error polynomial \(e\) are small and sampled from a discrete Gaussian distribution. Therefore, assume the error coefficients \(e_k\) lie in \([-t,t]\), we can construct a polynomial \(f(x) = x \cdot \prod_{i=1}^{t} (x+i)(x-i)\) that vanishes on all possible values of the error coefficients. This means that \(f(e_k) = 0\) for all \(k\), that is \[f\left(b_k - \sum_{j=1}^k \sum_{i=0}^{n-1} a_{j,i} s_{j,(k-i) \mod n}\right) = 0.\]
+The coefficients of the error polynomial \(e\) are small and sampled from a discrete Gaussian distribution. Therefore, assume the error coefficients \(e_k\) lie in \([-t,t]\), we can construct a polynomial \(f(x) = x \cdot \prod_{i=1}^{t} (x+i)(x-i)\) that vanishes on all possible values of the error coefficients. This means that \(f(e_k) = 0\) for all \(k\), that is \[f\left(b_k - \sum_{j=1}^k \sum_{i=0}^{N-1} a_{j,i} s_{j,(k-i) \mod N}\right) = 0.\]
 
-As a result, the parameters of the resulting polynomial system are \(nk\) (the number of coefficients of each secret), \(m\) (the number of samples) and \(d\) (the degree of the polynomial \(f\)).
+Consequently, for one sample of \mlwe, the resulting polynomial system has \(N\) equations of degree \(d := 2t+1\) in \(Nk\) variables (the coefficients of the secret polynomials).
+
+\Cref{tab:information_from_one_sample} summarizes the polynomial system characteristics provided by one sample of the different LWE variants.
+
+\begin{table}
+    [hb!]
+    \centering
+    \renewcommand{\arraystretch}{1.4} 
+    \begin{tabular}{|c|c|c|c|
+    }
+    \hline
+    \textbf{Problem} & \textbf{\#variables} & \textbf{\#equations} & \textbf{Degree} \mlf{(or Error Size?)}\\
+    \hline
+    LWE & $n$ & $1$ & $d$\\
+    \hline
+    \rlwe\ & $N$ & $N$ & $d$\\
+    \hline
+    \mlwe\ & $Nk$ & $N$ & $d$\\
+    \hline
+    \end{tabular}
+    \caption{This table summarizes the information gathered from one sample for different LWE variants.}\label{tab:information_from_one_sample}
+\end{table}

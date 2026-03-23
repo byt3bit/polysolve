@@ -1,6 +1,6 @@
 % \subsection{Probability of Sample Linear Independence}
-% Let $v_1 \in \mathbb{F}_q^t$ be a fixed nonzero vector, and let
-% $v_2 \in \mathbb{F}_q^t$ be sampled uniformly at random.
+% Let $v_1 \in \Z_q^t$ be a fixed nonzero vector, and let
+% $v_2 \in \Z_q^t$ be sampled uniformly at random.
 % The probability that $v_2$ is linearly independent of $v_1$ is
 % \[
 % \mathbb{P}\bigl(v_2 \notin \langle v_1 \rangle\bigr)
@@ -9,7 +9,7 @@
 % \]
 
 % Conditioned on $v_1$ and $v_2$ being linearly independent, let
-% $v_3 \in \mathbb{F}_q^t$ be sampled uniformly at random.
+% $v_3 \in \Z_q^t$ be sampled uniformly at random.
 % The probability that $v_3$ is linearly independent of $\{v_1,v_2\}$ is
 % \[
 % \mathbb{P}\bigl(v_3 \notin \langle v_1,v_2 \rangle \,\big|\, v_1,v_2 \text{ independent}\bigr)
@@ -18,14 +18,14 @@
 % \]
 
 % More generally, for $j \geq 2$, conditioned on $v_1,\dots,v_{j-1}$ being linearly independent, a uniformly random vector
-% $v_j \in \mathbb{F}_q^t$ satisfies
+% $v_j \in \Z_q^t$ satisfies
 % \[
 % \mathbb{P}\bigl(v_j \notin \langle v_1,\dots,v_{j-1} \rangle \,\big|\, v_1,\dots,v_{j-1} \text{ independent}\bigr)
 % = 1 - q^{j-1-t}.
 % \]
 
 % Hence, the probability that $k$ uniformly random vectors
-% $v_1,\dots,v_k \in \mathbb{F}_q^t$ are linearly independent is
+% $v_1,\dots,v_k \in \Z_q^t$ are linearly independent is
 % \begin{equation}\label{independence}
 % \mathbb{P}_k
 % = \prod_{j=1}^{k} \left(1 - \frac{q^{j-1}}{q^t}\right)
@@ -102,7 +102,7 @@
 
 % \subsection{Probability of Diagonal Pivots}
 % The probability that $k := \binom{n+d-1}{d}$ vectors
-% $v_1,\dots,v_k \in \mathbb{F}_q^k$ are linearly independent is
+% $v_1,\dots,v_k \in \Z_q^k$ are linearly independent is
 % \begin{equation}\label{pivots}
 %     \mathbb{P}_k(\{v_1,\dots,v_k\} \text{ independent})
 %     = \prod_{j=1}^{k} \left(1 - \frac{q^{j-1}}{q^k}\right)
@@ -159,13 +159,13 @@
 %     Let $\mathbb{F}$ be a field.
 %     Let $k,n,d\in\mathbb{N}$, an choose subsets $S_1,\dots,S_n\subset \mathbb{F}$, each of size $d$.
 
-%     For a generator matrix $\mathbf{G}\in\mathbb{F}^{n\times k}$, the LWBE problem asks to extract $\mathbf{x}\in\mathbb{F}^{k}$ from $(\mathbf{G},\mathbf{b}=\mathbf{Gx+e})$, where $\mathbf{e}\in S_1\times \cdots\times S_n$.
+%     For a generator matrix $\vars{G}\in\mathbb{F}^{n\times k}$, the LWBE problem asks to extract $\vars{x}\in\mathbb{F}^{k}$ from $(\vars{G},\vars{b}=\vars{Gx+e})$, where $\vars{e}\in S_1\times \cdots\times S_n$.
 % \end{definition}
 
 % It is easy to see that LWBE problem is equivalent to its dual version:
 
 % \begin{definition}[Bounded Syndrome Decoding]
-%     For a parity-check matrix $\mathbf{H}\in\mathbb{F}^{(n-k)\times n}$, the BSD problem asks to extract $\mathbf{e}$ from $(\mathbf{H},\mathbf{s}=\mathbf{He})$, where $\mathbf{e}\in S_1\times \cdots\times S_n$.
+%     For a parity-check matrix $\vars{H}\in\mathbb{F}^{(n-k)\times n}$, the BSD problem asks to extract $\vars{e}$ from $(\vars{H},\vars{s}=\vars{He})$, where $\vars{e}\in S_1\times \cdots\times S_n$.
 % \end{definition}
 % \newpage
 
@@ -176,7 +176,7 @@
 
 \subsection{Probability of Diagonal Pivots}
 
-Let \(k < N\) and consider \(k\) vectors \(v_1,\dots,v_k \in \mathbb{F}_q^N\). 
+Let \(k < N\) and consider \(k\) vectors \(v_1,\dots,v_k \in \Z_q^N\). 
 The probability that these vectors are linearly independent is well-known and can be expressed as
 \begin{equation}\label{pivots}
 \mathbb{P}_k(\{v_1,\dots,v_k\} \text{ are independent}) 
@@ -187,7 +187,7 @@ For large \(q\), this probability is extremely close to 1.
 \noindent
 \textsf{\textbf{Example.}} 
 Consider the parameters of CRYSTALS-Kyber768~\cite{NISTPQC:CRYSTALS-KYBER22} with \(n = 256\), \(d = 7\), and \(q = 3329\). 
-The initial set of LWE samples can be seen as \(k\) vectors in \(\mathbb{F}_q^N\), with $k = \binom{n+d-1}{d} = \binom{262}{7}$, and \(N = \binom{n+d}{d} = \binom{263}{7} \).
+The initial set of LWE samples can be seen as \(k\) vectors in \(\Z_q^N\), with $k = \binom{n+d-1}{d} = \binom{262}{7}$, and \(N = \binom{n+d}{d} = \binom{263}{7} \).
 Using standard estimates for the product in the above formula, we obtain
 \begin{equation*}
 \mathbb{P}_k \ge \exp\left(-\frac{1}{(1-q^{-1})(q-1)}\right) \approx 0.9997.

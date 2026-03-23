@@ -90,13 +90,13 @@ we obtain
 The complexity estimate above assumes that exactly $\binom{n+i-1}{i}$ linearly independent $S$-polynomials are produced at the iteration-$i$ and that none of them reduces to zero.
 This assumption is justified by the density of the intermediate systems:
 at the beginning of the iteration-$i$, all monomials of degree at most $i+1$ are already present, and after completion the same property holds for degree at most $i$.
-In particular, for a generic input system over $\mathbb{F}_q$, the resulting $S$-polynomials are linearly independent with high probability (\Cref{pivots}).
+In particular, for a generic input system over $\Z_q$, the resulting $S$-polynomials are linearly independent with high probability (\Cref{pivots}).
 If additional $S$-polynomials were required due to linear dependencies, their number would be bounded by a constant (or grow at most linearly) with respect to $\binom{n+i-1}{i}$.
 Hence, the asymptotic complexity remains unchanged.
 \end{remark}
 
 % \begin{remark}[On the number of $S$-polynomials]
-% The above complexity estimate assumes that $\binom{n+i-1}{i}$ linearly independent $S$-polynomials are generated at the $\deg_i$ iteration and that none of them reduces to zero. This assumption is justified by the density of the intermediate systems: at the beginning of the $\deg_i$ step, all monomials of degree at most $i+1$ are present, and this property is preserved for degree at most $i$ after completion. In particular, for a generic input system over $\mathbb{F}_q$, the $S$-polynomials are linearly independent with high probability.  
+% The above complexity estimate assumes that $\binom{n+i-1}{i}$ linearly independent $S$-polynomials are generated at the $\deg_i$ iteration and that none of them reduces to zero. This assumption is justified by the density of the intermediate systems: at the beginning of the $\deg_i$ step, all monomials of degree at most $i+1$ are present, and this property is preserved for degree at most $i$ after completion. In particular, for a generic input system over $\Z_q$, the $S$-polynomials are linearly independent with high probability.  
 
 % If additional $S$-polynomials are required due to linear dependencies, their number is bounded by a constant (or grows at most linearly) with respect to $\binom{n+i-1}{i}$, and therefore does not affect the asymptotic complexity.
 % \end{remark}
@@ -123,7 +123,7 @@ Hence, the asymptotic complexity remains unchanged.
 \begin{proof}[Proof of \Cref{thm:iterationCost} (ii)]
 \textbf{Complexity of \texttt{DiagA}.}
 We prove the overall complexity of \texttt{DiagA}, $\mathscr{C}_\texttt{DiagA}$, by first analyzing its complexity for a single call, and then summing over $d$ values of $i$.
-Let $1\le i \le d$ and consider $\mathcal{P}_{i}\subset \mathbb{F}_q[x_1,\dots,x_n]$.
+Let $1\le i \le d$ and consider $\mathcal{P}_{i}\subset \Z_q[x_1,\dots,x_n]$.
 
 % STEP 2 - DESCRIPTION of 2a ITERATION
 \underline{\textsf{Claim 2.}}
@@ -234,7 +234,7 @@ Observing that $\binom{n+d-1}{d} = \frac{n}{n+d}\binom{n+d}{d}$, we obtain
 % \begin{proof}[Proof of \Cref{thm:iterationCost} (iii)]
 
 \noindent
-\textbf{Complexity of \texttt{DiagB}.} We prove overall complexity of \texttt{DiagB}, $\mathscr{C}_\texttt{DiagB}$, by first analyzing the complexity of a single call, and then summing over all $d$ calls. Let $1 \le i \le d-1$ and consider the row-echelon set $\mathcal{Q}_i \subset \mathbb{F}_q[x_1,\dots,x_n]$.
+\textbf{Complexity of \texttt{DiagB}.} We prove overall complexity of \texttt{DiagB}, $\mathscr{C}_\texttt{DiagB}$, by first analyzing the complexity of a single call, and then summing over all $d$ calls. Let $1 \le i \le d-1$ and consider the row-echelon set $\mathcal{Q}_i \subset \Z_q[x_1,\dots,x_n]$.
 
 % STEP 2 - DESCRIPTION of 2b ITERATION
 % \begin{claim}

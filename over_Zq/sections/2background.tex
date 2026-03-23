@@ -4,25 +4,22 @@
 
 \noindent
 \textbf{Polynomials and Solving Polynomial System.}
-For $\alpha = (\alpha_1,\dots,\alpha_n) \in \mathbb{Z}_{\ge 0}^n$ we define $\mathbf{x}^{\alpha} := x_1^{\alpha_1}\cdots x_n^{\alpha_n}$. The total degree of $\mathbf{x}^{\alpha}$ is $|\alpha|$, where $|\alpha| := \sum_{i=1}^n \alpha_i$. For a polynomial $f \in \Z_q[x_1,\dots,x_n]$ of total degree $d$, we adopt the following degree decomposition:
+For $\alpha = (\alpha_1,\dots,\alpha_n) \in \mathbb{Z}_{\ge 0}^n$ we define $\vars{x}^{\alpha} := x_1^{\alpha_1}\cdots x_n^{\alpha_n}$. The total degree of $\vars{x}^{\alpha}$ is $|\alpha|$, where $|\alpha| := \sum_{i=1}^n \alpha_i$. For a polynomial $f \in \Z_q[x_1,\dots,x_n]$ of total degree $d$, we adopt the following degree decomposition:
 \[
 f = f^{(d)} + f^{(d-1)} + \cdots + f^{(1)} + f^{(0)},
 \]
 where $f^{(k)}$ denotes the sum of all monomials in $f$ of total degree exactly $k$.
-For a fixed monomial order $\prec$ on $\Z_q[x_1,\dots,x_n]$, \LM$(f)$ and \LT$(f)$ denote respectively the leading monomial and leading term of $f$ with respect to $\prec$. The notion of $S$-polynomial is well-known in the context of Gr\"obner bases, especially when coefficients of polynomials lie in a field. When coefficients are in a ring, the $S$-polynomial computation must be adapted. Initiated by Bruno Buchberger, the study of Gr{\"o}bner basis on rings has gained more attention~\cite{}. Indeed, Gr{\"o}bner basis theory has been extended to the so-called \emph{reduction rings}~\cite{}. 
-
-It is well-known that \emph{Euclidean rings}, e.g. \(\Z, \Z_q, \F_q[x]\), are always reduction rings. In this context, for $f, g \in \Z_q[x_1,\dots,x_n]$, the $S$-polynomial is defined as
+For a fixed monomial order $\prec$ on $\Z_q[x_1,\dots,x_n]$, \LM$(f)$ and \LT$(f)$ denote respectively the leading monomial and leading term of $f$ with respect to $\prec$. The notion of $S$-polynomial is well-known in the context of Gr\"obner basis, especially when coefficients of polynomials lie in a field. When coefficients are in a ring, the $S$-polynomial computation must be adapted. Initiated by Bruno Buchberger, the study of Gr{\"o}bner basis on rings has gained more attention and has been extended to the so-called \emph{reduction rings}~\cite{buchberger1983critical,basis_of_modules_over_reduction_rings}, where additional operations are needed to deal with non-invertible elements. It is well-known that $\Z, \Z_q$ are reduction rings~\cite{reductionring_theorema,hereditary_reduction_ring}. 
+In this context, for $f, g \in \Z_q[x_1,\dots,x_n]$, the $S$-polynomial is defined as
 \begin{equation}\label{eq:spoly-expanded}
-    S_{fg} := \frac{\mathbf{c}}{\lc(f)}\frac{\mathbf{x}^\gamma}{\mathrm{LM}(f)} \cdot f
-              - \frac{\mathbf{c}}{\lc(g)}\frac{\mathbf{x}^\gamma}{\mathrm{LM}(g)} \cdot g,
+    S_{fg} := \frac{\vars{c}}{\lc(f)}\frac{\vars{x}^\gamma}{\mathrm{LM}(f)} \cdot f
+              - \frac{\vars{c}}{\lc(g)}\frac{\vars{x}^\gamma}{\mathrm{LM}(g)} \cdot g,
 \end{equation}
-where $\mathbf{x}^\gamma  = \texttt{lcm}(\mathrm{LM}(f), \mathrm{LM}(g))$ and $\mathbf{c} = \texttt{lcm}(\lc(f), \lc(g))$. 
+where $\vars{x}^\gamma  = \texttt{lcm}(\mathrm{LM}(f), \mathrm{LM}(g))$ and $\vars{c} = \texttt{lcm}(\lc(f), \lc(g))$. 
 
-The main issue in Gr\"obner basis computations over rings arises during the $S$-polynomial reduction, e.g. multivariate polynomial division, where the leading term of the divisor may not divide the leading term of the dividend. In this case, the reduction process is not straightforward and may require additional steps to ensure that the resulting polynomial is reduced with respect to the given set of polynomials. This can lead to increased computational complexity and may require more sophisticated algorithms to handle these cases effectively. 
-In our algorithm we will devise a strategy to avoid multivariate polynomial division and thus the issues related to it. More specifically, the divisions will be replaced by simple linear algebra operations which can be efficiently implemented on rings too.
+The main issue in Gr\"obner basis computations over rings arises during the $S$-polynomial reduction, e.g. multivariate polynomial division. In our algorithm we completely avoid multivariate polynomial division and thus the issues related to it. More specifically, divisions will be replaced by simple linear algebra operations which can be efficiently implemented on rings.
 
-The Gr\"obner basis method is a well-known technique for solving a system of polynomials. For a complete introduction to the topic of Gr\"obner basis and its applications on reduction rings, we refer the reader to~\cite{Cox2015Ideals}. % add citation reduction ring
-
+Further details on Gr\"obner basis theory and its extension on reduction rings is given in~\cite{Cox2015Ideals,buchberger1983critical}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -38,12 +35,12 @@ The Gr\"obner basis method is a well-known technique for solving a system of pol
 % In particular, elements sampled from a Gaussian distribution take only values on the interval $[-t\cdot\sigma,\dots,t\cdot\sigma]$ of $\mathbb{Z}_q$ with probability $1 - e^{\mathcal{O}({-t^2})}$ when representing elements in $\mathbb{Z}_q$ as integers in $[-\lfloor q/2 \rfloor, \dots, \lfloor q/2 \rfloor]$.
 % Moreover, if $e \overset{\scriptscriptstyle \$}{\gets} \chi$ then $f(e)=0$ for $f(x) = x \cdot \prod_{i=1}^{t\cdot\sigma} (x+i)(x-i)$ with probability at least $1 - e^{\mathcal{O}({-t^2})}$.
 % The degree of $f$ is $d := 2 \cdot t \sigma + 1 < q$. We denote by $n$ the dimension of the secret and by $m$ the number of samples. %and $d := 2 \cdot t + 1$ the size of the interval where the error lies.
-% % It follows that if $(\mathbf{a}_i, b_i) = (\mathbf{a}_i, \langle\mathbf{a}_i, \mathbf{s}\rangle + e_i) \in \mathbb{Z}_q^n \times \mathbb{Z}_q$ and $e \overset{\scriptscriptstyle \$}{\gets} \chi$, then 
+% % It follows that if $(\vars{a}_i, b_i) = (\vars{a}_i, \langle\vars{a}_i, \vars{s}\rangle + e_i) \in \mathbb{Z}_q^n \times \mathbb{Z}_q$ and $e \overset{\scriptscriptstyle \$}{\gets} \chi$, then 
 % % \[
-% % f(-b_i + \sum_{j=1}^n{(\mathbf{a}_i)}_j x_j) = 0,
+% % f(-b_i + \sum_{j=1}^n{(\vars{a}_i)}_j x_j) = 0,
 % % \]
 % % with probability at least $1 - e^{\mathcal{O}({-t^2})}$.
-% Each sample $(\mathbf{a}_i, b_i) = (\mathbf{a}_i, \langle\mathbf{a}_i, \mathbf{s}\rangle + e_i) \in \mathbb{Z}_q^n \times \mathbb{Z}_q$ allows to generate a non-linear equation of degree $d$ in the $n$ components of the secrets $\mathbf{s}$, which holds with probability $1 - e^{\mathcal{O}({-t^2})}$.
+% Each sample $(\vars{a}_i, b_i) = (\vars{a}_i, \langle\vars{a}_i, \vars{s}\rangle + e_i) \in \mathbb{Z}_q^n \times \mathbb{Z}_q$ allows to generate a non-linear equation of degree $d$ in the $n$ components of the secrets $\vars{s}$, which holds with probability $1 - e^{\mathcal{O}({-t^2})}$.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -62,13 +59,13 @@ The Gr\"obner basis method is a well-known technique for solving a system of pol
 % In particular, by choosing $t$ sufficiently large, the error values are bounded by $|e| \le t \cdot \sigma$ with overwhelming probability.
 % This assumption is standard in algebraic encodings of LWE and will be used to derive the corresponding polynomial system.
 
-% Define the univariate polynomial $f(x) = x \cdot \prod_{i=1}^{t} (x+i)(x-i) \in \mathbb{F}_q[x]$ as in~\cite{ICALP:AroGe11}.
+% Define the univariate polynomial $f(x) = x \cdot \prod_{i=1}^{t} (x+i)(x-i) \in \Z_q[x]$ as in~\cite{ICALP:AroGe11}.
 % By construction, every error value in the above interval is a root of $f$, and $f$ is square-free. In particular, $f$ divides the field equation $x^q - x$.
 
-% Given an LWE sample $(\mathbf{a}_i, c_i) = (\mathbf{a}_i, \mathbf{a}_i^T \mathbf{s} + e_i) \in \mathbb{Z}_q^n \times \mathbb{Z}_q$, we obtain a polynomial equation in the unknown secret variables $\mathbf{x} = (x_1,\dots,x_n)$:
+% Given an LWE sample $(\vars{a}_i, c_i) = (\vars{a}_i, \vars{a}_i^T \vars{s} + e_i) \in \mathbb{Z}_q^n \times \mathbb{Z}_q$, we obtain a polynomial equation in the unknown secret variables $\vars{x} = (x_1,\dots,x_n)$:
 % \begin{equation}
 % \label{eq:lwe_poly_sistem}
-% f(c_i - \mathbf{a}_i^T \mathbf{x}) = 0
+% f(c_i - \vars{a}_i^T \vars{x}) = 0
 % \end{equation}
-% which holds in $\mathbb{F}_q[x_1,\dots,x_n]$ with probability at least 
+% which holds in $\Z_q[x_1,\dots,x_n]$ with probability at least 
 % $1 - \frac{2}{t\sqrt{2\pi}} \exp\Big(-\frac{t^2}{2}\Big)$.

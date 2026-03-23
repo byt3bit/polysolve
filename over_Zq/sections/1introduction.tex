@@ -4,44 +4,31 @@
 The Learning With Errors (LWE) problem was introduced by Oded Regev in 2005~\cite{STOC:Regev05} as a noisy generalization of the learning parity with noise problem over finite fields.
 
 \begin{definition}[LWE~\cite{EPRINT:AlbPlaSco15,STOC:Regev05}]\label{def:LWE}
-    Let $n$, $q$ be positive integers, $\chi$ be a probability distribution on $\mathbb{Z}$ and $\mathbf{s}$ be a secret vector in $\mathbb{Z}_q^n$.
-    We denote by $L_{\mathbf{s},\chi}$ the probability distribution on $\mathbb{Z}_q^n\times\mathbb{Z}_q$ obtained by choosing $\mathbf{a}\in\mathbb{Z}_q^n$ uniformly at random, choosing $e\in\mathbb{Z}$ according to $\chi$ and considering it in $\mathbb{Z}_q$, and returning $(\mathbf{a},c) = (\mathbf{a}, \langle \mathbf{a}, \mathbf{s} \rangle + e)\in\mathbb{Z}_q^n\times\mathbb{Z}_q$.
+    Let $n$, $q$ be positive integers, $\chi$ be a probability distribution on $\Z$ and $\vars{s}$ be a secret vector in $\Z_q^n$.
+    We denote by $L_{\vars{s},\chi}$ the probability distribution on $\Z_q^n\times\Z_q$ obtained by choosing $\vars{a}\in\Z_q^n$ uniformly at random, choosing $e\in\Z$ according to $\chi$ and considering it in $\Z_q$, and returning $(\vars{a},c) = (\vars{a}, \langle \vars{a}, \vars{s} \rangle + e)\in\Z_q^n\times\Z_q$.
     \begin{itemize}
-        \item Decision-LWE is the problem of deciding whether pairs $(\mathbf{a},c)\in\mathbb{Z}_q^n\times\mathbb{Z}_q$ are sampled according to $L_{\mathbf{s},\chi}$ or the uniform distribution on $\mathbb{Z}_q^n\times\mathbb{Z}_q$.
-        \item Search-LWE is the problem of recovering $\mathbf{s}$ from $(\mathbf{a},c) = (\mathbf{a}, \langle \mathbf{a}, \mathbf{s} \rangle + e)\in\mathbb{Z}_q^n\times\mathbb{Z}_q$ sampled according to $L_{\mathbf{s},\chi}$.
+        \item Decision-LWE is the problem of deciding whether pairs $(\vars{a},c)\in\Z_q^n\times\Z_q$ are sampled according to $L_{\vars{s},\chi}$ or the uniform distribution on $\Z_q^n\times\Z_q$.
+        \item Search-LWE is the problem of recovering $\vars{s}$ from $(\vars{a},c) = (\vars{a}, \langle \vars{a}, \vars{s} \rangle + e)\in\Z_q^n\times\Z_q$ sampled according to $L_{\vars{s},\chi}$.
     \end{itemize}
   \end{definition}
 
 
-\begin{definition}[RingLWE~\cite{EC:LyuPeiReg10}]
-Let $n \in \mathbb{N}$ (usually a power of $2$), $q \in \mathbb{Z}^+$, and let
-$R_q = \mathbb{Z}_q[x]/\langle \Phi_n(x) \rangle$
-be the quotient ring, where $\Phi_n(x) = x^n + 1$ is the $2n$-th cyclotomic polynomial.
-Let $\chi$ be an error distribution over $R_q$.
-For a secret $s \in R_q$, the Ring-LWE distribution
-$A^R_{s,\chi}$ produces samples $(a, b) \in R_q \times R_q$ where:
+\begin{definition}[RingLWE~\cite{EC:LyuPeiReg10} and ModuleLWE~\cite{EPRINT:BraGenVai11}]
+    Let $N \in \Z^+$ (usually a power of $2$), $q \in \Z^+$, 
+$R_q = \Z_q[x]/\langle \Phi_N(x) \rangle$, where $\Phi_N(x) = x^N + 1$ is the $N$-th cyclotomic polynomial, and let $\chi$ be an error distribution over $R_q$.
+For a secret vector $\vars{s} \in R_q^k$, the distribution
+$A_{\vars{s},\chi}$ produces samples $(\vars{a}, b) \in R_q^k \times R_q$ where:
 \[
-    a \xleftarrow{\$} R_q, \quad e \leftarrow \chi, \quad b = a \cdot s + e \in R_q.
+    \vars{a} \xleftarrow{\$} R_q^k, \quad e \leftarrow \chi, \quad
+    b = \langle \vars{a}, \vars{s} \rangle + e \in R_q.
 \]
-The \emph{search} variant asks to recover $s$ given arbitrarily many samples from
-$A^R_{s,\chi}$. The \emph{decision} variant asks to distinguish
-$A^R_{s,\chi}$ from the uniform distribution over $R_q \times R_q$.
+The \emph{search} variant asks to recover $\vars{s}$ given arbitrarily many samples from
+$A_{\vars{s},\chi}$. The \emph{decision} variant asks to distinguish
+$A_{\vars{s},\chi}$ from the uniform distribution over $R_q^k \times R_q$.
+
+If $k=1$, we refer to the problem as RingLWE (\rlwe), and if $k>1$, we refer to it as ModuleLWE (\mlwe).
 \end{definition}
 
-\begin{definition}[ModuleLWE~\cite{EPRINT:BraGenVai11}]
-    Let $n \in \mathbb{N}$ (usually a power of $2$), $k, q \in \mathbb{Z}^+$, and let
-$R_q = \mathbb{Z}_q[x]/\langle x^n + 1 \rangle$.
-Let $\chi$ be an error distribution over $R_q$.
-For a secret vector $\mathbf{s} \in R_q^k$, the Module-LWE distribution
-$A^M_{\mathbf{s},\chi}$ produces samples $(\mathbf{a}, b) \in R_q^k \times R_q$ where:
-\[
-    \mathbf{a} \xleftarrow{\$} R_q^k, \quad e \leftarrow \chi, \quad
-    b = \langle \mathbf{a}, \mathbf{s} \rangle + e \in R_q.
-\]
-The \emph{search} variant asks to recover $\mathbf{s}$ given arbitrarily many samples from
-$A^M_{\mathbf{s},\chi}$. The \emph{decision} variant asks to distinguish
-$A^M_{\mathbf{s},\chi}$ from the uniform distribution over $R_q^k \times R_q$.
-\end{definition}
 
 
   
@@ -67,7 +54,7 @@ Structured variants, including Ring-LWE~\cite{EC:LyuPeiReg10} and Module-LWE~\ci
 
 \subsection{Our Result}
 
-We consider algebraic attacks on LWE instances with \emph{bounded errors}, which asks to recover $\mathbf{s}$ from $(\mathbf{a}_i, b_i) = (\mathbf{a}_i, \langle\mathbf{a}_i, \mathbf{s}\rangle + e_i) \in \mathbb{F}_q^n \times \mathbb{F}_q$, for $1 \leq i \leq m$, where each $e_i$ lies in a fixed set of size $d$.
+We consider algebraic attacks on LWE instances with \emph{bounded errors}, which asks to recover $\vars{s}$ from $(\vars{a}_i, b_i) = (\vars{a}_i, \langle\vars{a}_i, \vars{s}\rangle + e_i) \in \Z_q^n \times \Z_q$, for $1 \leq i \leq m$, where each $e_i$ lies in a fixed set of size $d$.
 LWBE is a variant that remains as hard as standard LWE for suitable parameters~\cite{MicPei13}.
 
 In this work, we introduce a new algebraic method for solving the \slwe\ problem which differs fundamentally from existing approaches. Instead of directly applying Gr\"obner basis method,
@@ -79,7 +66,7 @@ Despite the absence of the above mentioned assumptions, the complexity of our al
 Our main result is summarized in \Cref{thm:result}:
 
 \begin{theorem}[Main Result]\label{thm:result}
-The complexity of solving a \slwe\ instance (for bounded errors) with parameters $n$, $d$ $(<n)$ and $m = \binom{n+d-1}{d}$ samples is $\mathcal{O}\!\left(\binom{n+d}{d}^3\right)$, measured in the number of field operations in $\mathbb{F}_q$, where $n$ denotes the length of the secret vector to be recovered and $d$ the size of the set from which the error is drawn.
+The complexity of solving a \slwe\ instance (for bounded errors) with parameters $n$, $d$ $(<n)$ and $m = \binom{n+d-1}{d}$ samples is $\mathcal{O}\!\left(\binom{n+d}{d}^3\right)$, measured in the number of field operations in $\Z_q$, where $n$ denotes the length of the secret vector to be recovered and $d$ the size of the set from which the error is drawn.
 \end{theorem}
 
 In particular, with $m = \binom{n+d-1}{d}$ samples and error support of size $d$, our complexity bound improves upon existing algebraic algorithms~\cite{EPRINT:ACFP14,EC:NMSU25,EPRINT:Steiner24b,ACISP:SunTibAbe20} for bounded error LWE.\@
@@ -89,49 +76,6 @@ In particular, with $m = \binom{n+d-1}{d}$ samples and error support of size $d$
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-\begin{table}[hb!]
-    \centering
-    \renewcommand{\arraystretch}{1.4} 
-    \begin{tabular}{
-    >{\centering\arraybackslash}m{1cm}
-    >{\centering\arraybackslash}m{0.7cm}
-    >{\centering\arraybackslash}m{2.2cm}
-    >{\centering\arraybackslash}m{3.5cm}
-    >{\centering\arraybackslash}m{2cm}
-    >{\centering\arraybackslash}m{1cm}
-    }
-    \hline\hline
-Work & Error Size & No. Samples & Time Complexity & Semi-regular assumption? & Without $d_{reg}$? \\ 
-\hline\hline
-~\cite{ICALP:AroGe11} & $d$ & $\mathcal{O}(\log(q)\cdot q\cdot n^d)$ & $\mathcal{O}\Big(\log(q)\cdot q\cdot n^{\omega d}\Big)$ &\cellcolor{lightgray} \notused&\cellcolor{lightgray} \YES\\ 
-\hline
-~\cite{EPRINT:Steiner24b} & $d$ & $m>n$ & $\mathcal{O}\Big( m\cdot (d-1)\cdot n\cdot 2^{\omega\cdot{(8d\ln(4)-1)}^{1/\ln(4)}\cdot n} \Big)$ & \cellcolor{lightgray}\notused& \NO\\
-\hline
-~\cite{EPRINT:Steiner24b} & $d$ & $\mathcal{O}\Big( \binom{n+d-1}{d} \Big)$ & $\mathcal{O}\Big(d^3\cdot c_d^{{(n-1)}^{1-1/\ln(4)}}\Big)$ & \used& \NO\\
-\hline
-~\cite{EC:NMSU25} & $d$ & $\binom{n+d-1}{d}$ & $\mathcal{O}\Big(dn^{1+d\omega}\Big)$ & \cellcolor{lightgray}\notused& \NO\\
-\hline
-This Work & $d$ & $\mathcal{O}\left(\binom{n+d-1}{d}\right)$ & $\mathcal{O}\Big(\binom{n+d}{d}^3\Big) $ &\cellcolor{lightgray} \notused&\cellcolor{lightgray}\YES\\
-\hline\hline
-~\cite{EPRINT:ACFP14} & 2 & $\mathcal{O}(n\log\log n)$ & $\mathcal{O}\Big(n^2\cdot 2^{\frac{\omega n \log\log\log n}{8\log\log n}}\Big)$ & \used& \NO\\
-\hline
-~\cite{EPRINT:ACFP14} & 2 & $c\cdot n$ & $\mathcal{O}\Big(n^2\cdot 2^{\omega n(1+\beta)H_2(\beta/(1+\beta))}\Big)$ & \used& \NO\\
-\hline
-~\cite{ACISP:SunTibAbe20} & 2 & $c\cdot n^2$ & $n^{\mathcal{O}(1/c)}$ & \used& \NO\\
-\hline
-~\cite{ACISP:SunTibAbe20} & 2 & $n^{1+\alpha}$ & $2^{\widetilde{\mathcal{O}}(m^{1-\alpha})}$ & \used& \NO\\
-\hline
-~\cite{EPRINT:Steiner24b} & 2 & $\mathcal{O}({n^2})$ & $\mathcal{O}\Big( n^2\cdot \binom{n+3}{3}^{\omega +2} \Big)$ & \used& \NO\\
-\hline
-This Work & $2$ & $\mathcal{O}\left(\frac{n(n-1)}{2}\right)$ & $\mathcal{O}\Big(\binom{n+2}{2}^3\Big) $ &\cellcolor{lightgray} \notused&\cellcolor{lightgray} \YES\\
-\hline\hline\\
-    \end{tabular}
-    \caption{An overview of the complexities of algebraic attacks on LWBE with secret $\mathbf{s}$ of length $n$, $m$ samples, and error entries drawn from a set of size $d$.  
-      $H_2(x) = -x \log x - (1-x) \log(1-x)$ is the binary entropy function, $\ln$ is the natural logarithm, $\omega$ is the linear algebra constant ($2 \le \omega \le 3$), $c_d = 2^{(\omega+3)\cdot 2^{1/\ln(2)}\cdot {(2d-1)}^{1/\ln(4)}}$, and $\beta = c-0.5-\sqrt{c(c-1)}$. The last two columns indicate whether semi-regularity assumption and/or degree of regularity $d_{reg}$  were used for the complexity bounds estimation.}\label{tab:comparison}
-    % \caption{Modified version of Table 2 in~\cite{EC:NMSU25}, providing an overview of the complexities of algebraic attacks on LWBE with secret $\mathbf{s}$ of length $k$, $m$ samples, and error entries drawn from a set of size $d$.  
-    % To simplify notation, we write $H_2(x) = -x \log x - (1-x) \log(1-x)$ for the binary entropy function, $\ln$ for the natural logarithm, $\omega$ for the linear algebra constant ($2 \le \omega \le 3$), $c_d = 2^{(\omega+3)\cdot 2^{1/\ln(2)}\cdot (2d-1)^{1/\ln(4)}}$, and $\beta = c-0.5-\sqrt{c(c-1)}$.  
-    % The last two columns emphasise whether heuristic assumptions were used in the time complexity estimation, and whether the estimates rely on bounds derived from the degree of regularity $d_{reg}$.}\label{tab:comparison}
-\end{table}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -147,17 +91,17 @@ This Work & $2$ & $\mathcal{O}\left(\frac{n(n-1)}{2}\right)$ & $\mathcal{O}\Big(
 
 \noindent
 \textbf{Linearization Technique~\cite{ICALP:AroGe11}.} 
-Each sample $(\mathbf{a}_i, b_i) = (\mathbf{a}_i, \langle\mathbf{a}_i, \mathbf{s}\rangle + e_i) \in \mathbb{F}_q^n \times \mathbb{F}_q$, for $1 \leq i \leq m$, allows to generate a non-linear equation of degree $d$ in the $n$ components of the secret $\mathbf{s}$. %which holds with probability $1 - e^{\mathcal{O}({-t^2})}$.
+Each sample $(\vars{a}_i, b_i) = (\vars{a}_i, \langle\vars{a}_i, \vars{s}\rangle + e_i) \in \Z_q^n \times \Z_q$, for $1 \leq i \leq m$, allows to generate a non-linear equation of degree $d$ in the $n$ components of the secret $\vars{s}$. %which holds with probability $1 - e^{\mathcal{O}({-t^2})}$.
 Considering that a common choice for the error distribution is the discrete Gaussian with mean $0$ and standard deviation $\sigma$, denoted as $\mathcal{N}(0,\sigma)$,
 we have
 \[
 \mathbb{P}\big[ e \overset{\scriptscriptstyle\$}{\gets} \chi : |e| > t \cdot \sigma \big] \leq \frac{2}{t\sqrt{2\pi}} e^{-t^2/2}\in e^{\mathcal{O}({-t^2})}, \quad \textrm{for all } t>0.
 \]
-A sample from a Gaussian distribution take values on the interval $[-t\cdot\sigma,\dots,t\cdot\sigma]$ of $\mathbb{F}_q$ with probability $1 - e^{\mathcal{O}({-t^2})}$ when representing elements in $\mathbb{F}_q$ as integers in $[-\lfloor q/2 \rfloor, \dots, \lfloor q/2 \rfloor]$.
+A sample from a Gaussian distribution take values on the interval $[-t\cdot\sigma,\dots,t\cdot\sigma]$ of $\Z_q$ with probability $1 - e^{\mathcal{O}({-t^2})}$ when representing elements in $\Z_q$ as integers in $[-\lfloor q/2 \rfloor, \dots, \lfloor q/2 \rfloor]$.
 When $e \overset{\scriptscriptstyle \$}{\gets} \mathcal{N}(0,\sigma)$ then $f(e)=0$ for $f(x) = x \cdot \prod_{i=1}^{t\cdot\sigma} (x+i)(x-i)$ with probability at least $1 - e^{\mathcal{O}({-t^2})}$.
 The degree of $f$ is $d := 2 \cdot t \sigma + 1 < q$. %We denote by $n$ the dimension of the secret. %and by $m$ the number of samples. %and $d := 2 \cdot t + 1$.
-The resulting polynomial system $\mathcal{F}_{\mathrm{LWE}}$ is solved using the linearization method, namely by replacing monomials with a new linearized variable and then solving the resulting linear system of equations. %The \belwe\ where $\mathbf{e} \in \{0,1\}^m$ was introduced in~\cite{MicPei13}. 
-The \belwe\, in which $\mathbf{e} \in \{0,1\}^m$, is a particular instance and was introduced in~\cite{MicPei13}.
+The resulting polynomial system $\mathcal{F}_{\mathrm{LWE}}$ is solved using the linearization method, namely by replacing monomials with a new linearized variable and then solving the resulting linear system of equations. %The \belwe\ where $\vars{e} \in \{0,1\}^m$ was introduced in~\cite{MicPei13}. 
+The \belwe\, in which $\vars{e} \in \{0,1\}^m$, is a particular instance and was introduced in~\cite{MicPei13}.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -166,7 +110,7 @@ The \belwe\, in which $\mathbf{e} \in \{0,1\}^m$, is a particular instance and w
 \textbf{Gr{\"o}bner Basis and Degree of Regularity.}
 In~\cite{EPRINT:ACFP14} Gr{\"o}bner basis algorithm was applied %F4~\cite{faugere:F4} and F5~\cite{faugere:F5} can be applied
 to solve the (error free) polynomial system, resulting in significant speed-up over the Arora-Ge algorithm. 
-%For applying Gr{\"o}bner algorithm, or its variants, one should work over $\mathbb{F}_q$
+%For applying Gr{\"o}bner algorithm, or its variants, one should work over $\Z_q$
 The \emph{degree of regularity} ($d_{reg}$) and semi-regularity plays an important role in the complexity analysis of the existing algebraic algorithms (for LWE) that
 uses Gr{\"o}bner basis method. 
 While computing $d_{reg}$ for a polynomial system is difficult, for semi-regular system one can estimate it.  
