@@ -4,23 +4,23 @@
 The Learning With Errors (LWE) problem was introduced by Oded Regev in 2005~\cite{STOC:Regev05} as a noisy generalization of the learning parity with noise problem over finite fields.
 
 \begin{definition}[LWE~\cite{EPRINT:AlbPlaSco15,STOC:Regev05}]\label{def:LWE}
-    Let $n$, $q$ be positive integers, $\chi$ be a probability distribution on $\mathbb{Z}$ and $\mathbf{s}$ be a secret vector in $\mathbb{Z}_q^n$.
-    We denote by $L_{\mathbf{s},\chi}$ the probability distribution on $\mathbb{Z}_q^n\times\mathbb{Z}_q$ obtained by choosing $\mathbf{a}\in\mathbb{Z}_q^n$ uniformly at random, choosing $e\in\mathbb{Z}$ according to $\chi$ and considering it in $\mathbb{Z}_q$, and returning $(\mathbf{a},c) = (\mathbf{a}, \langle \mathbf{a}, \mathbf{s} \rangle + e)\in\mathbb{Z}_q^n\times\mathbb{Z}_q$.
+    Let $n$, $q$ be positive integers, $\chi$ be a probability distribution on $\Z$ and $\vars{s}$ be a secret vector in $\Z_q^n$.
+    We denote by $L_{\vars{s},\chi}$ the probability distribution on $\Z_q^n\times\Z_q$ obtained by choosing $\vars{a}\in\Z_q^n$ uniformly at random, choosing $e\in\Z$ according to $\chi$ and considering it in $\Z_q$, and returning $(\vars{a},c) = (\vars{a}, \langle \vars{a}, \vars{s} \rangle + e)\in\Z_q^n\times\Z_q$.
     \begin{itemize}
-        \item Decision-LWE is the problem of deciding whether pairs $(\mathbf{a},c)\in\mathbb{Z}_q^n\times\mathbb{Z}_q$ are sampled according to $L_{\mathbf{s},\chi}$ or the uniform distribution on $\mathbb{Z}_q^n\times\mathbb{Z}_q$.
-        \item Search-LWE is the problem of recovering $\mathbf{s}$ from $(\mathbf{a},c) = (\mathbf{a}, \langle \mathbf{a}, \mathbf{s} \rangle + e)\in\mathbb{Z}_q^n\times\mathbb{Z}_q$ sampled according to $L_{\mathbf{s},\chi}$.
+        \item Decision-LWE is the problem of deciding whether pairs $(\vars{a},c)\in\Z_q^n\times\Z_q$ are sampled according to $L_{\vars{s},\chi}$ or the uniform distribution on $\Z_q^n\times\Z_q$.
+        \item Search-LWE is the problem of recovering $\vars{s}$ from $(\vars{a},c) = (\vars{a}, \langle \vars{a}, \vars{s} \rangle + e)\in\Z_q^n\times\Z_q$ sampled according to $L_{\vars{s},\chi}$.
     \end{itemize}
   \end{definition}
 
 
 \begin{definition}[RingLWE~\cite{EC:LyuPeiReg10} and ModuleLWE~\cite{EPRINT:BraGenVai11}]
-    Let $N \in \mathbb{N}$ (usually a power of $2$), $q \in \mathbb{Z}^+$, 
-$R_q = \mathbb{Z}_q[x]/\langle \Phi_N(x) \rangle$, where $\Phi_N(x) = x^N + 1$ is the $N$-th cyclotomic polynomial, and let $\chi$ be an error distribution over $R_q$.
-For a secret vector $\mathbf{s} \in R_q^k$, the distribution
+    Let $N \in \Z^+$ (usually a power of $2$), $q \in \Z^+$, 
+$R_q = \Z_q[x]/\langle \Phi_N(x) \rangle$, where $\Phi_N(x) = x^N + 1$ is the $N$-th cyclotomic polynomial, and let $\chi$ be an error distribution over $R_q$.
+For a secret vector $\vars{s} \in R_q^k$, the distribution
 $A_{\vars{s},\chi}$ produces samples $(\vars{a}, b) \in R_q^k \times R_q$ where:
 \[
-    \mathbf{a} \xleftarrow{\$} R_q^k, \quad e \leftarrow \chi, \quad
-    b = \langle \mathbf{a}, \mathbf{s} \rangle + e \in R_q.
+    \vars{a} \xleftarrow{\$} R_q^k, \quad e \leftarrow \chi, \quad
+    b = \langle \vars{a}, \vars{s} \rangle + e \in R_q.
 \]
 The \emph{search} variant asks to recover $\vars{s}$ given arbitrarily many samples from
 $A_{\vars{s},\chi}$. The \emph{decision} variant asks to distinguish
@@ -54,7 +54,7 @@ Structured variants, including Ring-LWE~\cite{EC:LyuPeiReg10} and Module-LWE~\ci
 
 \subsection{Our Result}
 
-We consider algebraic attacks on LWE instances with \emph{bounded errors}, which asks to recover $\mathbf{s}$ from $(\mathbf{a}_i, b_i) = (\mathbf{a}_i, \langle\mathbf{a}_i, \mathbf{s}\rangle + e_i) \in \Z_q^n \times \Z_q$, for $1 \leq i \leq m$, where each $e_i$ lies in a fixed set of size $d$.
+We consider algebraic attacks on LWE instances with \emph{bounded errors}, which asks to recover $\vars{s}$ from $(\vars{a}_i, b_i) = (\vars{a}_i, \langle\vars{a}_i, \vars{s}\rangle + e_i) \in \Z_q^n \times \Z_q$, for $1 \leq i \leq m$, where each $e_i$ lies in a fixed set of size $d$.
 LWBE is a variant that remains as hard as standard LWE for suitable parameters~\cite{MicPei13}.
 
 In this work, we introduce a new algebraic method for solving the \slwe\ problem which differs fundamentally from existing approaches. Instead of directly applying Gr\"obner basis method,
@@ -91,7 +91,7 @@ In particular, with $m = \binom{n+d-1}{d}$ samples and error support of size $d$
 
 \noindent
 \textbf{Linearization Technique~\cite{ICALP:AroGe11}.} 
-Each sample $(\mathbf{a}_i, b_i) = (\mathbf{a}_i, \langle\mathbf{a}_i, \mathbf{s}\rangle + e_i) \in \Z_q^n \times \Z_q$, for $1 \leq i \leq m$, allows to generate a non-linear equation of degree $d$ in the $n$ components of the secret $\mathbf{s}$. %which holds with probability $1 - e^{\mathcal{O}({-t^2})}$.
+Each sample $(\vars{a}_i, b_i) = (\vars{a}_i, \langle\vars{a}_i, \vars{s}\rangle + e_i) \in \Z_q^n \times \Z_q$, for $1 \leq i \leq m$, allows to generate a non-linear equation of degree $d$ in the $n$ components of the secret $\vars{s}$. %which holds with probability $1 - e^{\mathcal{O}({-t^2})}$.
 Considering that a common choice for the error distribution is the discrete Gaussian with mean $0$ and standard deviation $\sigma$, denoted as $\mathcal{N}(0,\sigma)$,
 we have
 \[
@@ -100,8 +100,8 @@ we have
 A sample from a Gaussian distribution take values on the interval $[-t\cdot\sigma,\dots,t\cdot\sigma]$ of $\Z_q$ with probability $1 - e^{\mathcal{O}({-t^2})}$ when representing elements in $\Z_q$ as integers in $[-\lfloor q/2 \rfloor, \dots, \lfloor q/2 \rfloor]$.
 When $e \overset{\scriptscriptstyle \$}{\gets} \mathcal{N}(0,\sigma)$ then $f(e)=0$ for $f(x) = x \cdot \prod_{i=1}^{t\cdot\sigma} (x+i)(x-i)$ with probability at least $1 - e^{\mathcal{O}({-t^2})}$.
 The degree of $f$ is $d := 2 \cdot t \sigma + 1 < q$. %We denote by $n$ the dimension of the secret. %and by $m$ the number of samples. %and $d := 2 \cdot t + 1$.
-The resulting polynomial system $\mathcal{F}_{\mathrm{LWE}}$ is solved using the linearization method, namely by replacing monomials with a new linearized variable and then solving the resulting linear system of equations. %The \belwe\ where $\mathbf{e} \in \{0,1\}^m$ was introduced in~\cite{MicPei13}. 
-The \belwe\, in which $\mathbf{e} \in \{0,1\}^m$, is a particular instance and was introduced in~\cite{MicPei13}.
+The resulting polynomial system $\mathcal{F}_{\mathrm{LWE}}$ is solved using the linearization method, namely by replacing monomials with a new linearized variable and then solving the resulting linear system of equations. %The \belwe\ where $\vars{e} \in \{0,1\}^m$ was introduced in~\cite{MicPei13}. 
+The \belwe\, in which $\vars{e} \in \{0,1\}^m$, is a particular instance and was introduced in~\cite{MicPei13}.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
