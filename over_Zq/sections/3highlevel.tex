@@ -16,6 +16,7 @@
 % \end{figure}
 
 \subsection{High-level Intuition of the Algorithm}
+In this section, we provide the high-level description of our algorithm applied to the polynomial system $\mathcal{F}_{\mathrm{LWE}}$ derived from \slwe. Next, we will show how to adapt the parameters of the algorithm to solve the other two variants, namely \rlwe\ and \mlwe. 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % NEW IMAGE
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -25,7 +26,7 @@
   \resizebox{0.60\textwidth}{!}{\input{figures/bigmatrix}} &
   \resizebox{0.33\textwidth}{!}{\input{figures/summary.tex}}
 \end{tabular}
-\caption{\textsf{Left:} Block-wise representation of the algorithm. Each row block corresponds to polynomials of total degree $i$, from $d$ down to $1$. The left part of each rectangular matrix shows the diagonalized leading submatrix of degree-$i$ monomials, while the right part contains lower-degree terms. \textsf{Right:} Step-wise illustration of one iteration of the algorithm showing \texttt{Spoly}, \texttt{DiagA} and \texttt{DiagB}.}\label{fig:bigmatrix}
+\caption{\textsf{Left:} Block-wise representation of the algorithm. Each row block corresponds to polynomials of total degree $i$, from $d$ down to $1$. The left part of each rectangular matrix shows the diagonalized leading submatrix of degree-$i$ monomials, while the right part contains lower-degree terms. \textsf{Right:} Step-wise illustration of one iteration of the algorithm showing \texttt{Spoly}, \texttt{Diag}.}\label{fig:bigmatrix}
 \end{figure}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -34,21 +35,20 @@
 In the polynomial system $\mathcal{F}_{\mathrm{LWE}}$ (stemming from \slwe), derived from $m = \binom{n+d-1}{d}$ samples, we identify each polynomial with its coefficient vector. The terms of each polynomial are ordered according to a fixed \emph{graded} monomial ordering by total degree. 
 % in the vector space of multivariate polynomials in $n$ variables of (total) degree at most $d$, which has dimension $w = \binom{n+d}{d}$. Fixing a graded monomial ordering induces a canonicalordering by total degree.
 This yields a matrix $M \in \Z_q^{m \times w}$ whose rows correspond to the input polynomials and $w = \binom{n+d}{d}$.
-With high probability, these rows are linearly independent (see \Cref{pivots}) and the leading principal $m \times m$ submatrix of $M$ is invertible; diagonalizing it produces a set of polynomials with monic leading terms of degree $d$ (outlined by the first square structure in \cref{fig:bigmatrix}).
+With high probability, these rows are linearly independent (see \Cref{pivots}) and the leading principal $m \times m$ submatrix of $M$ is invertible; diagonalizing it (computing its Hermite form) produces a set of polynomials with leading terms of degree $d$ (outlined by the first square structure in \cref{fig:bigmatrix}). Note that, because we are working over $\Z_q$, the resulting polynomials are not necessarily monic, but their leading terms are all distinct and cover all monomials of degree $d$.
 The remaining columns form a dense block containing lower-degree monomials. Each polynomial in this representation has a unique term of degree $d$ corresponding to the leading term, and additional terms of lower degree. The leading terms are all distinct and, due to the linear independence of the rows, they cover all monomials of degree $d$.
 
 % This structure can be represented as a rectangular coefficient matrix with a block decomposition: the left part, corresponding to a square block, is diagonalized and highlighted in Figure~\ref{fig:bigmatrix}, while the remaining columns form a dense block containing lower-degree monomials. 
 % Each polynomial in this representation has a unique term of degree $d$ corresponding to the leading term, and additional terms of lower degree. 
 % The leading terms are all distinct and, due to the linear independence of the rows, they cover all monomials of degree $d$.
 
-From this system, we generate a selected set of $S$-polynomials each having total degree $ \leq d$. Next we reduce this set of $S$-polynomials by the current diagonalized system. Note that this process \emph{does not require division}, as it consists of linear combinations of the diagonalized
-polynomials. Each reduced $S$-polynomial has total degree exactly $d-1$.
+From this system, we generate a selected set of $S$-polynomials each having total degree $ \leq d$. Next we reduce this set of $S$-polynomials by the current diagonalized system. Note that this process \emph{does not require division}, as it consists of linear combinations of the diagonalized polynomials. Each reduced $S$-polynomial has total degree exactly $d-1$.
 
 The coefficients of these reduced $S$-polynomials are then assembled into a new coefficient matrix.
-Provided that a sufficient number of such polynomials is generated, the leading principal submatrix of this matrix is invertible with overwhelming probability and can be diagonalized in the same manner as before.
-This yields a new diagonalized system whose leading terms are monic and cover all monomials of degree $d-1$. Then we compute a set of $S$-polynomials and their reduction as described before. 
+Provided that a sufficient number of such polynomials is generated, the leading principal submatrix of this matrix has full rank with overwhelming probability and can be diagonalized in the same manner as before. % TODO: specify the rank of the matrix
+This yields a new diagonalized system whose leading terms cover all monomials of degree $d-1$. Then we compute a set of $S$-polynomials and their reduction as described before. 
 
-This procedure is applied recursively, decreasing the degree at each iteration. Finally, the process terminates at degree $1$, where the resulting system consists of linear polynomials of the form $(x_j - s_j)$ for $j=1,\dots,n$, and directly reveal the secret vector $\vars{s}$.
+This procedure is applied recursively, decreasing the degree at each iteration. Finally, the process terminates at degree $1$, where the resulting system consists of linear polynomials of the form $(x_j - s_j)$ for $j=1,\dots,n$, and directly reveal the secret vector $\vars{s}$. % TODO: check that the final system is indeed of this form.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -69,8 +69,7 @@ This procedure is applied recursively, decreasing the degree at each iteration. 
 
 \paragraph*{Iterations (formal)}
 The main algorithm (\cref{alg:alg}) has $d-1$ iterations, processing polynomials of total degree $i+1$ at iteration-$i$, starting with $i = d-1$ and decreasing by one at each iteration until $i=1$. 
-At iteration-$i$, it performs the
-following operations:  
+At iteration-$i$, it performs the following operations:  
 
 % \begin{definition}[$\deg_i$ iteration]
 % For $1 \le i \le d-1$, the \emph{$\deg_i$ iteration} refers to the stage in which polynomials with leading terms of degree $i$ are processed. Specifically, $S$-polynomials of degree $i$ are generated and subsequently diagonalized.
@@ -86,16 +85,16 @@ following operations:
     We recall that at this stage, \LT$(f)$ and \LT$(g)$ have degree $i+1$.
     The resulting $S$-polynomial has the form  
     \begin{equation}\label{eq:spoly}
-        S_{fg} = x_k\cdot f - x_\ell \cdot g
+        S_{fg} = \frac{\texttt{lcm}(\lc(f), \lc(g))}{\lc(f)} x_k\cdot f - \frac{\texttt{lcm}(\lc(f), \lc(g))}{\lc(g)} x_\ell \cdot g
     \end{equation}
     for suitable indices $k,\ell \in \{1,\dots,n\}$.
     As a consequence, $S_{fg}$ consists only of monomials of degree at most $i+1$.
     After reduction with respect to the starting set of polynomials, all terms in $S_{fg}$ have degree at most $i$.
-
+    % TODO: explicitly say how the reduction is performed, and that it does not require division. Basically it is just an S-polynomial
     \item \textbf{Diagonalization.} (\texttt{Diag}) \mlf{All in one step.}
     The leading principal submatrix of size $\binom{n+i-1}{i}$ is diagonalized by computing the corresponding Hermite form.  
     % \begin{enumerate}
-    %     \item (\texttt{DiagA}) compute a row-echelon form to obtain an upper triangular matrix by eliminating entries below the diagonal;
+    %     \item (\texttt{DiagA}) compute a hermite form to obtain an upper triangular matrix by eliminating entries below the diagonal;
     %     \item (\texttt{DiagB}) complete the diagonalization by eliminating entries above the diagonal. 
     % \end{enumerate}
   \end{enumerate}

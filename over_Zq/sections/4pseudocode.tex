@@ -2,8 +2,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % For clarity, we introduce a few notations for the sets of polynomials, arising at the various stages of a $\deg_i$ iteration.
 For $1 \le i \le d-1$, let $\mathcal{D}_i$ denote the set of polynomials obtained after the diagonalization at iteration-$i$ and $\mathcal{D}_d$ denotes the first diagonalized set.
-For $1 \le i \le d-1$, let $\mathcal{P}_i$ denote the set of $S$-polynomials generated from $\mathcal{D}_{i+1}$, where $\mathcal{P}_d$ denotes the initial sample set, and let $\mathcal{Q}_i$ denote the set obtained from $\mathcal{P}_i$ after the row-echelon transformation (\texttt{DiagA}). For each iteration-$i$, these sets have the same cardinality:
-$|\mathcal{P}_i| = |\mathcal{Q}_i| = |\mathcal{D}_i| = \binom{n+i-1}{i}$.
+For $1 \le i \le d-1$, let $\mathcal{P}_i$ denote the set of $S$-polynomials generated from $\mathcal{D}_{i+1}$, where $\mathcal{P}_d$ denotes the initial sample set. For each iteration-$i$, these sets have the same cardinality:
+$|\mathcal{P}_i| = |\mathcal{D}_i| = \binom{n+i-1}{i}$.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -12,8 +12,7 @@ $|\mathcal{P}_i| = |\mathcal{Q}_i| = |\mathcal{D}_i| = \binom{n+i-1}{i}$.
 
 \Cref{alg:step1} generates a set of $S$-polynomials $\mathcal{P}_i$ from the set of the diagonalized polynomials $\mathcal{D}_{i+1}$. This process selects a number of
 admissible pairs (\cref{def:admissible-pair}) $(f,g)$ to compute $S_{fg}$ (having degree $i+1$), and removes all monomials of degree $i+1$ by reducing w.r.t.\ the polynomial set $\mathcal{D}_{i+1}$.
-\Cref{alg:step2a} converts a set of polynomials $\mathcal{P}_i$ into row-echelon form $\mathcal{Q}_i$ by iteratively normalizing leading terms and reducing the remaining polynomials.
-\Cref{alg:step2b} transforms a set of polynomials in row-echelon form $\mathcal{Q}_i$ into diagonal form $\mathcal{D}_i$ by iteratively eliminating leading terms from the remaining polynomials.
+\Cref{alg:step2b} transforms a set of polynomials in Hermite form $\mathcal{P}_i$ into diagonal form $\mathcal{D}_i$ by iteratively eliminating leading terms from the remaining polynomials.
 % The main algorithm, \Cref{alg:alg}, iteratively applies $S$-polynomial generation and diagonalization steps to reduce the initial set of polynomials $\mathcal{P}_d$ to a set of $n$ linear polynomials of the form $\{x_j - s_j\} _{j=1}^n$.
 
 
@@ -22,7 +21,7 @@ admissible pairs (\cref{def:admissible-pair}) $(f,g)$ to compute $S_{fg}$ (havin
 
 \subsection{S-polynomial generation and reduction}\label{sec:onspoly}
 \begin{definition}[Admissible Pair]\label{def:admissible-pair}
-    Given two tuples of integers \(\alpha, \beta \in \mathbb{Z}_{\ge 0}^n\) such that \(|\alpha|=|\beta|=t\), the pair \((\alpha, \beta)\) is called an \emph{admissible pair} if and only if there exist two distinct standard basis vectors \(e_j, e_k \in \mathbb{Z}_{\ge 0}^n\) with \(j \neq k\) such that \(\alpha_j > 0\) and \(\beta = \alpha - e_j + e_k\). Equivalently, we say that two polynomials \(f, g\) with \(\mathrm{LM}(f) = \vars{x}^\alpha\) and \(\mathrm{LM}(g) = \vars{x}^\beta\) form an \emph{admissible pair} of polynomials if and only if the pair \((\alpha, \beta)\) is admissible. In other words, if \(|\alpha|=|\beta|=t\), then \(\deg(\gcd(\LM(f),\LM(g))) = t-1\).
+    Given two tuples of integers \(\alpha, \beta \in \mathbb{Z}_{\ge 0}^n\) such that \(|\alpha|=|\beta|=t\), the pair \((\alpha, \beta)\) is called an \emph{admissible pair} if and only if there exist two distinct standard basis vectors \(e_j, e_k \in \mathbb{Z}_{\ge 0}^n\) with \(j \neq k\) such that \(\alpha_j > 0\) and \(\beta = \alpha - e_j + e_k\). Equivalently, we say that two polynomials \(f, g\) with \(\lm(f) = \vars{x}^\alpha\) and \(\lm(g) = \vars{x}^\beta\) form an \emph{admissible pair} of polynomials if and only if the pair \((\alpha, \beta)\) is admissible. In other words, if \(|\alpha|=|\beta|=t\), then \(\deg(\gcd(\LM(f),\LM(g))) = t-1\).
 \end{definition}
 % The $S$-polynomial generation (in \Cref{alg:step1}) selects admissible pairs (\cref{def:admissible-pair}) of polynomials from the set $\mathcal{D}_{i+1}$ and computes their corresponding $S$-polynomials. Then the $S$-polynomials are reduced by removing all monomials of degree $i+1$ to produce $\mathcal{P}_i$.
 
@@ -89,16 +88,16 @@ admissible pairs (\cref{def:admissible-pair}) $(f,g)$ to compute $S_{fg}$ (havin
 Consider the iteration-$i$. Note that given a monomial $m$ of degree \(i+1\), due to the diagonal form of $\mathcal{D}_{i+1}$ there exist a unique polynomial $f \in \mathcal{D}_{i+1}$ such that \(\LM(f) = m\). Hence, given two monomials $m_1, m_2$ that form an admissible pair, the corresponding admissible pair of polynomials can be uniquely determined. Let \(f,g\) be those two polynomials, the resulting $S$-polynomial \(S_{fg}\) admits the simplified form given in \Cref{eq:spoly}.
 
 Since they form an admissible pair, the least common multiple of the leading terms has degree $i+2$.
-Consequently, recalling that $\deg(\mathrm{LM}(f))=\deg(\mathrm{LM}(g))=i+1$, both $\frac{\vars{x}^\gamma}{\mathrm{LT}(f)}$ and $\frac{\vars{x}^\gamma}{\mathrm{LT}(g)}$ (in \Cref{eq:spoly-expanded}) are monomials of degree one. Using the notation of Section~\ref{sec:background}, we decompose
+Consequently, recalling that $\deg(\lm(f))=\deg(\lm(g))=i+1$, both $\frac{\vars{x}^\gamma}{\lm(f)}$ and $\frac{\vars{x}^\gamma}{\lm(g)}$ (in \Cref{eq:spoly-expanded}) are monomials of degree one. Using the notation of Section~\ref{sec:background}, we decompose
 \[
     f = f^{(i+1)} + f^{(i)} + \cdots + f^{(1)} + f^{(0)}.
 \] 
-Each polynomial in $\mathcal{D}_{i+1}$ contains a unique monomial of degree $i+1$, namely $\mathrm{LM}(f)$.
+Each polynomial in $\mathcal{D}_{i+1}$ contains a unique monomial of degree $i+1$, namely $\lm(f)$.
 Multiplication by a variable $x_k$ therefore yields
 \[
     x_k \cdot f = f^{(i+2)} + f^{(i+1)} + \cdots + f^{(1)},
 \]
-where $f^{(i+2)}$ consists of a single monomial, namely $x_k \cdot \mathrm{LM}(f)$.
+where $f^{(i+2)}$ consists of a single monomial, namely $x_k \cdot \lm(f)$.
 As a result, when forming the $S$-polynomial of two such polynomials, the degree-$(i+2)$ terms cancel, and we obtain
 \[
     S_{fg} = {S_{fg}}^{(i+1)} + {S_{fg}}^{(i)} + \cdots + {S_{fg}}^{(2)} + {S_{fg}}^{(1)}.
@@ -171,37 +170,16 @@ For the sake of completeness, a pseudocode description of the \textsc{Successor}
 % \textbf{\textsf{Diagonalization and reduction.}} 
 
 
+
+
 \begin{algorithm}[t!]
-\caption{(\texttt{DiagA}) --- Diagonalization: conversion to row-echelon form}\label{alg:step2a}
+\caption{(\texttt{Diag}) --- Diagonalization: conversion to Hermite form}\label{alg:step2b}
 \begin{algorithmic}[1]
 \Statex{\hspace*{-\algorithmicindent} \textbf{Input:} $\mathcal{P}_i$: set of polynomials, $n \geq 1$: secret's dimension, $1\leq i\leq d$: current degree}
-\Statex{\hspace*{-\algorithmicindent} \textbf{Output:} $\mathcal{Q}_i$: set of polynomials in row-echelon form}
-
-\State{$\mathcal{Q}_i \gets \emptyset$}
-\For{each polynomial $f \in \mathcal{P}_i$}
-    \If{$f \neq 0$}
-        \State{Normalize $f$, making it monic}
-        \State{Append $f$ to $\mathcal{Q}_i$ and remove it from $\mathcal{P}_i$}
-        \State{Reduce all remaining polynomials in $\mathcal{P}_i$ with respect to $f$}
-    \EndIf{}
-\EndFor{}
-\State{\Return{$\mathcal{Q}_i$}}
-\end{algorithmic}
-\end{algorithm}
-
-\begin{algorithm}[t!]
-\caption{(\texttt{DiagB}) --- Diagonalization: conversion to diagonal form}\label{alg:step2b}
-\begin{algorithmic}[1]
-\Statex{\hspace*{-\algorithmicindent} \textbf{Input:} $\mathcal{Q}_i$: set of polynomials, $n \geq 1$: secret's dimension, $1\leq i\leq d$: current degree}
 \Statex{\hspace*{-\algorithmicindent} \textbf{Output:} $\mathcal{D}_i$: set of polynomials in diagonal form}
 
-\State{$\mathcal{D}_i \gets \emptyset$}
-\For{each polynomial $f \in \mathcal{Q}_i$ (processed in reverse order)}
-    \If{$f \neq 0$}
-        \State{Append $f$ to $\mathcal{D}_i$ and remove it from $\mathcal{Q}_i$}
-        \State{Reduce all remaining polynomials in $\mathcal{Q}_i$ with respect to $f$}
-    \EndIf{}
-\EndFor{}
+\State{$\mathcal{D}_i \gets \texttt{HermiteForm}(\mathcal{P}_i)$}
+
 \State{\Return{$\mathcal{D}_i$}}
 \end{algorithmic}
 \end{algorithm}
@@ -212,17 +190,17 @@ For the sake of completeness, a pseudocode description of the \textsc{Successor}
 
 \subsection{Computational Complexity}
 \begin{theorem}\label{thm:iterationCost}
-    In \Cref{alg:alg} the complexity due to $\texttt{Spoly}$, $\texttt{DiagA}$ and $\texttt{DiagB}$ are as follows:
+    In \Cref{alg:alg} the complexity due to $\texttt{Spoly}$, $\texttt{Diag}$ are as follows:
     \begin{enumerate}
         \item $\mathscr{C}_{\texttt{Spoly}} = \mathcal{O}\!\left(\dbinom{n+d}{d}^3\right)$ over $d-1$ iterations,
-        \item $\mathscr{C}_{\texttt{DiagA}} = \mathcal{O}\!\left(\dbinom{n+d}{d}^3\right)$, $\mathscr{C}_{\texttt{DiagB}} = \mathcal{O}\!\left(\dbinom{n+d}{d}^3\right)$, over $d$ iterations.
+        \item $\mathscr{C}_{\texttt{Diag}} = \mathscr{C}_{\texttt{HermiteForm}} = \mathcal{O}\!\left(\dbinom{n+d}{d}^3\right)$, over $d$ iterations. \luc{To be updated}
         %\item $C_{\texttt{DiagB}} = \mathcal{O}\!\left(\dfrac{dn^2}{2{(n+d)}^3}\dbinom{n+d}{d}^3\right)$, over $d$ iterations.
     \end{enumerate}
     % The overall complexity of \Cref{alg:alg} is given by the sum of the complexities (over $1\le i\le d-1$ for \texttt{Spoly} and $1\le i\le d$ for \texttt{DiagA} and \texttt{DiagB}) of:
     % \begin{itemize}
     %     \item $S$-polynomial generation and reduction:
     %         $C_{\texttt{Spoly}}(i) = 2\cdot \binom{n+i-1}{i}^2\cdot \!\left[ \binom{n+i}{i} + 1 \right]$,
-    %     \item conversion to row-echelon form: $C_{\texttt{DiagA}}(i) =\sum_{j=1}^{\binom{n+i-1}{i}}\!\left[\!\left[ \binom{n+i}{i} - j + 1 \right]\cdot \!\left[ \binom{n+i-1}{i} - j + 1 \right]\right]$,
+    %     \item conversion to hermite form: $C_{\texttt{DiagA}}(i) =\sum_{j=1}^{\binom{n+i-1}{i}}\!\left[\!\left[ \binom{n+i}{i} - j + 1 \right]\cdot \!\left[ \binom{n+i-1}{i} - j + 1 \right]\right]$,
     %     \item conversion to diagonal form: $C_{\texttt{DiagB}}(i) =\sum_{j=1}^{\binom{n+i-1}{i}} \!\left[\!\left[ \binom{n+i-1}{i-1} +1 \right] \cdot \!\left[ \binom{n+i-1}{i} - j \right]\right]$.
     % \end{itemize}
 \end{theorem}
@@ -236,9 +214,9 @@ For the sake of completeness, a pseudocode description of the \textsc{Successor}
 % As stated in \Cref{thm:result}, the complexity of \Cref{alg:alg} is $\mathcal{O}\!\left(\frac{1}{3}\binom{n+d}{d}^3\right)$ field operations.
 
 \begin{proof}[Proof of \Cref{thm:result}]
-    The complexity $\mathscr{C}_{tot}$ of \Cref{alg:alg} follows immediately by adding the complexities of the three main procedures, as given in \Cref{thm:iterationCost}, i.e.
+    The complexity $\mathscr{C}_{tot}$ of \Cref{alg:alg} follows immediately by adding the complexities of the two main procedures, as given in \Cref{thm:iterationCost}, i.e.
     \begin{align*}
-        \mathscr{C}_{tot} &:= \mathscr{C}_{\texttt{Spoly}} + \mathscr{C}_{\texttt{DiagA}} + \mathscr{C}_{\texttt{DiagB}} = \mathcal{O}\left(\binom{n+d}{d}^3\right)
+        \mathscr{C}_{tot} &:= \mathscr{C}_{\texttt{Spoly}} + \mathscr{C}_{\texttt{Diag}} = \mathcal{O}\left(\binom{n+d}{d}^3\right)
         %&= \mathcal{O}\left(\binom{n+d}{d}^3\right) + \mathcal{O}\left(\binom{n+d}{d}^3\right) + \mathcal{O}\left(\binom{n+d}{d}^3\right) = \mathcal{O}\left(\binom{n+d}{d}^3\right).
     \end{align*}
     The correctness of the algorithm is proven in \cref{sec:correct}.
@@ -247,15 +225,15 @@ For the sake of completeness, a pseudocode description of the \textsc{Successor}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\noindent
-\textbf{\belwe.} For this case, our generic analysis for degree $d$ can be applied directly with $d = 2$. Thus, we require $\mathcal{O}\left(\frac{n(n+1)}{2}\right)$ samples and the complexity is
-\[
-  \mathcal{O}\left(\binom{n+2}{2}^3 \right) = \mathcal{O}\left(\frac{1}{8}\cdot n^6 \right).
-\]
+% \noindent
+% \textbf{\belwe.} For this case, our generic analysis for degree $d$ can be applied directly with $d = 2$. Thus, we require $\mathcal{O}\left(\frac{n(n+1)}{2}\right)$ samples and the complexity is
+% \[
+%   \mathcal{O}\left(\binom{n+2}{2}^3 \right) = \mathcal{O}\left(\frac{1}{8}\cdot n^6 \right).
+% \]
 
-\noindent
-\textbf{\bslwe.} For this case, we add the constraint set $\{ x_j^2 - x_j = 0: 1 \le j \le n\}$ to the polynomial system. Consequently, all monomials are of the form $x_1^{\alpha_1}\cdots x_n^{\alpha_n}$, where $\alpha_j \in \{0,1\}$ for ${1\le j\le n}$. The number of samples required in this case is $\binom{n}{d}$ and the complexity is $\mathcal{O}(\binom{n}{d}^3)$. A slighlty more detailed discussion is given in the Appendix~\ref{sec:binarysecret}.
-%$\mathcal{O}((^nC_k)^3)$
+% \noindent
+% \textbf{\bslwe.} For this case, we add the constraint set $\{ x_j^2 - x_j = 0: 1 \le j \le n\}$ to the polynomial system. Consequently, all monomials are of the form $x_1^{\alpha_1}\cdots x_n^{\alpha_n}$, where $\alpha_j \in \{0,1\}$ for ${1\le j\le n}$. The number of samples required in this case is $\binom{n}{d}$ and the complexity is $\mathcal{O}(\binom{n}{d}^3)$. A slighlty more detailed discussion is given in the Appendix~\ref{sec:binarysecret}.
+% %$\mathcal{O}((^nC_k)^3)$
 
 \subsection{Correctness}\label{sec:correct}
 
@@ -281,7 +259,7 @@ The following steps are performed:
     \item \emph{$S$-polynomial generation.} Let $f,g\in\mathcal{D}_{i+1}$. By the inductive hypothesis, they vanish at $\vars{s}$. By definition (\Cref{eq:spoly-expanded}), also their $S$-polynomial vanishes at $\vars{s}$.
 
     \item \emph{$S$-polynomial reduction, and diagonalization.} We showed in \Cref{sec:onspoly} that reductions do not involve polynomial divisions.
-    Therefore these steps only consist of linear combinations of previously
+    Therefore, these steps only consist of linear combinations of previously
     generated polynomials. Since all such polynomials vanish at
     $\vars{s}$, the resulting polynomials also vanish at $\vars{s}$.
 \end{enumerate}
