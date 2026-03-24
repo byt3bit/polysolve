@@ -592,15 +592,25 @@ author = {Timothy J. Hodges and Sergio D. Molina and Jacob Schlather},
 %%%%%%%% Ref on reduction rings - to be taken from DBLP (was unavilable)
 
 @inproceedings{buchberger1983critical,
-  title={A critical-pair/completion algorithm for finitely generated ideals in rings},
-  author={Buchberger, Bruno},
-  booktitle={Symposium on Recursive Combinatorics},
-  pages={137--161},
-  year={1983},
-  organization={Springer}
+  author       = {Bruno Buchberger},
+  editor       = {Egon B{\"{o}}rger and
+                  Gisbert Hasenjaeger and
+                  Dieter R{\"{o}}dding},
+  title        = {A critical-pair/completion algorithm for finitely generated ideals
+                  in rings},
+  booktitle    = {Logic and Machines: Decision Problems and Complexity, Proceedings
+                  of the Symposium "Rekursive Kombinatorik" held from May 23-28,
+                  at the Institut f{\"{u}}r Mathematische Logik und Grundlagenforschung
+                  der Universit{\"{a}}t M{\"{u}}nster/Westfalen},
+  series       = {Lecture Notes in Computer Science},
+  pages        = {137--161},
+  publisher    = {Springer},
+  year         = {1983},
+  doi          = {10.1007/3-540-13331-3\_39}
 }
 
-@article{reductionring_theorema,
+
+@report{reductionring_theorema,
   title={Exploring Reduction Ring Theory in Theorema*},
   author={Alexander Maletzky},
   year={2015},
@@ -632,4 +642,38 @@ doi = {https://doi.org/10.1006/jabr.1993.1146},
 url = {https://www.sciencedirect.com/science/article/pii/S0021869383711464},
 author = {S. Stifter},
 abstract = {Reduction rings are rings in which the Gröbner bases approach is possible, i.e., the Gröbner basis of an ideal in a reduction ring can be computed using Buchberger′s algorithm. We show that one can also compute Gröbner bases of modules over reduction rings. Our approach is much more general than other approaches to compute Gröbner bases of modules, in the sense that it applies to many more rings, not just polynomial rings over fields.}
+}
+
+
+% hermite form computation
+@inproceedings{DBLP:conf/issac/StorjohannL96,
+  author       = {Arne Storjohann and
+                  George Labahn},
+  editor       = {Erwin Engeler and
+                  Bob F. Caviness and
+                  Yagati N. Lakshman},
+  title        = {Asymptotically Fast Computation of Hermite Normal Forms of Integer
+                  Matrices},
+  booktitle    = {Proceedings of the 1996 International Symposium on Symbolic and Algebraic
+                  Computation, {ISSAC} '96, Zurich, Switzerland, July 24-26},
+  pages        = {259--266},
+  publisher    = {{ACM}},
+  year         = {1996},
+  doi          = {10.1145/236869.237083}
+}
+
+
+@inproceedings{DBLP:conf/issac/Gall14a,
+  author       = {Fran{\c{c}}ois Le Gall},
+  editor       = {Katsusuke Nabeshima and
+                  Kosaku Nagasaka and
+                  Franz Winkler and
+                  {\'{A}}gnes Sz{\'{a}}nt{\'{o}}},
+  title        = {Powers of tensors and fast matrix multiplication},
+  booktitle    = {International Symposium on Symbolic and Algebraic Computation, {ISSAC}
+                  '14, Kobe, Japan, July 23-25},
+  pages        = {296--303},
+  publisher    = {{ACM}},
+  year         = {2014},
+  doi          = {10.1145/2608628.2608664}
 }

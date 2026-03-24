@@ -105,14 +105,14 @@ Hence, the asymptotic complexity remains unchanged.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-
-\begin{figure}[t]
-    \centering
-    \resizebox{0.9\linewidth}{!}{%
-        \input{figures/diagonalization.tex}%
-    }
-    \caption{\texttt{Diag} reduction to Hermite form (diagonal form).}\label{fig:diagonalization}
-\end{figure}
+%%%%%%%%%%% REMOVED IMAGE - I don't think we have to show it, they know what is an hermite form %%%%%%%%%%%
+% \begin{figure}[t]
+%     \centering
+%     \resizebox{0.9\linewidth}{!}{%
+%         \input{figures/diagonalization.tex}%
+%     }
+%     \caption{\texttt{Diag} reduction to Hermite form (diagonal form).}\label{fig:diagonalization}
+% \end{figure}
 % \end{figure}
 
 % \begin{proposition}[\texttt{DiagA}]\label{thm:step2a}
@@ -124,7 +124,7 @@ Hence, the asymptotic complexity remains unchanged.
 \textbf{Complexity of \texttt{Diag}.}
 We prove the overall complexity of \texttt{Diag}, $\mathscr{C}_\texttt{Diag}$, by first analyzing its complexity for a single call, and then summing over $d$ values of $i$.
 Let $1\le i \le d$ and consider $\mathcal{P}_{i}\subset \Z_q[x_1,\dots,x_n]$.
-The corresponding coefficient matrix has $\binom{n+i-1}{i}$ rows and $\binom{n+i}{i}$ columns and the complexity of the reduction to Hermite form is given as~\cite{} \[complexity\]. \luc{complete}
+The corresponding coefficient matrix has $\binom{n+i-1}{i}$ rows and $\binom{n+i}{i}$ columns and the complexity of the reduction to Hermite form is given as~\cite{DBLP:conf/issac/StorjohannL96} \[\bigO\left(\binom{n+i-1}{i} \cdot \binom{n+i}{i}^{\omega-1}\right) = \bigO\left( \frac{n(n+i)^{\omega-1}}{n^\omega}\binom{n+i-1}{i}^\omega \right).\] \luc{check}
 % % STEP 2 - DESCRIPTION of 2a ITERATION
 % \underline{\textsf{Claim 2.}}
 % % \begin{claim}
@@ -169,7 +169,7 @@ The corresponding coefficient matrix has $\binom{n+i-1}{i}$ rows and $\binom{n+i
 % CONTINUATION OF MAIN PROOF
 The total complexity of the Hermite form reduction is obtained by summing the contribution of the $d$ iterations over all degrees $1\leq i \leq d$:
 \begin{equation*}
-    \mathscr{C}_{\texttt{Diag}} :=\sum_{i=1}^{d} \left[  \sum_{j=1}^{\binom{n+i-1}{i}}\left[ \left[ \binom{n+i}{i} - j+1 \right]\cdot\left[ \binom{n+i-1}{i} - j+1 \right] \right] \right].
+    \mathscr{C}_{\texttt{Diag}} :=\sum_{i=1}^{d} \left[  \frac{n(n+i)^{\omega-1}}{n^\omega}\binom{n+i-1}{i}^\omega \right].
 \end{equation*}
 Using the following relations
 \begin{equation*}

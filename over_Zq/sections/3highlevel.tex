@@ -121,3 +121,9 @@ At iteration-$i$, it performs the following operations:
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+In order to apply the same algorithm to the \rlwe\ and \mlwe\ cases, we need to adjust the parameters of the algorithm, in particular the number of samples $m$. More specifically
+\[ \begin{split}
+&\text{\rlwe} \rightarrow  \#variables = N \implies m_{\rlwe} = \binom{N+d-1}{d}, \\
+&\text{\mlwe} \rightarrow  \#variables = Nk \implies m_{\mlwe} = \binom{Nk+d-1}{d}.
+\end{split}\]
