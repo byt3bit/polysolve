@@ -15,7 +15,7 @@ The Learning With Errors (LWE) problem was introduced by Oded Regev in 2005~\cit
 
 \begin{definition}[RingLWE~\cite{EC:LyuPeiReg10} and ModuleLWE~\cite{EPRINT:BraGenVai11}]
     Let $N \in \Z^+$ (usually a power of $2$), $q \in \Z^+$, 
-$R_q = \Z_q[x]/\langle \Phi_N(x) \rangle$, where $\Phi_N(x) = x^N + 1$ is the $N$-th cyclotomic polynomial, and let $\chi$ be an error distribution over $R_q$.
+$R_q = \Z_q[x]/\langle \Phi_N(x) \rangle$, where $\Phi_N(x)$ is a $N$-degree irreducible polynomial (usually the $N$-th cyclotomic polynomial, e.g. $x^N + 1$), and let $\chi$ be an error distribution over $R_q$.
 For a secret vector $\vars{s} \in R_q^k$, the distribution
 $A_{\vars{s},\chi}$ produces samples $(\vars{a}, b) \in R_q^k \times R_q$ where:
 \[
