@@ -133,3 +133,13 @@ We emphasize that our approach does not aim at improving existing bounds on the 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\subsection{Some ATTACKS on RLWE/PLWE (Summary in \ref{appendix:summary})}
+
+Because an RLWE sample can be naturally represented as $n$ standard LWE samples, any known attack against LWE can be directly applied to the RLWE setting. However, the added algebraic structure of polynomial rings introduces unique attack vectors that do not exist in standard LWE.
+A primary class of these algebraic attacks exploits ring homomorphisms. Initially, it was demonstrated that PLWE exhibits weak instances when the defining polynomial satisfies $f(1) \equiv 0 \pmod q$. By ``guessing'' the evaluation of the secret polynomial at 1, an attacker can solve the Decision PLWE problem in $\mathcal{O}(q)$ time. While this targets highly specific and non-standard instances, subsequent work generalized this vulnerability to the broader RLWE problem. Specifically, researchers showed that by choosing an alternative polynomial basis, apparently secure RLWE instances can be mapped into these weak PLWE instances. If the error distortion during this transformation is sufficiently small, the $\mathcal{O}(q)$ attack remains effective. 
+
+Furthermore, while these initial techniques were limited to the Decision variant of the problem by mapping to simple prime fields $\mathbb{F}_q$, later cryptanalysis extended these attacks to the Search RLWE problem. By utilizing homomorphisms to higher-degree finite fields $\mathbb{F}_{q^f}$ and applying a chi-square statistical test to the mapped error distributions, attackers successfully exploited ``subfield vulnerabilities'' in prime cyclotomic rings. This advancement established a Search-to-Decision reduction, enabling full secret key recovery when the chosen error variance is small. 
+
+In a broader context, the authors in \cite{...} proved a polynomial-time equivalence between the PLWE, Primal RLWE, and Dual RLWE problems across a wide class of number fields. This guarantees that an algebraic weakness discovered in one representation compromises the others. Consequently, to ensure the security of all variants, modern cryptographic implementations strictly avoid arbitrary or prime cyclotomics. Instead, they utilize 2-power cyclotomic rings (where these problems coincide and are immune to the $\mathcal{O}(q)$ and subfield vulnerabilities) alongside cryptographically large moduli to render such attacks unfeasible in practice.
