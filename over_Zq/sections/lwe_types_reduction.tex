@@ -13,7 +13,7 @@
 % The \belwe\, in which $\vars{e} \in \{0,1\}^m$, is a particular instance and was introduced in~\cite{MicPei13}.
 
 \subsubsection{Reduction of \rlwe\ to the LWE Polynomial System.}
-The reduction of \rlwe\ to the LWE polynomial system is well-known and is also given in~\cite{EC:LyuPeiReg10}. Given a \rlwe\ instance, we can represent \(a, s, e\) as vectors of coefficients with respect to a fixed basis of the underlying ring. This allows us to express the \rlwe\ problem as a system of polynomial equations in the coefficients of the secret.
+The reduction of \rlwe\ to the LWE polynomial system is well-known and is also given in~\cite{EC:LyuPeiReg10}. Given a \rlwe\ instance, we can represent \(a, s, e\) as vectors of coefficients with respect to a fixed basis of the underlying ring. This allows us to express the \rlwe\ problem as a system of polynomial equations in the coefficients of the secret despite the chosen irreducible polynomial $\Phi_N(x)$. Here we give the reduction for the case of cyclotomic rings, i.e. $\Phi_N(x) = x^N + 1$, but the same reduction can be applied to any irreducible polynomial.
 
 For example, consider a sample \(a, s, e \in \Z_q[x]/(x^N + 1)\), we can write them in terms of their coefficients, e.g. $a = a_0 + a_1 x + \dots + a_{N-1} x^{N-1}$.
 

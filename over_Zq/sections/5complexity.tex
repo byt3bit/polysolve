@@ -171,13 +171,13 @@ The total complexity of the Hermite form reduction is obtained by summing the co
 \begin{equation*}
     \mathscr{C}_{\texttt{Diag}} :=\sum_{i=1}^{d} \left[  \frac{n(n+i)^{\omega-1}}{n^\omega}\binom{n+i-1}{i}^\omega \right].
 \end{equation*}
-Using the following relations
-\begin{equation*}
-    \begin{gathered}
-        \sum_{j=1}^k j = \frac{k(k+1)}{2}, \quad \sum_{j=1}^k j^2 = \frac{k(k+1)(2k+1)}{6},
-    \end{gathered}
-\end{equation*}
-we have complexity $\mathscr{C}_{\texttt{Diag}}$ as
+% Using the following relations
+% \begin{equation*}
+%     \begin{gathered}
+%         \sum_{j=1}^k j = \frac{k(k+1)}{2}, \quad \sum_{j=1}^k j^2 = \frac{k(k+1)(2k+1)}{6},
+%     \end{gathered}
+% \end{equation*}
+% we have complexity $\mathscr{C}_{\texttt{Diag}}$ as
 % \begin{align*}
 %     C_{\texttt{DiagA}} 
 %     &=\sum_{i=1}^{d} \Bigg[  \sum_{j=1}^{\binom{n+i-1}{i}}\Bigg[ \binom{n+i}{i}\binom{n+i-1}{i} - j\binom{n+i}{i}\\
@@ -187,33 +187,33 @@ we have complexity $\mathscr{C}_{\texttt{Diag}}$ as
 %     &\qquad\qquad+\frac{1}{6}\binom{n+i-1}{i}\Bigg[ \binom{n+i-1}{i}+1\Bigg]\Bigg[ 2\binom{n+i-1}{i}+1\Bigg]\\
 %     &\qquad\qquad-\frac{2}{2}\binom{n+i-1}{i}\Bigg[ \binom{n+i-1}{i}+1\Bigg] + \binom{n+i-1}{i}^2 +\binom{n+i-1}{i} \Bigg].
 % \end{align*}
-\begin{align*}
-\mathscr{C}_{\texttt{DiagA}} 
-&= \sum_{i=1}^{d} \bigg[ \sum_{j=1}^{\binom{n+i-1}{i}} \bigg[
-\binom{n+i}{i}\binom{n+i-1}{i} - j\binom{n+i}{i} \\
-&\qquad\qquad + \binom{n+i}{i} - j\binom{n+i-1}{i} + j^2 - 2j + \binom{n+i-1}{i} + 1
-\bigg] \bigg] \\
-&= \sum_{i=1}^{d} \bigg[
-\binom{n+i}{i}\binom{n+i-1}{i}^2 - \frac{1}{2}\binom{n+i}{i}\binom{n+i-1}{i}\left(\binom{n+i-1}{i}+1\right) \\
-&\qquad\qquad + \binom{n+i}{i}\binom{n+i-1}{i} - \frac{1}{2}\binom{n+i-1}{i}^2\left(\binom{n+i-1}{i}+1\right) \\
-&\qquad\qquad + \frac{1}{6}\binom{n+i-1}{i}\left(\binom{n+i-1}{i}+1\right)\left(2\binom{n+i-1}{i}+1\right) \\
-&\qquad\qquad - \binom{n+i-1}{i}\left(\binom{n+i-1}{i}+1\right) + \binom{n+i-1}{i}^2 + \binom{n+i-1}{i}\bigg].
-\end{align*}
-The inner sum produces several terms of different orders in $\binom{n+i}{i}$ and $\binom{n+i-1}{i}$.
-Among them, the dominant contribution is
-    \[
-    \frac{1}{2} \binom{n+i}{i} \binom{n+i-1}{i}^2 - \frac{1}{6} \binom{n+i-1}{i}^3,
-    \]
-which governs the asymptotic complexity. 
-Summing over all $i=1,\dots,d$, the largest contribution comes from $i=d$.
-Observing that $\binom{n+d-1}{d} = \frac{n}{n+d}\binom{n+d}{d}$, we obtain
-\begin{align*}
-    \mathscr{C}_{\texttt{DiagA}} 
-    &= \mathcal{O}\Bigg(\frac{1}{2}\binom{n+d}{d}\binom{n+d-1}{d}^2 - \frac{1}{6}\binom{n+d-1}{d}^3\Bigg)\\
-    &= \mathcal{O}\Bigg(\frac{1}{2}\frac{n^2}{{(n+d)}^2}\binom{n+d}{d}^3 - \frac{1}{6}\frac{n^3}{{(n+d)}^3}\binom{n+d}{d}^3\Bigg) \\
-    &= \mathcal{O}\Bigg(\frac{3n^2(n+d)-n^3}{6{(n+d)}^3}\binom{n+d}{d}^3\Bigg)= \mathcal{O}\Bigg(\binom{n+d}{d}^3\Bigg),
-\end{align*}
-    where the last equality holds, under the condition \(n > d\).
+% \begin{align*}
+% \mathscr{C}_{\texttt{DiagA}} 
+% &= \sum_{i=1}^{d} \bigg[ \sum_{j=1}^{\binom{n+i-1}{i}} \bigg[
+% \binom{n+i}{i}\binom{n+i-1}{i} - j\binom{n+i}{i} \\
+% &\qquad\qquad + \binom{n+i}{i} - j\binom{n+i-1}{i} + j^2 - 2j + \binom{n+i-1}{i} + 1
+% \bigg] \bigg] \\
+% &= \sum_{i=1}^{d} \bigg[
+% \binom{n+i}{i}\binom{n+i-1}{i}^2 - \frac{1}{2}\binom{n+i}{i}\binom{n+i-1}{i}\left(\binom{n+i-1}{i}+1\right) \\
+% &\qquad\qquad + \binom{n+i}{i}\binom{n+i-1}{i} - \frac{1}{2}\binom{n+i-1}{i}^2\left(\binom{n+i-1}{i}+1\right) \\
+% &\qquad\qquad + \frac{1}{6}\binom{n+i-1}{i}\left(\binom{n+i-1}{i}+1\right)\left(2\binom{n+i-1}{i}+1\right) \\
+% &\qquad\qquad - \binom{n+i-1}{i}\left(\binom{n+i-1}{i}+1\right) + \binom{n+i-1}{i}^2 + \binom{n+i-1}{i}\bigg].
+% \end{align*}
+% The inner sum produces several terms of different orders in $\binom{n+i}{i}$ and $\binom{n+i-1}{i}$.
+% Among them, the dominant contribution is
+%     \[
+%     \frac{1}{2} \binom{n+i}{i} \binom{n+i-1}{i}^2 - \frac{1}{6} \binom{n+i-1}{i}^3,
+%     \]
+% which governs the asymptotic complexity. 
+% Summing over all $i=1,\dots,d$, the largest contribution comes from $i=d$.
+% Observing that $\binom{n+d-1}{d} = \frac{n}{n+d}\binom{n+d}{d}$, we obtain
+% \begin{align*}
+%     \mathscr{C}_{\texttt{DiagA}} 
+%     &= \mathcal{O}\Bigg(\frac{1}{2}\binom{n+d}{d}\binom{n+d-1}{d}^2 - \frac{1}{6}\binom{n+d-1}{d}^3\Bigg)\\
+%     &= \mathcal{O}\Bigg(\frac{1}{2}\frac{n^2}{{(n+d)}^2}\binom{n+d}{d}^3 - \frac{1}{6}\frac{n^3}{{(n+d)}^3}\binom{n+d}{d}^3\Bigg) \\
+%     &= \mathcal{O}\Bigg(\frac{3n^2(n+d)-n^3}{6{(n+d)}^3}\binom{n+d}{d}^3\Bigg)= \mathcal{O}\Bigg(\binom{n+d}{d}^3\Bigg),
+% \end{align*}
+%     where the last equality holds, under the condition \(n > d\).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
