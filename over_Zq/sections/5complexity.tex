@@ -168,9 +168,33 @@ The corresponding coefficient matrix has $\binom{n+i-1}{i}$ rows and $\binom{n+i
 
 % CONTINUATION OF MAIN PROOF
 The total complexity of the Hermite form reduction is obtained by summing the contribution of the $d$ iterations over all degrees $1\leq i \leq d$:
-\begin{equation*}
-    \mathscr{C}_{\texttt{Diag}} :=\sum_{i=1}^{d} \left[  \frac{n(n+i)^{\omega-1}}{n^\omega}\binom{n+i-1}{i}^\omega \right].
-\end{equation*}
+\begin{align*}
+    \mathscr{C}_{\texttt{Diag}} &= \sum_{i=1}^{d} \left[  \frac{n(n+i)^{\omega-1}}{n^\omega}\binom{n+i-1}{i}^\omega \right]
+    = \sum_{i=1}^{d} \left[  \left(\frac{n+i}{n}\right)^{\omega-1}\binom{n+i-1}{i}^\omega \right].
+\end{align*}
+
+The inner sum produces several terms of different orders in $\binom{n+i-1}{i}$. Observe that, if $n>d$, the dominant contribution of each term in the sum is given by $\binom{n+i-1}{i}^\omega$, which can be approximated as $\bigO\left(n^{i\omega}\right)$.
+As a result we can rewrite the complexity as
+$
+\mathscr{C}_{\texttt{Diag}} = \sum_{i=1}^{d} \bigO\left(n^{i\omega}\right).
+$
+
+Define $y = n^\omega + n^{2\omega} + \dots + n^{d\omega}$ and let's multiply both sides by $-n^\omega$ to obtain $-n^\omega y = -n^{2\omega} - n^{3\omega} - \dots - n^{(d+1)\omega}$.
+Adding the two equations yields $(1-n^\omega)y = n^\omega - n^{(d+1)\omega}$, and therefore
+\begin{align*}
+y &= \frac{n^\omega - n^{(d+1)\omega}}{1 - n^\omega} = n^\omega\frac{n^{d\omega}-1}{n^\omega-1} = \bigO\left(n^{d\omega}\right)
+\end{align*}
+
+
+Consequently, we have that $\mathscr{C}_{\texttt{Diag}} = \bigO\left(n^{d\omega}\right)$.
+% Among them, for $n >> d$, the dominant contribution is given by
+%     \[
+%     \left(\frac{n+d}{n}\right)^{\omega-1} \binom{n+d-1}{d}^\omega 
+%     \]
+% which governs the asymptotic complexity. Observing that \(\left(\frac{n+d}{n}\right)^{\omega-1}\) does not increase the asymptotic complexity of the last term, we have that
+% \[
+% \mathscr{C}_{\texttt{Diag}} = \bigO\left(n^{d\omega}\right).
+% \]
 % Using the following relations
 % \begin{equation*}
 %     \begin{gathered}
