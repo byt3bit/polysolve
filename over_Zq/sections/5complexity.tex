@@ -111,7 +111,7 @@ Hence, the asymptotic complexity remains unchanged.
 %     \resizebox{0.9\linewidth}{!}{%
 %         \input{figures/diagonalization.tex}%
 %     }
-%     \caption{\texttt{Diag} reduction to Hermite form (diagonal form).}\label{fig:diagonalization}
+%     \caption{\algdiag\reduction to Hermite form (diagonal form).}\label{fig:diagonalization}
 % \end{figure}
 % \end{figure}
 
@@ -176,7 +176,7 @@ The corresponding coefficient matrix has $\binom{n+i-1}{i}$ rows and $\binom{n+i
 % The inner sum produces several terms of different orders in $\binom{n+i-1}{i}$. Observe that, if $n>d$, the dominant contribution of each term in the sum is given by $\binom{n+i-1}{i}^\omega$, which can be approximated as $\bigO\left(n^{i\omega}\right)$.
 % As a result we can rewrite the complexity as
 % $
-% \mathscr{C}_{\texttt{Diag}} = \sum_{i=1}^{d} \bigO\left(n^{i\omega}\right).
+% \mathscr{C}_{\algdiag} = \sum_{i=1}^{d} \bigO\left(n^{i\omega}\right).
 % $
 
 % Define $y = n^\omega + n^{2\omega} + \dots + n^{d\omega}$ and let's multiply both sides by $-n^\omega$ to obtain $-n^\omega y = -n^{2\omega} - n^{3\omega} - \dots - n^{(d+1)\omega}$.
@@ -186,7 +186,7 @@ The corresponding coefficient matrix has $\binom{n+i-1}{i}$ rows and $\binom{n+i
 % \end{align*}
 
 
-% Consequently, we have that $\mathscr{C}_{\texttt{Diag}} = \bigO\left(n^{d\omega}\right)$.
+% Consequently, we have that $\mathscr{C}_{\algdiag} = \bigO\left(n^{d\omega}\right)$.
 
 The total complexity of the Hermite form reduction is obtained by summing the contribution of the $d$ iterations over all degrees $1\leq i \leq d$:
 \begin{align*}
@@ -214,7 +214,7 @@ Consequently, we have that $\mathscr{C}_{\algdiag} = \bigO\left(n^{d\omega}\righ
 %     \]
 % which governs the asymptotic complexity. Observing that \(\left(\frac{n+d}{n}\right)^{\omega-1}\) does not increase the asymptotic complexity of the last term, we have that
 % \[
-% \mathscr{C}_{\texttt{Diag}} = \bigO\left(n^{d\omega}\right).
+% \mathscr{C}_{\algdiag} = \bigO\left(n^{d\omega}\right).
 % \]
 % Using the following relations
 % \begin{equation*}
@@ -222,7 +222,7 @@ Consequently, we have that $\mathscr{C}_{\algdiag} = \bigO\left(n^{d\omega}\righ
 %         \sum_{j=1}^k j = \frac{k(k+1)}{2}, \quad \sum_{j=1}^k j^2 = \frac{k(k+1)(2k+1)}{6},
 %     \end{gathered}
 % \end{equation*}
-% we have complexity $\mathscr{C}_{\texttt{Diag}}$ as
+% we have complexity $\mathscr{C}_{\algdiag}$ as
 % \begin{align*}
 %     C_{\texttt{DiagA}} 
 %     &=\sum_{i=1}^{d} \Bigg[  \sum_{j=1}^{\binom{n+i-1}{i}}\Bigg[ \binom{n+i}{i}\binom{n+i-1}{i} - j\binom{n+i}{i}\\

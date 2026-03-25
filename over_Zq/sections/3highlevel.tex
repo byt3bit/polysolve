@@ -29,7 +29,7 @@ In this section, we provide the high-level description of our algorithm applied 
   \resizebox{0.60\textwidth}{!}{\input{figures/bigmatrix}} &
   \resizebox{0.33\textwidth}{!}{\input{figures/summary.tex}}
 \end{tabular}
-\caption{\textsf{Left:} Block-wise representation of the algorithm. Each row block corresponds to polynomials of total degree $i$, from $d$ down to $1$. The left part of each rectangular matrix shows the diagonalized leading submatrix of degree-$i$ monomials, while the right part contains lower-degree terms. \textsf{Right:} Step-wise illustration of one iteration of the algorithm showing \texttt{Spoly}, \texttt{Diag}.}\label{fig:bigmatrix}
+\caption{\textsf{Left:} Block-wise representation of the algorithm. Each row block corresponds to polynomials of total degree $i$, from $d$ down to $1$. The left part of each rectangular matrix shows the diagonalized leading submatrix of degree-$i$ monomials, while the right part contains lower-degree terms. \textsf{Right:} Step-wise illustration of one iteration of the algorithm showing \texttt{Spoly}, \algdiag.}\label{fig:bigmatrix}
 \end{figure}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -94,7 +94,7 @@ At iteration-$i$, it performs the following operations:
     As a consequence, $S_{fg}$ consists only of monomials of degree at most $i+1$.
     After reduction with respect to the starting set of polynomials, all terms in $S_{fg}$ have degree at most $i$.
     % TODO: explicitly say how the reduction is performed, and that it does not require division. Basically it is just an S-polynomial
-    \item \textbf{Diagonalization.} (\texttt{Diag}) \mlf{All in one step.}
+    \item \textbf{Diagonalization.} (\algdiag) \mlf{All in one step.}
     The leading principal submatrix of size $\binom{n+i-1}{i}$ is diagonalized by computing the corresponding Hermite form.  
     % \begin{enumerate}
     %     \item (\texttt{DiagA}) compute a hermite form to obtain an upper triangular matrix by eliminating entries below the diagonal;
