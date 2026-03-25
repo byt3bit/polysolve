@@ -176,6 +176,26 @@
 
 \subsection{Probability of Diagonal Pivots}
 
+
+%%%
+\begin{definition}[LWE Framework]\label{def:GeneralLWE}
+    Let $R_q$ be a commutative ring, $k \ge 1$ be the dimension of the secret vector, and $\chi$ be an error distribution over $R_q$.
+    For a secret vector $\vars{s} \in R_q^k$, we denote by $A_{\vars{s},\chi}$ the probability distribution over $R_q^k \times R_q$ obtained by sampling:\[
+        \vars{a} \xleftarrow{\$} R_q^k, \quad e \leftarrow \chi, \quad \text{and returning} \quad (\vars{a}, b) = (\vars{a}, \langle \vars{a}, \vars{s} \rangle + e) \in R_q^k \times R_q.
+    \]
+    \begin{itemize}
+        \item Search-LWE: Recover the secret $\vars{s}$ given arbitrarily many samples drawn from $A_{\vars{s},\chi}$.
+        \item Decision-LWE: Distinguish arbitrarily many samples drawn from $A_{\vars{s},\chi}$ from the same number of samples drawn uniformly at random from $R_q^k \times R_q$.
+    \end{itemize}
+    This framework captures the three main LWE variants based on the parameterization of $R_q$ and $k$:
+    \begin{itemize}
+        \item Plain LWE (LWE~\cite{STOC:Regev05}): $R_q = \Z_q$ and $k = n$ (where $n$ is the standard LWE dimension).
+        \item Ring-LWE (\rlwe~\cite{EC:LyuPeiReg10}): $R_q = \Z_q[x]/\langle \Phi_N(x) \rangle$ (where $\Phi_N(x)$ is an irreducible polynomial of degree $N$) and $k = 1$.
+        \item Module-LWE (\mlwe~\cite{EPRINT:BraGenVai11}): $R_q = \Z_q[x]/\langle \Phi_N(x) \rangle$ and $k > 1$.
+    \end{itemize}
+\end{definition}
+%%%
+
 Let \(k < N\) and consider \(k\) vectors \(v_1,\dots,v_k \in \Z_q^N\). 
 The probability that these vectors are linearly independent is well-known and can be expressed as
 \begin{equation}\label{pivots}

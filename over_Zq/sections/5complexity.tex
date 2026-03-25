@@ -126,7 +126,7 @@ Hence, the asymptotic complexity remains unchanged.
 \textbf{Complexity of \algdiag.}
 We prove the overall complexity of \algdiag, $\mathscr{C}_\algdiag$, by first analyzing its complexity for a single call, and then summing over $d$ values of $i$.
 Let $1\le i \le d$ and consider $\mathcal{P}_{i}\subset \Z_q[x_1,\dots,x_n]$.
-The corresponding coefficient matrix has $\binom{n+i-1}{i}$ rows and $\binom{n+i}{i}$ columns and the complexity of the reduction to the Smith Normal Form is given as~\cite{DBLP:conf/issac/StorjohannL96}\mlf{Change reference} \[\bigO\left(\binom{n+i-1}{i} \cdot \binom{n+i}{i}^{\omega-1}\right) = \bigO\left( \left(\frac{n+i}{n}\right)^{\omega-1}\binom{n+i-1}{i}^\omega \right).\] \luc{check}
+The corresponding coefficient matrix has $\binom{n+i-1}{i}$ rows and $\binom{n+i}{i}$ columns and the complexity of the reduction to the Smith Normal Form is given as~\cite{DBLP:conf/issac/StorjohannL96}\mlf{Change reference} \[\bigO\left(\binom{n+i-1}{i} \cdot \binom{n+i}{i}^{\omega-1}\right) = \bigO\left( {\left(\frac{n+i}{n}\right)}^{\omega-1}\binom{n+i-1}{i}^\omega \right).\] \luc{check}
 % % STEP 2 - DESCRIPTION of 2a ITERATION
 % \underline{\textsf{Claim 2.}}
 % % \begin{claim}
