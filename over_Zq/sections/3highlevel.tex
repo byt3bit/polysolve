@@ -94,8 +94,8 @@ At iteration-$i$, it performs the following operations:
     As a consequence, $S_{fg}$ consists only of monomials of degree at most $i+1$.
     After reduction with respect to the starting set of polynomials, all terms in $S_{fg}$ have degree at most $i$.
     % TODO: explicitly say how the reduction is performed, and that it does not require division. Basically it is just an S-polynomial
-    \item \textbf{Diagonalization.} (\algdiag) \mlf{All in one step.}
-    The leading principal submatrix of size $\binom{n+i-1}{i}$ is diagonalized by computing the corresponding Hermite form.  
+    \item \textbf{Diagonalization.} (\algdiag)
+    The newly generated matrix is diagonalized by computing the corresponding Smith Normal Form.  
     % \begin{enumerate}
     %     \item (\texttt{DiagA}) compute a hermite form to obtain an upper triangular matrix by eliminating entries below the diagonal;
     %     \item (\texttt{DiagB}) complete the diagonalization by eliminating entries above the diagonal. 
