@@ -72,25 +72,11 @@ The complexity of solving a \slwe\ instance (for bounded errors) with parameters
 In particular, with $m = \binom{n+d-1}{d}$ samples and error support of size $d$, our complexity bound improves upon existing algebraic algorithms~\cite{EPRINT:ACFP14,EC:NMSU25,EPRINT:Steiner24b,ACISP:SunTibAbe20} for bounded error LWE.\@
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
 \subsection{Overview of Previous Algebraic Algorithms}
 \label{subsec:previous-algorithms}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
 \noindent
-\textbf{Linearization Technique~\cite{ICALP:AroGe11}.} 
+\textbf{Arora and Ge Technique~\cite{ICALP:AroGe11}.} 
 Each sample $(\vars{a}_i, b_i) = (\vars{a}_i, \langle\vars{a}_i, \vars{s}\rangle + e_i) \in \Z_q^n \times \Z_q$, for $1 \leq i \leq m$, allows to generate a non-linear equation of degree $d$ in the $n$ components of the secret $\vars{s}$. %which holds with probability $1 - e^{\mathcal{O}({-t^2})}$.
 Considering that a common choice for the error distribution is the discrete Gaussian with mean $0$ and standard deviation $\sigma$, denoted as $\mathcal{N}(0,\sigma)$,
 we have
@@ -107,30 +93,33 @@ The \belwe\, in which $\vars{e} \in \{0,1\}^m$, is a particular instance and was
 
 
 \noindent
-\textbf{Gr{\"o}bner Basis and Degree of Regularity.}
-In~\cite{EPRINT:ACFP14} Gr{\"o}bner basis algorithm was applied %F4~\cite{faugere:F4} and F5~\cite{faugere:F5} can be applied
-to solve the (error free) polynomial system, resulting in significant speed-up over the Arora-Ge algorithm. 
+\textbf{Application of Gr{\"o}bner Basis Method.}
+The Gr{\"o}bner basis algorithm was applied %F4~\cite{faugere:F4} and F5~\cite{faugere:F5} can be applied
+to solve the (error free) polynomial system, in~\cite{EPRINT:ACFP14}, resulting in significant speed-up over the Arora-Ge algorithm. For providing a
+complexity estimate \cite{EPRINT:ACFP14} and susequent works \cite{ACISP:SunTibAbe20, EPRINT:Steiner24b} derived bounds on the so-called degree of regularity under semi-regularity assumption. While more recent result ~\cite{EC:NMSU25} derived a bound that holds with high probability.  
 %For applying Gr{\"o}bner algorithm, or its variants, one should work over $\Z_q$
-The \emph{degree of regularity} ($d_{reg}$) and semi-regularity plays an important role in the complexity analysis of the existing algebraic algorithms (for LWE) that
-uses Gr{\"o}bner basis method. 
-While computing $d_{reg}$ for a polynomial system is difficult, for semi-regular system one can estimate it.  
-Assuming that the polynomial system (from LWE) is semi-regular, the complexity analysis (of Gr{\"o}bner basis algorithm) in~\cite{EPRINT:ACFP14}, provides estimates of the degree of
-regularity. Under the same assumption,~\cite{ACISP:SunTibAbe20} estimates $d_{reg}$ using Hilbert polynomial. While most random systems of polynomials are semi-regular, Fr\"oberg
-showed~\cite{DBLP:journals/jsc/FrobergH94} that there are polynomial systems that can never be semi-regular, and~\cite{HODGES2017519} showed that (for certain parameter choices) semi-regular sequence
-can never exist.  
+% The \emph{degree of regularity} ($d_{reg}$) and semi-regularity plays an important role in the complexity analysis of the existing algebraic algorithms (for LWE) that
+% uses Gr{\"o}bner basis method. 
+% While computing $d_{reg}$ for a polynomial system is difficult, for semi-regular system one can estimate it.  
+% Assuming that the polynomial system (from LWE) is semi-regular, the complexity analysis (of Gr{\"o}bner basis algorithm) in~\cite{EPRINT:ACFP14}, provides estimates of the degree of
+% regularity. Under the same assumption,~\cite{ACISP:SunTibAbe20} estimates $d_{reg}$ using Hilbert polynomial. While most random systems of polynomials are semi-regular, Fr\"oberg
+% showed~\cite{DBLP:journals/jsc/FrobergH94} that there are polynomial systems that can never be semi-regular, and~\cite{HODGES2017519} showed that (for certain parameter choices) semi-regular sequence
+% can never exist.
+
 % Understanding and analyzing the degree of regularity is crucial for deriving fine-grained complexity bounds for Gr\"obner basis computations, and has therefore been the focus of several works aiming at increasingly accurate complexity estimates.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-Recently,~\cite{EPRINT:Steiner24b} provided a refined complexity analysis using solving degree and assuming the degree of regularity to be same as the degree of polynomial. While this result does not make semi-regularity assumption, still relies on the assumption of degree of regularity. In~\cite{EC:NMSU25}, under semi-regularity assumption, the $d_{reg}$ was shown to be $d$ with high probability. 
+% Recently,~\cite{EPRINT:Steiner24b} provided a refined complexity analysis using solving degree and assuming the degree of regularity to be same as the degree of polynomial. While this result does not make semi-regularity assumption, still relies on the assumption of degree of regularity. In~\cite{EC:NMSU25}, under semi-regularity assumption, the $d_{reg}$ was shown to be $d$ with high probability. 
 % and consequently gives a refined complexity analysis of LWE (by taking into account key parameters such as the modulus $q$, noise distribution, dimension $n$, and number of samples $m$). 
 % Using concepts of \emph{generic coordinates} and \emph{solving degree}, this work reduces reliance on the semi-regularity assumptions of earlier analyses~\cite{EPRINT:ACFP14}.
 % %Despite these refinements, the degree of regularity remains high for standard cryptographic parameters, implying very large algebraic complexity.
 % In particular, the main contribution relies on providing a tighter bound on the estimate of the complexity of computing Gr\"obner basis.
 
-We emphasize that our approach does not aim at improving existing bounds on the degree of regularity; instead, we avoid this notion altogether by providing a fine-grained complexity directly in terms of the LWE parameters.
+% We emphasize that our approach does not aim at improving existing bounds on the degree of regularity; instead, we avoid this notion altogether by providing a fine-grained complexity directly in terms of the LWE parameters.
 
+All the above-mentioned algebraic analysis that use polynomial system solving methods, work for over $\F_q$. 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
