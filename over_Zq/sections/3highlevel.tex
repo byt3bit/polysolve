@@ -38,7 +38,7 @@ In this section, we provide the high-level description of our algorithm applied 
 In the polynomial system $\mathcal{F}_{\mathrm{LWE}}$ (stemming from \slwe), derived from $m = \binom{n+d-1}{d}$ samples, we identify each polynomial with its coefficient vector. The terms of each polynomial are ordered according to a fixed \emph{graded} monomial ordering by total degree. 
 % in the vector space of multivariate polynomials in $n$ variables of (total) degree at most $d$, which has dimension $w = \binom{n+d}{d}$. Fixing a graded monomial ordering induces a canonicalordering by total degree.
 This yields a matrix $M \in \Z_q^{m \times w}$ whose rows correspond to the input polynomials and $w = \binom{n+d}{d}$.
-With high probability, these rows are linearly independent (see \Cref{pivots}) and the leading principal $m \times m$ submatrix of $M$ is invertible; diagonalizing it (computing its Hermite form) produces a set of polynomials with leading terms of degree $d$ (outlined by the first square structure in \cref{fig:bigmatrix}). Note that, because we are working over $\Z_q$, the resulting polynomials are not necessarily monic, but their leading terms are all distinct and cover all monomials of degree $d$.
+With high probability, these rows are linearly independent (see \Cref{pivots}) and the leading principal $m \times m$ submatrix of $M$ is invertible; diagonalizing it (computing its Smith Normal Form) produces a set of polynomials with leading terms of degree $d$ (outlined by the first square structure in \cref{fig:bigmatrix}). Note that, because we are working over $\Z_q$, the resulting polynomials are not necessarily monic, but their leading terms are all distinct and cover all monomials of degree $d$.
 The remaining columns form a dense block containing lower-degree monomials. Each polynomial in this representation has a unique term of degree $d$ corresponding to the leading term, and additional terms of lower degree. The leading terms are all distinct and, due to the linear independence of the rows, they cover all monomials of degree $d$.
 
 % This structure can be represented as a rectangular coefficient matrix with a block decomposition: the left part, corresponding to a square block, is diagonalized and highlighted in Figure~\ref{fig:bigmatrix}, while the remaining columns form a dense block containing lower-degree monomials. 
@@ -97,7 +97,7 @@ At iteration-$i$, it performs the following operations:
     \item \textbf{Diagonalization.} (\algdiag)
     The newly generated matrix is diagonalized by computing the corresponding Smith Normal Form.  
     % \begin{enumerate}
-    %     \item (\texttt{DiagA}) compute a hermite form to obtain an upper triangular matrix by eliminating entries below the diagonal;
+    %     \item (\texttt{DiagA}) compute a Smith Normal Form to obtain an upper triangular matrix by eliminating entries below the diagonal;
     %     \item (\texttt{DiagB}) complete the diagonalization by eliminating entries above the diagonal. 
     % \end{enumerate}
   \end{enumerate}

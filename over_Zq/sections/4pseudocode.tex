@@ -12,7 +12,7 @@ $|\mathcal{P}_i| = |\mathcal{D}_i| = \binom{n+i-1}{i}$.
 
 \Cref{alg:step1} generates a set of $S$-polynomials $\mathcal{P}_i$ from the set of the diagonalized polynomials $\mathcal{D}_{i+1}$. This process selects a number of
 admissible pairs (\cref{def:admissible-pair}) $(f,g)$ to compute $S_{fg}$ (having degree $i+1$), and removes all monomials of degree $i+1$ by reducing w.r.t.\ the polynomial set $\mathcal{D}_{i+1}$.
-\algdiag\ transforms a set of polynomials in Hermite form $\mathcal{P}_i$ into diagonal form $\mathcal{D}_i$ by iteratively eliminating leading terms from the remaining polynomials.
+\algdiag\ transforms a set of polynomials $\mathcal{P}_i$ into diagonal form (Smith Normal Form) $\mathcal{D}_i$.
 % The main algorithm, \Cref{alg:alg}, iteratively applies $S$-polynomial generation and diagonalization steps to reduce the initial set of polynomials $\mathcal{P}_d$ to a set of $n$ linear polynomials of the form $\{x_j - s_j\} _{j=1}^n$.
 
 
@@ -173,7 +173,7 @@ For the sake of completeness, a pseudocode description of the \textsc{Successor}
 
 
 % \begin{algorithm}[t!]
-% \caption{(\algdiag\) --- Diagonalization: conversion to Hermite form}\label{alg:step2b}
+% \caption{(\algdiag\) --- Diagonalization: conversion to Smith Normal Form}\label{alg:step2b}
 % \begin{algorithmic}[1]
 % \Statex{\hspace*{-\algorithmicindent} \textbf{Input:} $\mathcal{P}_i$: set of polynomials, $n \geq 1$: secret's dimension, $1\leq i\leq d$: current degree}
 % \Statex{\hspace*{-\algorithmicindent} \textbf{Output:} $\mathcal{D}_i$: set of polynomials in diagonal form}
@@ -200,7 +200,7 @@ For the sake of completeness, a pseudocode description of the \textsc{Successor}
     % \begin{itemize}
     %     \item $S$-polynomial generation and reduction:
     %         $C_{\texttt{Spoly}}(i) = 2\cdot \binom{n+i-1}{i}^2\cdot \!\left[ \binom{n+i}{i} + 1 \right]$,
-    %     \item conversion to hermite form: $C_{\texttt{DiagA}}(i) =\sum_{j=1}^{\binom{n+i-1}{i}}\!\left[\!\left[ \binom{n+i}{i} - j + 1 \right]\cdot \!\left[ \binom{n+i-1}{i} - j + 1 \right]\right]$,
+    %     \item conversion to Smith Normal Form: $C_{\texttt{DiagA}}(i) =\sum_{j=1}^{\binom{n+i-1}{i}}\!\left[\!\left[ \binom{n+i}{i} - j + 1 \right]\cdot \!\left[ \binom{n+i-1}{i} - j + 1 \right]\right]$,
     %     \item conversion to diagonal form: $C_{\texttt{DiagB}}(i) =\sum_{j=1}^{\binom{n+i-1}{i}} \!\left[\!\left[ \binom{n+i-1}{i-1} +1 \right] \cdot \!\left[ \binom{n+i-1}{i} - j \right]\right]$.
     % \end{itemize}
 \end{theorem}
