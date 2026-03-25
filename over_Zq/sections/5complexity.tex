@@ -166,27 +166,48 @@ The corresponding coefficient matrix has $\binom{n+i-1}{i}$ rows and $\binom{n+i
 % proving the {\textsf{Claim 2.}}
 % \end{claimproof}
 
-% CONTINUATION OF MAIN PROOF
+% CONTINUATION OF MAIN PROOF -- LUCA'S VERSION
+% The total complexity of the Hermite form reduction is obtained by summing the contribution of the $d$ iterations over all degrees $1\leq i \leq d$:
+% \begin{align*}
+%     \mathscr{C}_{\texttt{Herm}} &= \sum_{i=1}^{d} \left[  \frac{n(n+i)^{\omega-1}}{n^\omega}\binom{n+i-1}{i}^\omega \right]
+%     = \sum_{i=1}^{d} \left[  \left(\frac{n+i}{n}\right)^{\omega-1}\binom{n+i-1}{i}^\omega \right].
+% \end{align*}
+
+% The inner sum produces several terms of different orders in $\binom{n+i-1}{i}$. Observe that, if $n>d$, the dominant contribution of each term in the sum is given by $\binom{n+i-1}{i}^\omega$, which can be approximated as $\bigO\left(n^{i\omega}\right)$.
+% As a result we can rewrite the complexity as
+% $
+% \mathscr{C}_{\texttt{Diag}} = \sum_{i=1}^{d} \bigO\left(n^{i\omega}\right).
+% $
+
+% Define $y = n^\omega + n^{2\omega} + \dots + n^{d\omega}$ and let's multiply both sides by $-n^\omega$ to obtain $-n^\omega y = -n^{2\omega} - n^{3\omega} - \dots - n^{(d+1)\omega}$.
+% Adding the two equations yields $(1-n^\omega)y = n^\omega - n^{(d+1)\omega}$, and therefore
+% \begin{align*}
+% y &= \frac{n^\omega - n^{(d+1)\omega}}{1 - n^\omega} = n^\omega\frac{n^{d\omega}-1}{n^\omega-1} = \bigO\left(n^{d\omega}\right)
+% \end{align*}
+
+
+% Consequently, we have that $\mathscr{C}_{\texttt{Diag}} = \bigO\left(n^{d\omega}\right)$.
+
 The total complexity of the Hermite form reduction is obtained by summing the contribution of the $d$ iterations over all degrees $1\leq i \leq d$:
 \begin{align*}
-    \mathscr{C}_{\texttt{Diag}} &= \sum_{i=1}^{d} \left[  \frac{n(n+i)^{\omega-1}}{n^\omega}\binom{n+i-1}{i}^\omega \right]
+    \mathscr{C}_{\texttt{Herm}} &= \sum_{i=1}^{d} \left[  \frac{n(n+i)^{\omega-1}}{n^\omega}\binom{n+i-1}{i}^\omega \right]
     = \sum_{i=1}^{d} \left[  \left(\frac{n+i}{n}\right)^{\omega-1}\binom{n+i-1}{i}^\omega \right].
 \end{align*}
 
-The inner sum produces several terms of different orders in $\binom{n+i-1}{i}$. Observe that, if $n>d$, the dominant contribution of each term in the sum is given by $\binom{n+i-1}{i}^\omega$, which can be approximated as $\bigO\left(n^{i\omega}\right)$.
-As a result we can rewrite the complexity as
+The inner sum produces several terms of different orders in $n$ from the expansion of $\binom{n+i-1}{i}$. Observe that, if $n>d$, the dominant contribution of each term in the sum is given by $\binom{n+i-1}{i}^\omega$, which can be approximated as $\bigO\left(n^{i\omega}\right)$. Furthermore, the leading fractional term approaches a constant since ${\left(1 + \frac{i}{n}\right)}^{\omega-1} = \bigO(1)$. 
+As a result, we can rewrite the complexity as:
 $
-\mathscr{C}_{\texttt{Diag}} = \sum_{i=1}^{d} \bigO\left(n^{i\omega}\right).
+\mathscr{C}_{\texttt{Herm}} = \sum_{i=1}^{d} \bigO\left(n^{i\omega}\right).
 $
 
-Define $y = n^\omega + n^{2\omega} + \dots + n^{d\omega}$ and let's multiply both sides by $-n^\omega$ to obtain $-n^\omega y = -n^{2\omega} - n^{3\omega} - \dots - n^{(d+1)\omega}$.
-Adding the two equations yields $(1-n^\omega)y = n^\omega - n^{(d+1)\omega}$, and therefore
+The resulting expression is a finite geometric series. Define $y = n^\omega + n^{2\omega} + \dots + n^{d\omega}$ and let's multiply both sides by $-n^\omega$ to obtain $-n^\omega y = -n^{2\omega} - n^{3\omega} - \dots - n^{(d+1)\omega}$.
+Adding the two equations yields $(1-n^\omega)y = n^\omega - n^{(d+1)\omega}$, and therefore:
 \begin{align*}
-y &= \frac{n^\omega - n^{(d+1)\omega}}{1 - n^\omega} = n^\omega\frac{n^{d\omega}-1}{n^\omega-1} = \bigO\left(n^{d\omega}\right)
+y &= \frac{n^{(d+1)\omega} - n^\omega}{n^\omega - 1} = n^\omega \frac{n^{d\omega}-1}{n^\omega-1} = \bigO\left(n^{d\omega}\right).
 \end{align*}
 
+Consequently, we have that $\mathscr{C}_{\texttt{Herm}} = \bigO\left(n^{d\omega}\right)$.
 
-Consequently, we have that $\mathscr{C}_{\texttt{Diag}} = \bigO\left(n^{d\omega}\right)$.
 % Among them, for $n >> d$, the dominant contribution is given by
 %     \[
 %     \left(\frac{n+d}{n}\right)^{\omega-1} \binom{n+d-1}{d}^\omega 
