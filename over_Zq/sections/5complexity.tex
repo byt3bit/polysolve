@@ -26,7 +26,7 @@ Let $1 \le i \le d-1$ and consider the diagonalized set $\mathcal{D}_{i+1}$.
 % \begin{claim}
     The cost of generating and reducing $\mathcal{P}_i$ from $\mathcal{D}_{i+1}$ at the iteration-$i$ is
     \[
-        2\cdot \binom{n+i-1}{i}^2\cdot \left[ \binom{n+i}{i} + 1 \right].
+        \left( 2 \cdot \binom{n+i-1}{i}^2 + 2 \cdot \binom{n+i-1}{i}\right) \cdot \left[ \binom{n+i}{i} + 1 \right].
     \]
 % \end{claim}
 % \begin{claimproof}
@@ -38,7 +38,9 @@ We have
 |\mathcal{P}_i| = \binom{n+i-1}{i}.
 \]
 
-Each polynomial in $\mathcal{D}_{i+1}$ contains exactly one monomial of degree $i+1$ and at most $\binom{n+i-1}{i}$ monomials of degree $i$, namely those monomials which, when multiplied by a variable, yield a monomial of degree $i+1$.
+Each polynomial in $\mathcal{D}_{i+1}$ contains at most $\binom{n+i}{i}+1$ monomials, hence, as the $S$-polynomial computation in \(\Z_q\) requires the multiplication by a scalar (see \Cref{eq:spoly-expanded}), the cost of generating a single $S$-polynomial is at most $2\left(\binom{n+i}{i}+1\right)$ scalar multiplications.
+
+Furthermore, each polynomial in $\mathcal{D}_{i+1}$ contains exactly one monomial of degree $i+1$ and at most $\binom{n+i-1}{i}$ monomials of degree $i$, namely those monomials which, when multiplied by a variable, yield a monomial of degree $i+1$.
 Consequently, in the $S$-polynomial $S_{fg}$, at most $2 \cdot \binom{n+i-1}{i}$ monomials of degree $i+1$ arise, where the factor $2$ accounts for the contributions coming from both $f$ and $g$.
 
 Each of these degree-$(i+1)$ monomials is reduced using exactly one polynomial from $\mathcal{D}_{i+1}$, thanks to its diagonal structure.
@@ -49,9 +51,9 @@ $2 \cdot \binom{n+i-1}{i} \cdot \left[\binom{n+i}{i}+1\right]$.
 %\]
 Since $\binom{n+i-1}{i}$ $S$-polynomials are generated at the iteration-$i$, the total cost is
 \[
-\sum_{j=1}^{\binom{n+i-1}{i}} \left[ 2 \cdot \binom{n+i-1}{i} \cdot \left[ \binom{n+i}{i} + 1 \right] \right]
+\sum_{j=1}^{\binom{n+i-1}{i}} \left[ 2 \cdot \binom{n+i-1}{i} \cdot \left[ \binom{n+i}{i} + 1 \right] + 2\cdot \left[ \binom{n+i}{i} + 1 \right]\right]
 =
-2 \cdot \binom{n+i-1}{i}^2 \cdot \left[ \binom{n+i}{i} + 1 \right],
+\left( 2 \cdot \binom{n+i-1}{i}^2 + 2 \cdot \binom{n+i-1}{i}\right) \cdot \left[ \binom{n+i}{i} + 1 \right],
 \]
 proving the {\textsf{Claim 1.}}
 % \end{claimproof}
@@ -61,9 +63,9 @@ The total complexity of the $S$-polynomial generation and reduction is obtained 
 Using the following relation $\binom{n+i}{i} =\frac{n+i}{n}\binom{n+i-1}{i}$, we have complexity $\mathscr{C}_{\algspoly}$ as
     \begin{align*}
         \mathscr{C}_{\texttt{Spoly}}
-        &:=\sum_{i=1}^{d-1} \left[  2 \cdot \binom{n+i-1}{i}^2 \cdot \left[ \binom{n+i}{i} + 1 \right] \right]\\
+        &:=\sum_{i=1}^{d-1} \left[\left( 2 \cdot \binom{n+i-1}{i}^2 + 2 \cdot \binom{n+i-1}{i}\right) \cdot \left[ \binom{n+i}{i} + 1 \right]\right]\\
       % &= \sum_{i=1}^{d-1} \Bigg[ 2 \binom{n+i-1}{i}^2  \binom{n+i}{i} + 2\binom{n+i-1}{i}^2  \Bigg]
-        &= \sum_{i=1}^{d} \left[ 2\frac{n+i}{n}\binom{n+i-1}{i}^3 + 2\binom{n+i-1}{i}^2  \right],
+        &= \sum_{i=1}^{d} \left[ 2\frac{n+i}{n}\binom{n+i-1}{i}^3 + 2\left(\frac{n+i}{n}+1\right)\binom{n+i-1}{i}^2 + 2\binom{n+i-1}{i}  \right],
     \end{align*}
 which gives for $i=d-1$ the highest term.
 Observing that
@@ -74,7 +76,7 @@ Observing that
 % \end{equation*}
 we obtain
     \begin{align*}
-        &\mathcal{O}\left(2\frac{n+d-1}{n}\binom{n+d-2}{d-1}^3 + 2\binom{n+d-2}{d-1}^2\right) = \mathcal{O}\left(2\frac{n+d-1}{n}\binom{n+d-2}{d-1}^3\right) \\
+        &\mathcal{O}\left(2\frac{n+d-1}{n}\binom{n+d-2}{d-1}^3 + 2\left(\frac{n+d-1}{n}+1\right)\binom{n+d-2}{d-1}^2 + 2\binom{n+d-2}{d-1}\right) = \mathcal{O}\left(2\frac{n+d-1}{n}\binom{n+d-2}{d-1}^3\right) \\
         &= \mathcal{O}\left(2\frac{n+d-1}{n}\frac{{(nd)}^3}{{(n+d)}^3{(n+d-1)}^3}\binom{n+d}{d}^3\right)\\
         &= \mathcal{O}\left(\frac{2n^2d^3}{{(n+d)}^3{(n+d-1)}^2}\binom{n+d}{d}^3\right)= \mathcal{O}\left(\binom{n+d}{d}^3\right),
     \end{align*}
