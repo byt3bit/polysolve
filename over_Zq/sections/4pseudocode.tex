@@ -12,7 +12,7 @@ $|\mathcal{P}_i| = |\mathcal{D}_i| = \binom{n+i-1}{i}$.
 
 
 \Cref{alg:step1} generates a set of $S$-polynomials $\mathcal{P}_i$ from the set of the diagonalized polynomials $\mathcal{D}_{i+1}$. This process selects a number of
-admissible pairs (\cref{def:admissible-pair}) $(f,g)$ to compute $S_{fg}$ (having degree $i+1$), and removes all monomials of degree $i+1$ by reducing w.r.t.\ the polynomial set $\mathcal{D}_{i+1}$.
+admissible pairs (\Cref{def:admissible-pair}) $(f,g)$ to compute $S_{fg}$ (having degree $i+1$), and removes all monomials of degree $i+1$ by reducing w.r.t.\ the polynomial set $\mathcal{D}_{i+1}$.
 \algdiag\ transforms a set of polynomials $\mathcal{P}_i$ into diagonal form (Smith Normal Form) $\mathcal{D}_i$.
 % The main algorithm, \Cref{alg:alg}, iteratively applies $S$-polynomial generation and diagonalization steps to reduce the initial set of polynomials $\mathcal{P}_d$ to a set of $n$ linear polynomials of the form $\{x_j - s_j\} _{j=1}^n$.
 
@@ -220,7 +220,7 @@ For the sake of completeness, a pseudocode description of the \textsc{Successor}
     \begin{align*}
         \mathscr{C}_{tot} &:= \mathscr{C}_{\algspoly} + \mathscr{C}_{\algdiag} = \mathcal{O}\left( n^{3(d-1)} \right) + \mathcal{O}\left(n^{d\omega}\right) = \mathcal{O}\left(n^{\max(3(d-1), d\omega)}\right).
     \end{align*}
-    The correctness of the algorithm is proven in \cref{sec:correct}.
+    The correctness of the algorithm is proven in \Cref{sec:correct}.
 \end{proof}
 
 
@@ -284,9 +284,9 @@ Therefore, $\vars{s}$ is a common zero of all polynomials in $\mathcal{D}_i$, fo
 
 
 By \Cref{prop:preservation}, $\vars{s}$ remains the zero of the polynomials through all iterations.
-In particular, at the last iteration, all polynomials in $\mathcal{D}_1$ are linear, monic and of degree $1$.
-Each equation, due to diagonalization process, is of the form $x_i - s_i$ for $i \in \{1,\dots,n\}$, and the secret is uniquely determined as $\vars{s} = (s_1, \dots, s_n)$.
-
+In particular, at the last iteration, all polynomials in $\mathcal{D}_1$ are linear and of degree $1$.
+Each equation, due to diagonalization process, is of the form $x_i - s_i$ \mlf{$a_jx_j - s_j$} for $i \in \{1,\dots,n\}$, and the secret is uniquely determined as $\vars{s} = (s_1, \dots, s_n)$.
+\mlf{not directly $s_j$.}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
