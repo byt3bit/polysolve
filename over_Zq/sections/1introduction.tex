@@ -16,17 +16,17 @@ The Learning With Errors (LWE) problem was introduced by Oded Regev in 2005~\cit
 \begin{definition}[RingLWE~\cite{EC:LyuPeiReg10} and ModuleLWE~\cite{EPRINT:BraGenVai11}]
     Let $N \in \Z^+$ (usually a power of $2$), $q \in \Z^+$, 
 $R_q = \Z_q[x]/\langle \Phi_N(x) \rangle$, where $\Phi_N(x)$ is a $N$-degree irreducible polynomial (usually the $N$-th cyclotomic polynomial, e.g. $x^N + 1$), and let $\chi$ be an error distribution over $R_q$.
-For a secret vector $\vars{s} \in R_q^k$, the distribution
-$A_{\vars{s},\chi}$ produces samples $(\vars{a}, b) \in R_q^k \times R_q$ where:
+For a secret vector $\vars{s} \in R_q^n$, the distribution
+$A_{\vars{s},\chi}$ produces samples $(\vars{a}, b) \in R_q^n \times R_q$ where:
 \[
-    \vars{a} \xleftarrow{\$} R_q^k, \quad e \leftarrow \chi, \quad
+    \vars{a} \xleftarrow{\$} R_q^n, \quad e \leftarrow \chi, \quad
     b = \langle \vars{a}, \vars{s} \rangle + e \in R_q.
 \]
 The \emph{search} variant asks to recover $\vars{s}$ given arbitrarily many samples from
 $A_{\vars{s},\chi}$. The \emph{decision} variant asks to distinguish
-$A_{\vars{s},\chi}$ from the uniform distribution over $R_q^k \times R_q$.
+$A_{\vars{s},\chi}$ from the uniform distribution over $R_q^n \times R_q$.
 
-If $k=1$, we refer to the problem as RingLWE (\rlwe), and if $k>1$, we refer to it as ModuleLWE (\mlwe).
+If $n=1$, we refer to the problem as RingLWE (\rlwe), and if $n>1$, we refer to it as ModuleLWE (\mlwe).
 \end{definition}
 
 

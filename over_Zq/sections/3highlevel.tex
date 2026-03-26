@@ -20,7 +20,7 @@ $f(x) = x \cdot \prod_{i=1}^{t} (x+i)(x-i)$, as described in \Cref{subsec:previo
 % \end{figure}
 
 \subsection{High-level Intuition of the Algorithm}
-In this section, we provide the high-level description of our algorithm applied to the polynomial system $\mathcal{F}_{\mathrm{LWE}}$ derived from \slwe. Next, we will show how to adapt the parameters of the algorithm to solve the other two variants, namely \rlwe\ and \mlwe. 
+In this section and \Cref{sec:pseudocode}, we provide the description of our algorithm applied to the polynomial system $\mathcal{F}_{\mathrm{LWE}}$ derived from \slwe. Next, we will show how to adapt the parameters of the algorithm to solve the other two variants, namely \rlwe\ and \mlwe. 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % NEW IMAGE
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -130,7 +130,7 @@ In order to apply the same algorithm to the \rlwe\ and \mlwe\ cases, we need to 
 % \end{split}\]
 \begin{align*}
   \text{\rlwe} \rightarrow  \#variables = N &\implies m_{\rlwe} = \binom{N+d-1}{d}, \\
-  \text{\mlwe} \rightarrow  \#variables = Nk &\implies m_{\mlwe} = \binom{Nk+d-1}{d}.
+  \text{\mlwe} \rightarrow  \#variables = Nn &\implies m_{\mlwe} = \binom{Nn+d-1}{d}.
 \end{align*}
 
-\mlf{For a better understanding: Specify again what is $N$? Better not to use $k$ in the S-poly def}
+\mlf{For a better understanding: Specify again what is $N$? }

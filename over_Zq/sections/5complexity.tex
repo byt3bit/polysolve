@@ -76,22 +76,22 @@ Using the following relations $\binom{n+i}{i} =\frac{n+i}{n}\binom{n+i-1}{i}$ an
     &= \sum_{i=1}^{d-1} \Bigg[ \left(2 + 4\frac{n+i}{n}\right)\binom{n+i-1}{i}^3 + \left(3 + 2\frac{n+i}{n}\right)\binom{n+i-1}{i}^2 + 2\binom{n+i-1}{i} \Bigg],
 \end{align*}
 which gives for $i=d-1$ the highest term.
-Observing that $\binom{n+d-2}{d-1} = \frac{nd}{(n+d)(n+d-1)}\binom{n+d}{d}$, we obtain:
-\begin{align*}
-    \mathscr{C}_{\algspoly} 
-    &= \mathcal{O}\left( \left(\frac{6n+4d-4}{n}\right)\binom{n+d-2}{d-1}^3 + \left( \frac{5n+2d-2}{n}\right)\binom{n+d-2}{d-1}^2 + 2\binom{n+d-2}{d-1} \right) \\
-    &= \mathcal{O}\left( \left( \frac{6n+4d-4}{n} \right) \frac{{(nd)}^3}{{(n+d)}^3{(n+d-1)}^3}\binom{n+d}{d}^3 \right) \\
-    &= \mathcal{O}\left( \frac{n(6n+4d-4)d^3}{{(n+d)}^3{(n+d-1)}^2}\binom{n+d}{d}^3 \right) = \mathcal{O}\left(\binom{n+d}{d}^3\right) = \mathcal{O}\left( n^{3d} \right),
-\end{align*}
-where the last equality holds under the condition $n > d$.
-\end{proof}
-\mlf{Maybe we can also do this:}
+% Observing that $\binom{n+d-2}{d-1} = \frac{nd}{(n+d)(n+d-1)}\binom{n+d}{d}$, we obtain:
+% \begin{align*}
+%     \mathscr{C}_{\algspoly} 
+%     &= \mathcal{O}\left( \left(\frac{6n+4d-4}{n}\right)\binom{n+d-2}{d-1}^3 + \left( \frac{5n+2d-2}{n}\right)\binom{n+d-2}{d-1}^2 + 2\binom{n+d-2}{d-1} \right) \\
+%     &= \mathcal{O}\left( \left( \frac{6n+4d-4}{n} \right) \frac{{(nd)}^3}{{(n+d)}^3{(n+d-1)}^3}\binom{n+d}{d}^3 \right) \\
+%     &= \mathcal{O}\left( \frac{n(6n+4d-4)d^3}{{(n+d)}^3{(n+d-1)}^2}\binom{n+d}{d}^3 \right) = \mathcal{O}\left(\binom{n+d}{d}^3\right) = \mathcal{O}\left( n^{3d} \right),
+% \end{align*}
+% \mlf{Maybe we can also do this:}
 \begin{align*}
     \mathscr{C}_{\algspoly} 
     &= \mathcal{O}\left( \left(\frac{6n+4d-4}{n}\right)\binom{n+d-2}{d-1}^3 + \left( \frac{5n+2d-2}{n}\right)\binom{n+d-2}{d-1}^2 + 2\binom{n+d-2}{d-1} \right) \\
     &= \mathcal{O}\left( \left(\frac{6n+4d-4}{n}\right)\binom{n+d-2}{d-1}^3 \right) \\
-    &= \mathcal{O}\left( \left(\frac{6n+4d-4}{n}\right) {\left( \frac{(n+d-2)\cdots (n+1)n}{(d-1)!}\right)}^3 \right) = \mathcal{O}\left( n^{3(d-1)} \right),
+    &= \mathcal{O}\left( \left(\frac{6n+4d-4}{n}\right) {\left( \frac{(n+d-2)\cdots (n+1)n}{(d-1)!}\right)}^3 \right) = \mathcal{O}\left( n^{3(d-1)} \right).
 \end{align*}
+where the last equality holds under the condition $n > d$.
+\end{proof}
 
 % ------------------------------------------
 % ------------------------------------------
@@ -139,7 +139,7 @@ Hence, the asymptotic complexity remains unchanged.
 \textbf{Complexity of \algdiag.}
 We prove the overall complexity of \algdiag, $\mathscr{C}_\algdiag$, by first analyzing its complexity for a single call, and then summing over $d$ values of $i$.
 Let $1\le i \le d$ and consider $\mathcal{P}_{i}\subset \Z_q[x_1,\dots,x_n]$.
-The corresponding coefficient matrix has $\binom{n+i-1}{i}$ rows and $\binom{n+i}{i}$ columns and the complexity of the reduction to the Smith Normal Form is given as~\cite{DBLP:conf/issac/Storjohann96} \[\bigO\left(\binom{n+i-1}{i} \cdot \binom{n+i}{i}^{\omega-1}\right) = \bigO\left( {\left(\frac{n+i}{n}\right)}^{\omega-1}\binom{n+i-1}{i}^\omega \right).\] \luc{check}
+The corresponding coefficient matrix has $\binom{n+i-1}{i}$ rows and $\binom{n+i}{i}$ columns and the complexity of the reduction to the Smith Normal Form is given as~\cite{DBLP:conf/issac/Storjohann96} \[\bigO\left(\binom{n+i-1}{i} \cdot \binom{n+i}{i}^{\omega-1}\right) = \bigO\left( {\left(\frac{n+i}{n}\right)}^{\omega-1}\binom{n+i-1}{i}^\omega \right).\] 
 % % STEP 2 - DESCRIPTION of 2a ITERATION
 % \underline{\textsf{Claim 2.}}
 % % \begin{claim}

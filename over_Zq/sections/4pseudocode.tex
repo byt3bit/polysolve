@@ -1,4 +1,5 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\label{sec:pseudocode}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % For clarity, we introduce a few notations for the sets of polynomials, arising at the various stages of a $\deg_i$ iteration.
 For $1 \le i \le d-1$, let $\mathcal{D}_i$ denote the set of polynomials obtained after the diagonalization at iteration-$i$ and $\mathcal{D}_d$ denotes the first diagonalized set.
@@ -131,10 +132,10 @@ Then there exists a collection of (at least) $\binom{n+i-1}{i}$ pairwise disjoin
 \end{lemma}
 \mlf{In the proof: just fix (i) and (ii) into 1. and 2.}
 \begin{proof}
-In order to prove this result, we first establish \textcolor{gray}{\textbf{\textsf{(i)}}} a necessary condition for the existence of a sufficient number of admissible pairs, and then show \textcolor{gray}{\textbf{\textsf{(ii)}}} that this condition is also sufficient by providing an explicit construction of such pairs.
+In order to prove this result, we first establish {\textbf{\textsf{(i)}}} a necessary condition for the existence of a sufficient number of admissible pairs, and then show {\textbf{\textsf{(ii)}}} that this condition is also sufficient by providing an explicit construction of such pairs.
 
 
-\begin{enumerate}
+\begin{enumerate}[i)]
     \item To generate at least \(\binom{n+i-1}{i}\) \emph{pairwise disjoint} pairs, at least \(2\binom{n+i-1}{i}\) are required. 
     Hence, a necessary condition is
     \[
@@ -191,9 +192,9 @@ For the sake of completeness, a pseudocode description of the \textsc{Successor}
 \subsection{Computational Complexity}
 \begin{theorem}\label{thm:iterationCost}
     In \Cref{alg:alg} the complexity due to $\algspoly$, $\algdiag$ are as follows:
-    \begin{enumerate}
-        \item $\mathscr{C}_{\algspoly} = \mathcal{O}\!\left(\dbinom{n+d}{d}^3\right)$ over $d-1$ iterations,
-        \item $\mathscr{C}_{\algdiag} = \mathcal{O}\!\left(\dbinom{n+d}{d}^3\right)$, over $d$ iterations. \luc{To be updated}
+    \begin{enumerate}[i)]
+        \item $\mathscr{C}_{\algspoly} = \mathcal{O}\left( n^{3(d-1)} \right)$ over $d-1$ iterations,
+        \item $\mathscr{C}_{\algdiag} = \bigO\left(n^{d\omega}\right)$, over $d$ iterations. 
         %\item $C_{\texttt{DiagB}} = \mathcal{O}\!\left(\dfrac{dn^2}{2{(n+d)}^3}\dbinom{n+d}{d}^3\right)$, over $d$ iterations.
     \end{enumerate}
     % The overall complexity of \Cref{alg:alg} is given by the sum of the complexities (over $1\le i\le d-1$ for \texttt{Spoly} and $1\le i\le d$ for \texttt{DiagA} and \texttt{DiagB}) of:
@@ -216,8 +217,7 @@ For the sake of completeness, a pseudocode description of the \textsc{Successor}
 \begin{proof}[Proof of \Cref{thm:result}]
     The complexity $\mathscr{C}_{tot}$ of \Cref{alg:alg} follows immediately by adding the complexities of the two main procedures, as given in \Cref{thm:iterationCost}, i.e.
     \begin{align*}
-        \mathscr{C}_{tot} &:= \mathscr{C}_{\algspoly} + \mathscr{C}_{\algdiag} = \mathcal{O}\left(\binom{n+d}{d}^3\right)
-        %&= \mathcal{O}\left(\binom{n+d}{d}^3\right) + \mathcal{O}\left(\binom{n+d}{d}^3\right) + \mathcal{O}\left(\binom{n+d}{d}^3\right) = \mathcal{O}\left(\binom{n+d}{d}^3\right).
+        \mathscr{C}_{tot} &:= \mathscr{C}_{\algspoly} + \mathscr{C}_{\algdiag} = \mathcal{O}\left( n^{3(d-1)} \right) + \mathcal{O}\left(n^{d\omega}\right) = \mathcal{O}\left(n^{\max(3(d-1), d\omega)}\right).
     \end{align*}
     The correctness of the algorithm is proven in \cref{sec:correct}.
 \end{proof}
