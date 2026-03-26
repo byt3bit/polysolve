@@ -12,7 +12,7 @@ $|\mathcal{P}_i| = |\mathcal{D}_i| = \binom{n+i-1}{i}$.
 
 \Cref{alg:step1} generates a set of $S$-polynomials $\mathcal{P}_i$ from the set of the diagonalized polynomials $\mathcal{D}_{i+1}$. This process selects a number of
 admissible pairs (\cref{def:admissible-pair}) $(f,g)$ to compute $S_{fg}$ (having degree $i+1$), and removes all monomials of degree $i+1$ by reducing w.r.t.\ the polynomial set $\mathcal{D}_{i+1}$.
-\algdiag\ transforms a set of polynomials in Hermite form $\mathcal{P}_i$ into diagonal form $\mathcal{D}_i$ by iteratively eliminating leading terms from the remaining polynomials.
+\algdiag\ transforms a set of polynomials $\mathcal{P}_i$ into diagonal form (Smith Normal Form) $\mathcal{D}_i$.
 % The main algorithm, \Cref{alg:alg}, iteratively applies $S$-polynomial generation and diagonalization steps to reduce the initial set of polynomials $\mathcal{P}_d$ to a set of $n$ linear polynomials of the form $\{x_j - s_j\} _{j=1}^n$.
 
 
@@ -21,7 +21,7 @@ admissible pairs (\cref{def:admissible-pair}) $(f,g)$ to compute $S_{fg}$ (havin
 
 \subsection{S-polynomial generation and reduction}\label{sec:onspoly}
 \begin{definition}[Admissible Pair]\label{def:admissible-pair}
-    Given two tuples of integers \(\alpha, \beta \in \mathbb{Z}_{\ge 0}^n\) such that \(|\alpha|=|\beta|=t\), the pair \((\alpha, \beta)\) is called an \emph{admissible pair} if and only if there exist two distinct standard basis vectors \(e_j, e_k \in \mathbb{Z}_{\ge 0}^n\) with \(j \neq k\) such that \(\alpha_j > 0\) and \(\beta = \alpha - e_j + e_k\). Equivalently, we say that two polynomials \(f, g\) with \(\lm(f) = \vars{x}^\alpha\) and \(\lm(g) = \vars{x}^\beta\) form an \emph{admissible pair} of polynomials if and only if the pair \((\alpha, \beta)\) is admissible. In other words, if \(|\alpha|=|\beta|=t\), then \(\deg(\gcd(\LM(f),\LM(g))) = t-1\).
+    Given two tuples of integers \(\alpha, \beta \in \mathbb{Z}_{\ge 0}^n\) such that \(|\alpha|=|\beta|=t\), the pair \((\alpha, \beta)\) is called an \emph{admissible pair} if and only if there exist two distinct standard basis vectors \(e_j, e_k \in \mathbb{Z}_{\ge 0}^n\) with \(j \neq k\) such that \(\alpha_j > 0\) and \(\beta = \alpha - e_j + e_k\). Equivalently, we say that two polynomials \(f, g\) with \(\lm(f) = \vars{x}^\alpha\) and \(\lm(g) = \vars{x}^\beta\) form an \emph{admissible pair} of polynomials if and only if the pair \((\alpha, \beta)\) is admissible. In other words, if \(|\alpha|=|\beta|=t\), then \(\deg(\gcd(\lm(f),\lm(g))) = t-1\).
 \end{definition}
 % The $S$-polynomial generation (in \Cref{alg:step1}) selects admissible pairs (\cref{def:admissible-pair}) of polynomials from the set $\mathcal{D}_{i+1}$ and computes their corresponding $S$-polynomials. Then the $S$-polynomials are reduced by removing all monomials of degree $i+1$ to produce $\mathcal{P}_i$.
 
@@ -85,7 +85,7 @@ admissible pairs (\cref{def:admissible-pair}) $(f,g)$ to compute $S_{fg}$ (havin
 
 % We now specify the criterion used to select admissible pairs of polynomials for $S$-polynomial generation and explain the motivation behind this choice.
 %\paragraph*{}\label{paragraph:criterion}
-Consider the iteration-$i$. Note that given a monomial $m$ of degree \(i+1\), due to the diagonal form of $\mathcal{D}_{i+1}$ there exist a unique polynomial $f \in \mathcal{D}_{i+1}$ such that \(\LM(f) = m\). Hence, given two monomials $m_1, m_2$ that form an admissible pair, the corresponding admissible pair of polynomials can be uniquely determined. Let \(f,g\) be those two polynomials, the resulting $S$-polynomial \(S_{fg}\) admits the simplified form given in \Cref{eq:spoly}.
+Consider the iteration-$i$. Note that given a monomial $m$ of degree \(i+1\), due to the diagonal form of $\mathcal{D}_{i+1}$ there exist a unique polynomial $f \in \mathcal{D}_{i+1}$ such that \(\lm(f) = m\). Hence, given two monomials $m_1, m_2$ that form an admissible pair, the corresponding admissible pair of polynomials can be uniquely determined. Let \(f,g\) be those two polynomials, the resulting $S$-polynomial \(S_{fg}\) admits the simplified form given in \Cref{eq:spoly}.
 
 Since they form an admissible pair, the least common multiple of the leading terms has degree $i+2$.
 Consequently, recalling that $\deg(\lm(f))=\deg(\lm(g))=i+1$, both $\frac{\vars{x}^\gamma}{\lm(f)}$ and $\frac{\vars{x}^\gamma}{\lm(g)}$ (in \Cref{eq:spoly-expanded}) are monomials of degree one. Using the notation of Section~\ref{sec:2background}, we decompose
@@ -129,7 +129,7 @@ Then there exists a collection of (at least) $\binom{n+i-1}{i}$ pairwise disjoin
 %Following the described criterion, \Cref{alg:pairs-construction} generates at least \(\binom{n+d-2}{d-1}\) \(S\)-polynomials, starting from $\mathcal{D}_{i+1}$ at $\deg_i$ iteration.
 % Given a degree \(d\), a number of variables \(n\), and a polynomial set of size \(\binom{n+d-1}{d}\) whose leading monomials exhaust all monomials of degree \(d\), \Cref{alg:pairs-construction} generates at least \(\binom{n+d-2}{d-1}\) \(S\)-polynomials if and only if \(d \le n-1\).
 \end{lemma}
-
+\mlf{In the proof: just fix (i) and (ii) into 1. and 2.}
 \begin{proof}
 In order to prove this result, we first establish \textcolor{gray}{\textbf{\textsf{(i)}}} a necessary condition for the existence of a sufficient number of admissible pairs, and then show \textcolor{gray}{\textbf{\textsf{(ii)}}} that this condition is also sufficient by providing an explicit construction of such pairs.
 
@@ -173,7 +173,7 @@ For the sake of completeness, a pseudocode description of the \textsc{Successor}
 
 
 % \begin{algorithm}[t!]
-% \caption{(\algdiag\) --- Diagonalization: conversion to Hermite form}\label{alg:step2b}
+% \caption{(\algdiag\) --- Diagonalization: conversion to Smith Normal Form}\label{alg:step2b}
 % \begin{algorithmic}[1]
 % \Statex{\hspace*{-\algorithmicindent} \textbf{Input:} $\mathcal{P}_i$: set of polynomials, $n \geq 1$: secret's dimension, $1\leq i\leq d$: current degree}
 % \Statex{\hspace*{-\algorithmicindent} \textbf{Output:} $\mathcal{D}_i$: set of polynomials in diagonal form}
@@ -193,14 +193,14 @@ For the sake of completeness, a pseudocode description of the \textsc{Successor}
     In \Cref{alg:alg} the complexity due to $\algspoly$, $\algdiag$ are as follows:
     \begin{enumerate}
         \item $\mathscr{C}_{\algspoly} = \mathcal{O}\!\left(\dbinom{n+d}{d}^3\right)$ over $d-1$ iterations,
-        \item $\mathscr{C}_{\algdiag} = \mathscr{C}_{\texttt{HermiteForm}} = \mathcal{O}\!\left(\dbinom{n+d}{d}^3\right)$, over $d$ iterations. \luc{To be updated}
+        \item $\mathscr{C}_{\algdiag} = \mathcal{O}\!\left(\dbinom{n+d}{d}^3\right)$, over $d$ iterations. \luc{To be updated}
         %\item $C_{\texttt{DiagB}} = \mathcal{O}\!\left(\dfrac{dn^2}{2{(n+d)}^3}\dbinom{n+d}{d}^3\right)$, over $d$ iterations.
     \end{enumerate}
     % The overall complexity of \Cref{alg:alg} is given by the sum of the complexities (over $1\le i\le d-1$ for \texttt{Spoly} and $1\le i\le d$ for \texttt{DiagA} and \texttt{DiagB}) of:
     % \begin{itemize}
     %     \item $S$-polynomial generation and reduction:
     %         $C_{\texttt{Spoly}}(i) = 2\cdot \binom{n+i-1}{i}^2\cdot \!\left[ \binom{n+i}{i} + 1 \right]$,
-    %     \item conversion to hermite form: $C_{\texttt{DiagA}}(i) =\sum_{j=1}^{\binom{n+i-1}{i}}\!\left[\!\left[ \binom{n+i}{i} - j + 1 \right]\cdot \!\left[ \binom{n+i-1}{i} - j + 1 \right]\right]$,
+    %     \item conversion to Smith Normal Form: $C_{\texttt{DiagA}}(i) =\sum_{j=1}^{\binom{n+i-1}{i}}\!\left[\!\left[ \binom{n+i}{i} - j + 1 \right]\cdot \!\left[ \binom{n+i-1}{i} - j + 1 \right]\right]$,
     %     \item conversion to diagonal form: $C_{\texttt{DiagB}}(i) =\sum_{j=1}^{\binom{n+i-1}{i}} \!\left[\!\left[ \binom{n+i-1}{i-1} +1 \right] \cdot \!\left[ \binom{n+i-1}{i} - j \right]\right]$.
     % \end{itemize}
 \end{theorem}
