@@ -1,6 +1,5 @@
 
 \paragraph{Generating the polynomial system}
-%% referring to subsection 1.2 to avoid the repetition of  F_LWE by Arora and Ge
 Constructing a polynomial system corresponding to an LWE problem follows the method of Arora and Ge \cite{ICALP:AroGe11}, i.e. by using the polynomial
 $f(x) = x \cdot \prod_{i=1}^{t} (x+i)(x-i)$, as described in \Cref{subsec:previous-algorithms}.
 % In \Cref{subsec:previous-algorithms}, we presented the polynomial representation of the \slwe\ problem introduced by Arora and Ge~\cite{ICALP:AroGe11}. This representation is the starting point of our algorithm. More specifically, we highlight the importance of the polynomial $f(x) = x \cdot \prod_{i=1}^{t} (x+i)(x-i)$, which vanishes on all possible values of the error term, to construct a system of polynomial equations capturing the \slwe\ problem. 
