@@ -19,7 +19,7 @@ $f(x) = x \cdot \prod_{i=1}^{t} (x+i)(x-i)$, as described in \Cref{subsec:previo
 % \caption{Block-wise representation of the algorithm. Each row block corresponds to polynomials of total degree $i$, from $d$ down to $1$. The left part of each rectangular matrix shows the diagonalized leading submatrix of degree-$i$ monomials, while the right part contains lower-degree terms. Each iteration produces a new rectangular matrix in this form.}\label{fig:bigmatrix}
 % \end{figure}
 
-\subsection{High-level Intuition of the Algorithm}
+\subsection{High-level Intuition of the Algorithm}\label{subsec:highlevel}
 In this section and \Cref{sec:pseudocode}, we provide the description of our algorithm applied to the polynomial system $\mathcal{F}_{\mathrm{LWE}}$ derived from \slwe. Next, we will show how to adapt the parameters of the algorithm to solve the other two variants, namely \rlwe\ and \mlwe. 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % NEW IMAGE
@@ -52,8 +52,13 @@ The coefficients of these reduced $S$-polynomials are then assembled into a new 
 Provided that a sufficient number of such polynomials is generated, the leading principal submatrix of this matrix has full rank with overwhelming probability and can be diagonalized in the same manner as before. % TODO: specify the rank of the matrix
 This yields a new diagonalized system whose leading terms cover all monomials of degree $d-1$. Then we compute a set of $S$-polynomials and their reduction as described before. 
 
-This procedure is applied recursively, decreasing the degree at each iteration. Finally, the process terminates at degree $1$, where the resulting system consists of linear polynomials of the form $(x_j - s_j)$ for $j=1,\dots,n$, and directly reveal the secret vector $\vars{s}$. % TODO: check that the final system is indeed of this form.
-\mlf{$\to a_j x_j - s_j.$}
+% This procedure is applied recursively, decreasing the degree at each iteration. Finally, the process terminates at degree $1$, where the resulting system consists of linear polynomials of the form $(x_j - s_j)$ for $j=1,\dots,n$, and directly reveal the secret vector $\vars{s}$. % TODO: check that the final system is indeed of this form.
+% \mlf{$\to a_j x_j - s_j.$}
+
+This procedure is applied recursively, decreasing the degree at each iteration. Finally, the process terminates at degree $1$, yielding a system of linear relations of the form $a_j x_j - b_j = 0$ over $\Z_q$ for $j=1,\dots,n$. 
+Throughout the algorithm, we assume that the leading principal submatrices are invertible over $\Z_q$. In a commutative ring, a matrix is invertible if and only if its determinant is a unit. When such a matrix is diagonalized, its determinant equals the product of its diagonal elements, which correspond to our leading coefficients $a_j$. For this product to be a unit, every single coefficient $a_j$ must also be a unit in $\Z_q$, meaning that $\gcd(a_j, q) = 1$. 
+
+Consequently, the equation $a_j x_j - b_j = 0$ can always be solved exactly. We can uniquely recover the secret components by computing $s_j = a_j^{-1}b_j \pmod q$. In practice, the diagonalization process naturally multiplies the rows by these inverses to normalize the leading coefficients to $1$, yielding the monic polynomials $x_j - s_j$ and directly revealing the secret vector $\vars{s}$.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -107,9 +112,9 @@ At iteration-$i$, it performs the following operations:
 \caption{Main Algorithm}\label{alg:alg}
 \begin{algorithmic}[1]
 \Statex{\hspace*{-\algorithmicindent} \textbf{Input:} $\mathcal{P}_d$: initial set of samples, $n \geq 1$: secret's dimension, $d$: maximum error size}
-\Statex{\hspace*{-\algorithmicindent} \textbf{Output:} $\mathcal{D}_1$: set of $n$ linear polynomials $\{ x_j - s_j: 1 \le j \le n \}$.}\mlf{$\to a_j x_j - s_j.$}
+\Statex{\hspace*{-\algorithmicindent} \textbf{Output:} $\mathcal{D}_1$: set of $n$ linear polynomials $\{ a_j x_j - s_j: 1 \le j \le n \}$.}
 % \Statex{}
-\State{\texttt{SET = Diag($\mathcal{P}_d, n, d$)}} \Comment{Initial conversion to Smith Normal Form of the degree-$d$ samples}
+\State{\texttt{SET = Diag($\mathcal{P}_d, n, d$)}} \Comment{Smith Normal Form of the degree-$d$ samples}
 \For{$i = d-1, d-2, \dots, 1$}
     \State{\texttt{STEP1 = Spoly(SET,$n, i$)}} \Comment{$S$-polynomial generation step: $\mathcal{P}_i$}
     \State{\texttt{SET = Diag(STEP1,$n, i$)}} \Comment{Diagonalization step: Smith Normal Form computation $\mathcal{D}_i$}

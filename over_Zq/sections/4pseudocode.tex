@@ -285,8 +285,7 @@ Therefore, $\vars{s}$ is a common zero of all polynomials in $\mathcal{D}_i$, fo
 
 By \Cref{prop:preservation}, $\vars{s}$ remains the zero of the polynomials through all iterations.
 In particular, at the last iteration, all polynomials in $\mathcal{D}_1$ are linear and of degree $1$.
-Each equation, due to diagonalization process, is of the form $x_i - s_i$ \mlf{$a_jx_j - s_j$} for $i \in \{1,\dots,n\}$, and the secret is uniquely determined as $\vars{s} = (s_1, \dots, s_n)$.
-\mlf{not directly $s_j$.}
+Each equation, due to diagonalization process, is of the form $a_i x_i -b_i$ for $i \in \{1,\dots,n\}$, and the secret is uniquely determined as $\vars{s} = (s_1, \dots, s_n)$, with $s_i = a_i^{-1}b_i \pmod q$ as described in \Cref{subsec:highlevel}.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
