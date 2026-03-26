@@ -73,16 +73,20 @@ This yields a new diagonalized system whose leading terms cover all monomials of
 % \mlf{$\to a_j x_j - s_j.$}
 
 This procedure is applied recursively, decreasing the degree at each iteration. Finally, the process terminates at degree $1$, yielding a system of linear relations of the form $a_j x_j - b_j = 0$ over $\Z_q$ for $j=1,\dots,n$. 
-By construction, these relations correspond to a square $n \times n$ coefficient matrix. In a commutative ring, a matrix is invertible if and only if its determinant is a unit. When such a matrix is diagonalized, its determinant equals the product of its diagonal elements, which correspond to our leading coefficients $a_j$. For this product to be a unit, every single coefficient $a_j$ must also be a unit in $\Z_q$, meaning that $\gcd(a_j, q) = 1$. 
+By construction, these relations correspond to a diagonal $n \times (n+1)$ coefficient matrix. For this matrix to be invertible over $\Z_q$, its determinant (which is simply the product of the diagonal elements $a_j$) must be a unit. This strictly requires every leading coefficient to satisfy $\gcd(a_j, q) = 1$. Assuming the non-zero diagonal entries behave pseudo-randomly, the probability of a single coefficient being a unit is exactly $\frac{\varphi(q)}{q-1}$, where $\varphi$ is Euler's totient function. Consequently, the final matrix is invertible with probability ${\left( \frac{\varphi(q)}{q-1} \right)}^n$. 
 
-Assuming the non-zero diagonal entries behave pseudo-randomly over $\Z_q$, the probability of a single coefficient $a_j$ being a unit is exactly $\frac{\varphi(q)}{q-1}$, where $\varphi$ is Euler's totient function. Consequently, the entire matrix is invertible with probability ${\left( \frac{\varphi(q)}{q-1} \right)}^n$. Furthermore, given the heavily overdefined nature of the initial system (derived from a large number of samples $m$) the underlying secret vector $\vars{s}$ remains the unique valid solution with high probability.
+Furthermore, given the heavily overdefined nature of the initial system (derived from a large number of samples $m$), the underlying secret vector $\vars{s}$ remains the unique valid solution with high probability. Consequently, the secret components are directly extracted by computing $s_j = a_j^{-1}b_j \pmod q$ for each $j$, successfully revealing the secret vector $\vars{s}$.
 
-Conditioned on this invertibility, the equation $a_j x_j - b_j = 0$ can always be solved exactly. We uniquely recover the secret components by computing $s_j = a_j^{-1}b_j \pmod q$, directly revealing the secret vector $\vars{s}$.
+% Slightly "extended" description
+% By construction, these relations correspond to a square $n \times n$ coefficient matrix. In a commutative ring, a matrix is invertible if and only if its determinant is a unit. When such a matrix is diagonalized, its determinant equals the product of its diagonal elements, which correspond to our leading coefficients $a_j$. For this product to be a unit, every single coefficient $a_j$ must also be a unit in $\Z_q$, meaning that $\gcd(a_j, q) = 1$. 
+
+% Assuming the non-zero diagonal entries behave pseudo-randomly over $\Z_q$, the probability of a single coefficient $a_j$ being a unit is exactly $\frac{\varphi(q)}{q-1}$, where $\varphi$ is Euler's totient function. Consequently, the entire matrix is invertible with probability ${\left( \frac{\varphi(q)}{q-1} \right)}^n$. Furthermore, given the heavily overdefined nature of the initial system (derived from a large number of samples $m$) the underlying secret vector $\vars{s}$ remains the unique valid solution with high probability.
+
+% Conditioned on this invertibility, the equation $a_j x_j - b_j = 0$ can always be solved exactly. We uniquely recover the secret components by computing $s_j = a_j^{-1}b_j \pmod q$, directly revealing the secret vector $\vars{s}$.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
+ 
 % \paragraph*{NEW Intuition of the Algorithm.} 
 % Figure~\ref{fig:bigmatrix} provides a conceptual visualization of the algorithm by embedding the iterative steps into a single large matrix. Each row block corresponds to polynomials of a fixed degree $i$ ($1 \le i \le d$), with the leading principal submatrix highlighted to indicate the diagonalization of the corresponding polynomials. The remaining portion of each block represents the dense part of the polynomials formed by lower-degree monomials. 
 
