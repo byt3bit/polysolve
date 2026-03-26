@@ -13,7 +13,7 @@ The Learning With Errors (LWE) problem was introduced by Oded Regev in 2005~\cit
 %   \end{definition}
 
 
-% \begin{definition}[RingLWE~\cite{EC:LyuPeiReg10} and ModuleLWE~\cite{EPRINT:BraGenVai11}]
+% \begin{definition}[Ring-LWE~\cite{EC:LyuPeiReg10} and Module-LWE~\cite{EPRINT:BraGenVai11}]
 %     Let $N \in \Z^+$ (usually a power of $2$), $q \in \Z^+$, 
 % $R_q = \Z_q[x]/\langle \Phi_N(x) \rangle$, where $\Phi_N(x)$ is a $N$-degree irreducible polynomial (usually the $N$-th cyclotomic polynomial, e.g. $x^N + 1$), and let $\chi$ be an error distribution over $R_q$.
 % For a secret vector $\vars{s} \in R_q^n$, the distribution
@@ -26,10 +26,10 @@ The Learning With Errors (LWE) problem was introduced by Oded Regev in 2005~\cit
 % $A_{\vars{s},\chi}$. The \emph{decision} variant asks to distinguish
 % $A_{\vars{s},\chi}$ from the uniform distribution over $R_q^n \times R_q$.
 
-% If $n=1$, we refer to the problem as RingLWE (\rlwe), and if $n>1$, we refer to it as ModuleLWE (\mlwe).
+% If $n=1$, we refer to the problem as Ring-LWE (\rlwe), and if $n>1$, we refer to it as Module-LWE (\mlwe).
 % \end{definition}
 
-\begin{definition}[LWE~\cite{EPRINT:AlbPlaSco15,STOC:Regev05}, RingLWE~\cite{EC:LyuPeiReg10} and ModuleLWE~\cite{EPRINT:BraGenVai11}]
+\begin{definition}[LWE~\cite{EPRINT:AlbPlaSco15,STOC:Regev05}, Ring-LWE~\cite{EC:LyuPeiReg10} and Module-LWE~\cite{EPRINT:BraGenVai11}]
     Let $N \in \Z^+$ (usually a power of $2$), $n, q \in \Z^+$, 
 $R_q = \Z_q[x]/\langle \Phi_N(x) \rangle$, where $\Phi_N(x)$ is a $N$-degree irreducible polynomial (usually the $N$-th cyclotomic polynomial, e.g. $x^N + 1$), and let $\chi$ be an error distribution over $R_q$.
 For a secret vector $\vars{s} \in R_q^n$, the distribution
@@ -42,14 +42,14 @@ The \emph{search} variant asks to recover $\vars{s}$ given arbitrarily many samp
 $A_{\vars{s},\chi}$. The \emph{decision} variant asks to distinguish
 $A_{\vars{s},\chi}$ from the uniform distribution over $R_q^n \times R_q$.
 
-If $n=1$, we refer to the problem as RingLWE (\rlwe), and if $n>1$, we refer to it as ModuleLWE (\mlwe). By replacing \(R_q\) with \(\Z_q\), we can also express the standard LWE problem.
+If $n=1$, we refer to the problem as Ring-LWE (\rlwe), and if $n>1$, we refer to it as Module-LWE (\mlwe). By replacing \(R_q\) with \(\Z_q\), we can also express the standard LWE problem.
 \end{definition}
 
 % % TODO: introduce notatino rlwe e mlwe
-% \begin{definition}[LWE~\cite{EPRINT:AlbPlaSco15,STOC:Regev05}, RingLWE~\cite{EC:LyuPeiReg10}, ModuleLWE~\cite{EPRINT:BraGenVai11}]
-%     Let $N \in \Z_{>0}$ (usually a power of $2$), $q, n \in \Z_{>0}$, $R_q = \Z_q[x]/\langle \Phi_N(x) \rangle$ with $\Phi_N(x)$ an $N$-degree irreducible polynomial, and let $\chi$ be a probability distribution on $\Z$ (for LWE) or $R_q$ (for RingLWE and ModuleLWE).
+% \begin{definition}[LWE~\cite{EPRINT:AlbPlaSco15,STOC:Regev05}, Ring-LWE~\cite{EC:LyuPeiReg10}, Module-LWE~\cite{EPRINT:BraGenVai11}]
+%     Let $N \in \Z_{>0}$ (usually a power of $2$), $q, n \in \Z_{>0}$, $R_q = \Z_q[x]/\langle \Phi_N(x) \rangle$ with $\Phi_N(x)$ an $N$-degree irreducible polynomial, and let $\chi$ be a probability distribution on $\Z$ (for LWE) or $R_q$ (for Ring-LWE and Module-LWE).
     
-%     For a secret vector $\vars{s} \in \Z_q^n$ (for LWE) or $\vars{s} \in R_q^n$ (for RingLWE and ModuleLWE), the distribution $A_{\vars{s},\chi}$ produces samples $(\vars{a}, b) \in R_q^n \times R_q$ (or $\Z_q^n \times \Z_q$ for LWE) where:
+%     For a secret vector $\vars{s} \in \Z_q^n$ (for LWE) or $\vars{s} \in R_q^n$ (for Ring-LWE and Module-LWE), the distribution $A_{\vars{s},\chi}$ produces samples $(\vars{a}, b) \in R_q^n \times R_q$ (or $\Z_q^n \times \Z_q$ for LWE) where:
 %     \[
 %     \vars{a} \xleftarrow{\$} R_q^n, \quad e \leftarrow \chi, \quad
 %     b = \langle \vars{a}, \vars{s} \rangle + e \in R_q.
@@ -60,7 +60,7 @@ If $n=1$, we refer to the problem as RingLWE (\rlwe), and if $n>1$, we refer to 
 %     $A_{\vars{s},\chi}$. The \emph{decision} variant asks to distinguish
 %     $A_{\vars{s},\chi}$ from the uniform distribution over $R_q^n \times R_q$.
 
-%     For $n=1$, ModuleLWE (\mlwe) becomes RingLWE (\rlwe).
+%     For $n=1$, Module-LWE (\mlwe) becomes Ring-LWE (\rlwe).
         
     
 % \end{definition}
