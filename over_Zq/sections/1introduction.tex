@@ -3,31 +3,31 @@
 
 The Learning With Errors (LWE) problem was introduced by Oded Regev in 2005~\cite{STOC:Regev05} as a noisy generalization of the learning parity with noise problem over finite fields.
 
-\begin{definition}[LWE~\cite{EPRINT:AlbPlaSco15,STOC:Regev05}]\label{def:LWE}
-    Let $n$, $q$ be positive integers, $\chi$ be a probability distribution on $\Z$ and $\vars{s}$ be a secret vector in $\Z_q^n$.
-    We denote by $L_{\vars{s},\chi}$ the probability distribution on $\Z_q^n\times\Z_q$ obtained by choosing $\vars{a}\in\Z_q^n$ uniformly at random, choosing $e\in\Z$ according to $\chi$ and considering it in $\Z_q$, and returning $(\vars{a},c) = (\vars{a}, \langle \vars{a}, \vars{s} \rangle + e)\in\Z_q^n\times\Z_q$.
-    \begin{itemize}
-        \item Decision-LWE is the problem of deciding whether pairs $(\vars{a},c)\in\Z_q^n\times\Z_q$ are sampled according to $L_{\vars{s},\chi}$ or the uniform distribution on $\Z_q^n\times\Z_q$.
-        \item Search-LWE is the problem of recovering $\vars{s}$ from $(\vars{a},c) = (\vars{a}, \langle \vars{a}, \vars{s} \rangle + e)\in\Z_q^n\times\Z_q$ sampled according to $L_{\vars{s},\chi}$.
-    \end{itemize}
-  \end{definition}
+% \begin{definition}[LWE~\cite{EPRINT:AlbPlaSco15,STOC:Regev05}]\label{def:LWE}
+%     Let $n$, $q$ be positive integers, $\chi$ be a probability distribution on $\Z$ and $\vars{s}$ be a secret vector in $\Z_q^n$.
+%     We denote by $L_{\vars{s},\chi}$ the probability distribution on $\Z_q^n\times\Z_q$ obtained by choosing $\vars{a}\in\Z_q^n$ uniformly at random, choosing $e\in\Z$ according to $\chi$ and considering it in $\Z_q$, and returning $(\vars{a},c) = (\vars{a}, \langle \vars{a}, \vars{s} \rangle + e)\in\Z_q^n\times\Z_q$.
+%     \begin{itemize}
+%         \item Decision-LWE is the problem of deciding whether pairs $(\vars{a},c)\in\Z_q^n\times\Z_q$ are sampled according to $L_{\vars{s},\chi}$ or the uniform distribution on $\Z_q^n\times\Z_q$.
+%         \item Search-LWE is the problem of recovering $\vars{s}$ from $(\vars{a},c) = (\vars{a}, \langle \vars{a}, \vars{s} \rangle + e)\in\Z_q^n\times\Z_q$ sampled according to $L_{\vars{s},\chi}$.
+%     \end{itemize}
+%   \end{definition}
 
 
-\begin{definition}[RingLWE~\cite{EC:LyuPeiReg10} and ModuleLWE~\cite{EPRINT:BraGenVai11}]
-    Let $N \in \Z^+$ (usually a power of $2$), $q \in \Z^+$, 
-$R_q = \Z_q[x]/\langle \Phi_N(x) \rangle$, where $\Phi_N(x)$ is a $N$-degree irreducible polynomial (usually the $N$-th cyclotomic polynomial, e.g. $x^N + 1$), and let $\chi$ be an error distribution over $R_q$.
-For a secret vector $\vars{s} \in R_q^n$, the distribution
-$A_{\vars{s},\chi}$ produces samples $(\vars{a}, b) \in R_q^n \times R_q$ where:
-\[
-    \vars{a} \xleftarrow{\$} R_q^n, \quad e \leftarrow \chi, \quad
-    b = \langle \vars{a}, \vars{s} \rangle + e \in R_q.
-\]
-The \emph{search} variant asks to recover $\vars{s}$ given arbitrarily many samples from
-$A_{\vars{s},\chi}$. The \emph{decision} variant asks to distinguish
-$A_{\vars{s},\chi}$ from the uniform distribution over $R_q^n \times R_q$.
+% \begin{definition}[RingLWE~\cite{EC:LyuPeiReg10} and ModuleLWE~\cite{EPRINT:BraGenVai11}]
+%     Let $N \in \Z^+$ (usually a power of $2$), $q \in \Z^+$, 
+% $R_q = \Z_q[x]/\langle \Phi_N(x) \rangle$, where $\Phi_N(x)$ is a $N$-degree irreducible polynomial (usually the $N$-th cyclotomic polynomial, e.g. $x^N + 1$), and let $\chi$ be an error distribution over $R_q$.
+% For a secret vector $\vars{s} \in R_q^n$, the distribution
+% $A_{\vars{s},\chi}$ produces samples $(\vars{a}, b) \in R_q^n \times R_q$ where:
+% \[
+%     \vars{a} \xleftarrow{\$} R_q^n, \quad e \leftarrow \chi, \quad
+%     b = \langle \vars{a}, \vars{s} \rangle + e \in R_q.
+% \]
+% The \emph{search} variant asks to recover $\vars{s}$ given arbitrarily many samples from
+% $A_{\vars{s},\chi}$. The \emph{decision} variant asks to distinguish
+% $A_{\vars{s},\chi}$ from the uniform distribution over $R_q^n \times R_q$.
 
-If $n=1$, we refer to the problem as RingLWE (\rlwe), and if $n>1$, we refer to it as ModuleLWE (\mlwe).
-\end{definition}
+% If $n=1$, we refer to the problem as RingLWE (\rlwe), and if $n>1$, we refer to it as ModuleLWE (\mlwe).
+% \end{definition}
 
 \begin{definition}[LWE~\cite{EPRINT:AlbPlaSco15,STOC:Regev05}, RingLWE~\cite{EC:LyuPeiReg10} and ModuleLWE~\cite{EPRINT:BraGenVai11}]
     Let $N \in \Z^+$ (usually a power of $2$), $n, q \in \Z^+$, 
@@ -112,7 +112,7 @@ RLWE & $N$ & $d$ & $m_{\rlwe}= \binom{N+d-1}{d}$ & $\bigO\left(N^{\max(3(d-1), d
 MLWE & $Nn$ & $d$ & $m_{\mlwe} = \binom{Nn+d-1}{d}$ & $\bigO\left((Nn)^{\max(3(d-1), d\omega)}\right)$\\
 \hline\hline
     \end{tabular}
-    \caption{Let $N, n, q \in \Z_{>0}$ and let $m_{\texttt{prob}}$, where \texttt{prob} = \{LWE, \rlwe, \mlwe \}, be the number of samples of the corresponding problem. The table shows the complexity of our algebraic attack on the three LWE variants with bounded errors (e.g. error entries/coefficients drawn from a set of size $d$). $\omega$ is the linear algebra constant ($2 \le \omega \le 3$) and the complexity is measured in the number of scalar multiplications in $\Z_q$.
+    \caption{Let $N, n, q \in \Z_{>0}$ and let $m_{\texttt{prob}}$, where $\texttt{prob} \in \{\text{LWE}, \rlwe, \mlwe \}$, be the number of samples of the corresponding problem. The table shows the complexity of our algebraic attack on the three LWE variants with bounded errors (e.g. error entries/coefficients drawn from a set of size $d$). $\omega$ is the linear algebra constant ($2 \le \omega \le 3$) and the complexity is measured in the number of scalar multiplications in $\Z_q$.
     }\label{tab:comparison}
 \end{table}
 
