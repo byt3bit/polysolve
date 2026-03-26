@@ -67,7 +67,7 @@ While these problems trivially collapse into a single equivalent problem for 2-p
 \textbf{Methodology and Algebraic Tools:} \\
 The authors prove that these three problems (in both their Search and Decision variants) are essentially equivalent for massive classes of rings by constructing polynomial-time reductions between them. The mathematical heavy lifting involves:
 \begin{itemize}
-    \item \textbf{The Conductor Ideal:} To bridge the gap between the formal ring of integers $\mathcal{O}_K$ and the easily computable polynomial order $\mathbb{Z}[\alpha]$, the authors introduce the \textit{conductor ideal} $\mathcal{C}_{\mathbb{Z}[\alpha]}$. This is a novel application in RLWE cryptanalysis.
+    \item \textbf{The Conductor Ideal:} To bridge the gap between the formal ring of integers $\mathcal{O}_K$ and the easily computable polynomial order $\mathbb{Z}[\alpha]$, the authors introduce the \textit{conductor ideal} $\mathscr{C}_{\mathbb{Z}[\alpha]}$. This is a novel application in RLWE cryptanalysis.
     \item \textbf{Condition Number Bounds:} To prove that transitioning from PLWE (coefficient embedding) to RLWE (Minkowski embedding) does not stretch the error vectors exponentially, they rigorously bound the \textit{condition number} of the transformation map for large families of polynomials (e.g., $x^n + x \cdot P(x) - a$).
     \item \textbf{Oracle Hidden Center Problem (OHCP):} Leveraging techniques from Peikert et al., they construct a Search-to-Decision reduction for Dual-RLWE across arbitrary fields by mapping Gaussian combinations of RLWE samples to an OHCP instance.
 \end{itemize}
