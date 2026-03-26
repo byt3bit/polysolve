@@ -21,7 +21,7 @@ The \rlwe\ equation \(b = a \cdot s + e\) can then be expanded and rearranged to
 
 Let's consider the product \(a \cdot s\) in the cyclotomic ring \(R_q\):
 \[a \cdot s = (a_0 + a_1 x + \dots + a_{N-1} x^{N-1})(s_0 + s_1 x + \dots + s_{N-1} x^{N-1}).\]
-Expanding this product and reducing by the relation \(x^N = -1\), we can express the coefficients of the result as linear combinations of the unknown coefficients of \(s\). Specifically, the coefficient of \(x^n\) in the product can be computed as:
+Expanding this product and reducing by the relation \(x^N = -1\), we can express the coefficients of the result as linear combinations of the unknown coefficients of \(s\). Specifically, the coefficient of \(x^k\) in the product can be computed as:
 $\sum_{i=0}^{N-1} a_i s_{(k-i) \mod N}.$
 
 This results in a system of polynomial equations in the coefficients of the secret \(s\) and the known coefficients of \(a\) and \(b\): for \(0 \le k < N\), 
@@ -36,17 +36,17 @@ The reduction of \mlwe\ to the LWE polynomial system is similar to the reduction
 
 Let \(\vars{a}, \vars{s} \in R_q^n\) and \(e, b \in R_q\) be the elements of one \mlwe\ sample. The \mlwe\ relation is given by:
 \[b = \langle \vars{a}, \vars{s} \rangle + e = \sum_{j=1}^n a_j s_j + e.\]
-For \(1 \le j \le k\), \(a_j\) and \(s_j\) can be expressed in terms of their coefficients.
+For \(1 \le j \le n\), \(a_j\) and \(s_j\) can be expressed in terms of their coefficients.
 
-From the \rlwe\ reduction, we know how to express the product \(a_j s_j\) as a linear combination of the secret coefficients of \(s_j\). After the sum \(\sum_{j=1}^n a_j s_j\) is computed, the coefficients of the resulting polynomial can be expressed as linear combinations of the coefficients of all the secret polynomials \(s_1, \dots, s_k\) and the known coefficients of \(a_1, \dots, a_k\). 
-More specifically, the coefficient of \(x^n\) in the final sum can be computed as:
+From the \rlwe\ reduction, we know how to express the product \(a_j s_j\) as a linear combination of the secret coefficients of \(s_j\). After the sum \(\sum_{j=1}^n a_j s_j\) is computed, the coefficients of the resulting polynomial can be expressed as linear combinations of the coefficients of all the secret polynomials \(s_1, \dots, s_n\) and the known coefficients of \(a_1, \dots, a_n\). 
+More specifically, the coefficient of \(x^k\) in the final sum can be computed as:
 \[\sum_{j=1}^n \sum_{i=0}^{N-1} a_{j,i} s_{j,(k-i) \mod N}.\]
 
 For \(0 \le k < N\), the \mlwe\ relation can be rewritten as: $b_k - \sum_{j=1}^n \sum_{i=0}^{N-1} a_{j,i} s_{j,(k-i) \mod N} = e_k.$
 
 As in the previous cases, we can construct a polynomial \(f(x) = x \cdot \prod_{i=1}^{t} (x+i)(x-i)\) that vanishes on all possible values of the error coefficients. This means that \(f(e_k) = 0\) for all \(k\), that is \[f\left(b_k - \sum_{j=1}^n \sum_{i=0}^{N-1} a_{j,i} s_{j,(k-i) \mod N}\right) = 0.\]
 
-Consequently, for one sample of \mlwe, the resulting polynomial system has \(N\) equations of degree \(d := 2t+1\) in \(Nk\) variables (the coefficients of the secret polynomials).
+Consequently, for one sample of \mlwe, the resulting polynomial system has \(N\) equations of degree \(d := 2t+1\) in \(Nn\) variables (the coefficients of the secret polynomials).
 
 \Cref{tab:information_from_one_sample} summarizes the polynomial system characteristics provided by one sample of the different LWE variants.
 
@@ -63,8 +63,8 @@ Consequently, for one sample of \mlwe, the resulting polynomial system has \(N\)
     \hline
     \rlwe\ & $N$ & $N$ & $2t+1$\\
     \hline
-    \mlwe\ & $Nk$ & $N$ & $2t+1$\\
+    \mlwe\ & $Nn$ & $N$ & $2t+1$\\
     \hline
     \end{tabular}
-    \caption{Let $n$ be the secret size in LWE, $N$ the ring dimension in \rlwe\ and \mlwe\ (equiv. the secret polynomial size in \rlwe\ and \mlwe), $k$ the number of secret polynomials in \mlwe, and $t$ the error bound. The table summarizes the information gathered from one sample for the three LWE variants.}\label{tab:information_from_one_sample}
+    \caption{Let $n$ be the secret size in LWE, $N$ the ring dimension in \rlwe\ and \mlwe\ (equiv. the secret polynomial size in \rlwe\ and \mlwe), $n$ the number of secret polynomials in \mlwe, and $t$ the error bound. The table summarizes the information gathered from one sample for the three LWE variants.}\label{tab:information_from_one_sample}
 \end{table}
