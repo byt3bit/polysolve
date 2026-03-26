@@ -131,10 +131,10 @@ Then there exists a collection of (at least) $\binom{n+i-1}{i}$ pairwise disjoin
 \end{lemma}
 \mlf{In the proof: just fix (i) and (ii) into 1. and 2.}
 \begin{proof}
-In order to prove this result, we first establish \textcolor{gray}{\textbf{\textsf{(i)}}} a necessary condition for the existence of a sufficient number of admissible pairs, and then show \textcolor{gray}{\textbf{\textsf{(ii)}}} that this condition is also sufficient by providing an explicit construction of such pairs.
+In order to prove this result, we first establish {\textbf{\textsf{(i)}}} a necessary condition for the existence of a sufficient number of admissible pairs, and then show {\textbf{\textsf{(ii)}}} that this condition is also sufficient by providing an explicit construction of such pairs.
 
 
-\begin{enumerate}
+\begin{enumerate}[i)]
     \item To generate at least \(\binom{n+i-1}{i}\) \emph{pairwise disjoint} pairs, at least \(2\binom{n+i-1}{i}\) are required. 
     Hence, a necessary condition is
     \[
@@ -191,7 +191,7 @@ For the sake of completeness, a pseudocode description of the \textsc{Successor}
 \subsection{Computational Complexity}
 \begin{theorem}\label{thm:iterationCost}
     In \Cref{alg:alg} the complexity due to $\algspoly$, $\algdiag$ are as follows:
-    \begin{enumerate}
+    \begin{enumerate}[i)]
         \item $\mathscr{C}_{\algspoly} = \mathcal{O}\!\left(\dbinom{n+d}{d}^3\right)$ over $d-1$ iterations,
         \item $\mathscr{C}_{\algdiag} = \mathcal{O}\!\left(\dbinom{n+d}{d}^3\right)$, over $d$ iterations. \luc{To be updated}
         %\item $C_{\texttt{DiagB}} = \mathcal{O}\!\left(\dfrac{dn^2}{2{(n+d)}^3}\dbinom{n+d}{d}^3\right)$, over $d$ iterations.
