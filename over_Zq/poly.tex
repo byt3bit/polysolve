@@ -113,34 +113,8 @@ In this work we present an algorithm for solving the Learning With Errors (LWE) 
 \input{sections/successor.tex}
 \input{sections/a2comparison_with_fq.tex}
 \input{sections/a3attacksRLWE.tex}
+\input{sections/lwe_types_reduction.tex}
 
-
-\begin{table}[hb!]
-    \centering
-    \renewcommand{\arraystretch}{1.4} 
-    \begin{tabular}{
-    >{\arraybackslash}m{1cm}
-    >{\centering\arraybackslash}m{1.5cm}
-    >{\centering\arraybackslash}m{1.5cm}
-    >{\centering\arraybackslash}m{4cm}
-    >{\centering\arraybackslash}m{4cm}
-    }
-    \hline\hline
-Problem & Secret size & Error Size & No. Samples & Time Complexity\\ 
-\hline\hline
-LWE & $n$ & $d$ & $m_{\text{LWE}} = \binom{n+d-1}{d}$ & $\bigO\left(n^{\max(3(d-1), d\omega)}\right)$\\
-\hline
-RLWE & $N$ & $d$ & $m_{\rlwe}= \binom{N+d-1}{d}$ & $\bigO\left(N^{\max(3(d-1), d\omega)}\right)$\\
-\hline
-MLWE & $Nn$ & $d$ & $m_{\mlwe} = \binom{Nn+d-1}{d}$ & $\bigO\left((Nn)^{\max(3(d-1), d\omega)}\right)$\\
-\hline\hline
-    \end{tabular}
-    \caption{An overview of the complexities of algebraic attacks on LWBE with secret $\mathbf{s}$ of length $n$, $m$ samples, and error entries drawn from a set of size $d$.  
-      $H_2(x) = -x \log x - (1-x) \log(1-x)$ is the binary entropy function, $\ln$ is the natural logarithm, $\omega$ is the linear algebra constant ($2 \le \omega \le 3$), $c_d = 2^{(\omega+3)\cdot 2^{1/\ln(2)}\cdot {(2d-1)}^{1/\ln(4)}}$, and $\beta = c-0.5-\sqrt{c(c-1)}$. The last two columns indicate whether semi-regularity assumption and/or degree of regularity $d_{reg}$  were used for the complexity bounds estimation.}\label{tab:comparison}
-    % \caption{Modified version of Table 2 in~\cite{EC:NMSU25}, providing an overview of the complexities of algebraic attacks on LWBE with secret $\mathbf{s}$ of length $k$, $m$ samples, and error entries drawn from a set of size $d$.  
-    % To simplify notation, we write $H_2(x) = -x \log x - (1-x) \log(1-x)$ for the binary entropy function, $\ln$ for the natural logarithm, $\omega$ for the linear algebra constant ($2 \le \omega \le 3$), $c_d = 2^{(\omega+3)\cdot 2^{1/\ln(2)}\cdot (2d-1)^{1/\ln(4)}}$, and $\beta = c-0.5-\sqrt{c(c-1)}$.  
-    % The last two columns emphasise whether heuristic assumptions were used in the time complexity estimation, and whether the estimates rely on bounds derived from the degree of regularity $d_{reg}$.}\label{tab:comparison}
-\end{table}
 
 
 \end{document}

@@ -1,13 +1,30 @@
 
 \paragraph{Generating the polynomial system}
-Constructing a polynomial system corresponding to an LWE problem follows the method of Arora and Ge \cite{ICALP:AroGe11}, i.e. by using the polynomial
-$f(x) = x \cdot \prod_{i=1}^{t} (x+i)(x-i)$, as described in \Cref{subsec:previous-algorithms}.
+Constructing a polynomial system corresponding to an LWE problem follows the method of Arora and Ge~\cite{ICALP:AroGe11}, i.e.~by using the polynomial
+$f(x) = x \cdot \prod_{i=1}^{t} (x+i)(x-i)$, as described in \Cref{subsec:previous-algorithms}. The same idea can be applied to \rlwe\ and \mlwe\  by first expressing them as ``extended'' LWE instances. This transformation is possible for all irreducible polynomials \(\Phi_N(x)\). In \Cref{sec:lwe_types_reduction} and~\cite{DBLP:journals/iacr/BoerW25} the case of cyclotomic rings is detailed.
 % In \Cref{subsec:previous-algorithms}, we presented the polynomial representation of the \slwe\ problem introduced by Arora and Ge~\cite{ICALP:AroGe11}. This representation is the starting point of our algorithm. More specifically, we highlight the importance of the polynomial $f(x) = x \cdot \prod_{i=1}^{t} (x+i)(x-i)$, which vanishes on all possible values of the error term, to construct a system of polynomial equations capturing the \slwe\ problem. 
 % \luc{generalize to generic irreducible polynomial but give example with cyclotomic}
-\input{sections/lwe_types_reduction.tex}
+\Cref{tab:information_from_one_sample} describes the polynomial system characteristics provided by one sample of the LWE variants (after conversion to LWE instances).
 
 
-
+\begin{table}
+    [hb!]
+    \centering
+    \renewcommand{\arraystretch}{1.3} 
+    \begin{tabular}{|c|c|c|c|
+    }
+    \hline
+    \textbf{Problem} & \textbf{\#variables} & \textbf{\#equations} & \textbf{Degree}\\
+    \hline
+    LWE & $n$ & $1$ & $2t+1$\\
+    \hline
+    \rlwe\ & $N$ & $N$ & $2t+1$\\
+    \hline
+    \mlwe\ & $Nn$ & $N$ & $2t+1$\\
+    \hline
+    \end{tabular}
+    \caption{Let $n$ be the secret size in LWE, $N$ the ring dimension in \rlwe\ and \mlwe\ (equiv. the secret polynomial size in \rlwe\ and \mlwe), $n$ the number of secret polynomials in \mlwe, and $t$ the error bound. The table summarizes the information gathered from one sample for the three LWE variants.}\label{tab:information_from_one_sample}
+\end{table}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % OLD IMAGE -- Switch to this.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
