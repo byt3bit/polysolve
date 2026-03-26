@@ -130,7 +130,7 @@ Then there exists a collection of (at least) $\binom{n+i-1}{i}$ pairwise disjoin
 %Following the described criterion, \Cref{alg:pairs-construction} generates at least \(\binom{n+d-2}{d-1}\) \(S\)-polynomials, starting from $\mathcal{D}_{i+1}$ at $\deg_i$ iteration.
 % Given a degree \(d\), a number of variables \(n\), and a polynomial set of size \(\binom{n+d-1}{d}\) whose leading monomials exhaust all monomials of degree \(d\), \Cref{alg:pairs-construction} generates at least \(\binom{n+d-2}{d-1}\) \(S\)-polynomials if and only if \(d \le n-1\).
 \end{lemma}
-\mlf{In the proof: just fix (i) and (ii) into 1. and 2.}
+
 \begin{proof}
 In order to prove this result, we first establish {\textbf{\textsf{(i)}}} a necessary condition for the existence of a sufficient number of admissible pairs, and then show {\textbf{\textsf{(ii)}}} that this condition is also sufficient by providing an explicit construction of such pairs.
 
@@ -197,6 +197,7 @@ For the sake of completeness, a pseudocode description of the \textsc{Successor}
         \item $\mathscr{C}_{\algdiag} = \bigO\left(n^{d\omega}\right)$, over $d$ iterations. 
         %\item $C_{\texttt{DiagB}} = \mathcal{O}\!\left(\dfrac{dn^2}{2{(n+d)}^3}\dbinom{n+d}{d}^3\right)$, over $d$ iterations.
     \end{enumerate}
+    Hence, the overall complexity of \Cref{alg:alg} is $\mathcal{O}\left(n^{\max(3(d-1), d\omega)}\right)$ scalar operations.
     % The overall complexity of \Cref{alg:alg} is given by the sum of the complexities (over $1\le i\le d-1$ for \texttt{Spoly} and $1\le i\le d$ for \texttt{DiagA} and \texttt{DiagB}) of:
     % \begin{itemize}
     %     \item $S$-polynomial generation and reduction:
