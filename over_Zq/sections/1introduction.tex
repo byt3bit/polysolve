@@ -94,13 +94,13 @@ Structured variants, including Ring-LWE~\cite{EC:LyuPeiReg10} and Module-LWE~\ci
 
 \begin{table}[hb!]
     \centering
-    \renewcommand{\arraystretch}{1.4} 
+    \renewcommand{\arraystretch}{1.7} 
     \begin{tabular}{
     >{\arraybackslash}m{1cm}
     >{\arraybackslash}m{1cm}
     >{\arraybackslash}m{1.5cm}
     >{\arraybackslash}m{4cm}|
-    >{\arraybackslash}m{3cm}
+    >{\arraybackslash}m{3.5cm}
     >{\arraybackslash}m{3cm}
     }
     \hline
@@ -110,9 +110,9 @@ Structured variants, including Ring-LWE~\cite{EC:LyuPeiReg10} and Module-LWE~\ci
 \hline\hline
 LWE & $n$  & $\binom{n+d-1}{d}$ & $\bigO\left(n^{\max(3(d-1), d\omega)}\right)$ & $\bigO\left(q\log(q)n^d\right)$ & $\bigO\left(q\log(q)n^{d\omega}\right)$\\
 \hline
-RLWE & $N$  & $\binom{N+d-1}{d}$ & $\bigO\left(N^{\max(3(d-1), d\omega)}\right)$ & $\bigO\left(q\log(q)N^d\right)$ & $\bigO\left(q\log(q)N^{d\omega}\right)$\\
+RLWE & $N$  & $\frac{\binom{N+d-1}{d}}{N}$ & $\bigO\left(N^{\max(3(d-1), d\omega)}\right)$ & $\bigO\left(q\log(q)N^{d-1}\right)$ & $\bigO\left(q\log(q)N^{d\omega}\right)$\\
 \hline
-MLWE & $Nn$  & $\binom{Nn+d-1}{d}$ & $\bigO\left((Nn)^{\max(3(d-1), d\omega)}\right)$ & $\bigO\left(q\log(q)(Nn)^d\right)$ & $\bigO\left(q\log(q)(Nn)^{d\omega}\right)$\\
+MLWE & $Nn$  & $\frac{\binom{Nn+d-1}{d}}{N}$ & $\bigO\left((Nn)^{\max(3(d-1), d\omega)}\right)$ & $\bigO\left(nq\log(q)(Nn)^{d-1}\right)$ & $\bigO\left(q\log(q)(Nn)^{d\omega}\right)$\\
 \hline\hline
     \end{tabular}
     \caption{Let $N, n, q \in \Z_{>0}$. The table shows the complexity of our algebraic attack on the three LWE variants with bounded errors (e.g. error entries/coefficients drawn from a set of size $d$). $\omega$ is the linear algebra constant ($2 \le \omega \le 3$) and the complexity is measured in the number of scalar multiplications in $\Z_q$.
@@ -136,7 +136,7 @@ The complexity of solving a \slwe\ instance (for bounded errors) with parameters
 
 \begin{corollary}[Algorithm's complexity for \rlwe\ and \mlwe]
     \label{cor:result-rlwe-mlwe}
-The complexity of solving a \rlwe\ instance (for bounded errors) with parameters $N, d$ $(<N)$ and $m_{\rlwe} = \binom{N+d-1}{d}$ samples is $\mathcal{O}\!\left(N^{\max(3(d-1), d\omega)}\right)$ scalar multiplications in $\Z_q$. Similarly, the complexity of solving a \mlwe\ instance with parameters $N, n, d$ $(<N)$ and $m_{\mlwe} = \binom{Nn+d-1}{d}$ samples is $\mathcal{O}\!\left((Nn)^{\max(3(d-1), d\omega)}\right)$ scalar multiplications in $\Z_q$.
+The complexity of solving a \rlwe\ instance (for bounded errors) with parameters $N, d$ $(<N)$ and $m_{\rlwe} = \binom{N+d-1}{d}/N$ samples is $\mathcal{O}\!\left(N^{\max(3(d-1), d\omega)}\right)$ scalar multiplications in $\Z_q$. Similarly, the complexity of solving a \mlwe\ instance with parameters $N, n, d$ $(<N)$ and $m_{\mlwe} = \binom{Nn+d-1}{d}/N$ samples is $\mathcal{O}\!\left((Nn)^{\max(3(d-1), d\omega)}\right)$ scalar multiplications in $\Z_q$.
 \end{corollary}
 
 % In particular, with $m = \binom{n+d-1}{d}$ samples and error support of size $d$, our complexity bound improves upon existing algebraic algorithms~\cite{EPRINT:ACFP14,EC:NMSU25,EPRINT:Steiner24b,ACISP:SunTibAbe20} for bounded error LWE.\@

@@ -169,13 +169,13 @@ At iteration-$i$, it performs the following operations:
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-For LWE we require $m = \binom{n+d-1}{d}$ samples to generate the target polynomial system. In order to apply the same algorithm to the \rlwe\ and \mlwe\ cases, the number of samples must be adapted to the number of variables introduced by each problem ($N$ for \rlwe\ and $Nn$ for \mlwe), hence
+For LWE we require $m = \binom{n+d-1}{d}$ samples to generate the target polynomial system. In order to apply the same algorithm to the \rlwe\ and \mlwe\ cases, the number of samples must be adapted to the number of variables introduced by each problem ($N$ for \rlwe\ and $Nn$ for \mlwe), hence, considering the amount of information provided by one sample (see \Cref{tab:information_from_one_sample}), the number of samples required for the two variants is given as follows:
 % \[ \begin{split}
 % &\text{\rlwe} \rightarrow  \#variables = N \implies m_{\rlwe} = \binom{N+d-1}{d}, \\
 % &\text{\mlwe} \rightarrow  \#variables = Nk \implies m_{\mlwe} = \binom{Nk+d-1}{d}.
 % \end{split}\]
 \begin{equation*}
-  m_{\rlwe} = \binom{N+d-1}{d}, \ \ \ m_{\mlwe} = \binom{Nn+d-1}{d}.
+  m_{\rlwe} = \frac{\binom{N+d-1}{d}}{N}, \ \ \ m_{\mlwe} = \frac{\binom{Nn+d-1}{d}}{N}.
 \end{equation*}
 
 \mlf{For a better understanding: Specify again what is $N$? }
