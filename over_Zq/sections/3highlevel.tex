@@ -40,13 +40,13 @@ $f(x) = x \cdot \prod_{i=1}^{t} (x+i)(x-i)$, as described in \Cref{subsec:previo
 The original work of Arora and Ge~\cite{ICALP:AroGe11} focuses on solving the LWE problem over a finite field \(\F_p\) with prime modulus \(p\). Our algorithm, instead, operates on the general setting of \(\Z_q\) for any arbitrary integer \(q\). Hence, for a fair comparison a straightforward adaptation is required. As the linearization technique relies on the high number of samples (able to cover all the possible terms of degree less than or equal to $d$) and on the final diagonalization of the coefficient matrix derived from the polynomial system, it is sufficient to replace the diagonalization algorithm with an appropriate method working over \(\Z_q\), e.g. the Smith Normal Form. 
 Considering that LWE, \rlwe\ and \mlwe\ introduce $n$, $N$ and $Nn$ variables respectively (see \Cref{tab:information_from_one_sample}), the number of samples required by Arora and Ge's technique and the corresponding complexities are defined as in \Cref{tab:comparison}.
 
-\begin{equation*}
-\begin{split}
-&\text{LWE} \rightarrow m = \bigO(q\log(q)n^d) \implies \text{complexity} = \bigO(q\log(q)n^{d\omega}), \\
-&\text{RLWE} \rightarrow m = \bigO(q\log(q)N^d) \implies \text{complexity} = \bigO(q\log(q)N^{d\omega}), \\
-&\text{MLWE} \rightarrow m = \bigO(q\log(q)(Nn)^d) \implies \text{complexity} = \bigO(q\log(q)(Nn)^{d\omega}).
-\end{split}
-\end{equation*} 
+% \begin{equation*}
+% \begin{split}
+% &\text{LWE} \rightarrow m = \bigO(q\log(q)n^d) \implies \text{complexity} = \bigO(q\log(q)n^{d\omega}), \\
+% &\text{RLWE} \rightarrow m = \bigO(q\log(q)N^d) \implies \text{complexity} = \bigO(q\log(q)N^{d\omega}), \\
+% &\text{MLWE} \rightarrow m = \bigO(q\log(q)(Nn)^d) \implies \text{complexity} = \bigO(q\log(q)(Nn)^{d\omega}).
+% \end{split}
+% \end{equation*} 
 
 
 \subsection{High-level Intuition of our Algorithm}\label{subsec:highlevel}
