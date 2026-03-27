@@ -97,22 +97,25 @@ Structured variants, including Ring-LWE~\cite{EC:LyuPeiReg10} and Module-LWE~\ci
     \renewcommand{\arraystretch}{1.4} 
     \begin{tabular}{
     >{\arraybackslash}m{1cm}
-    >{\centering\arraybackslash}m{1.5cm}
-    >{\centering\arraybackslash}m{1.5cm}
-    >{\centering\arraybackslash}m{4cm}
-    >{\centering\arraybackslash}m{4cm}
+    >{\arraybackslash}m{1cm}
+    >{\arraybackslash}m{1.5cm}
+    >{\arraybackslash}m{4cm}|
+    >{\arraybackslash}m{3cm}
+    >{\arraybackslash}m{3cm}
     }
-    \hline\hline
-Problem & Secret size & Error Size & No. Samples & Time Complexity\\ 
+    \hline
+    & &  \multicolumn{2}{c}{This work} & \multicolumn{2}{c}{Arora and Ge~\cite{ICALP:AroGe11}} \\
+    \hline
+  & Secret size & No. Samples & Time Complexity & No. Samples & Time Complexity\\ 
 \hline\hline
-LWE & $n$ & $d$ & $m_{\text{LWE}} = \binom{n+d-1}{d}$ & $\bigO\left(n^{\max(3(d-1), d\omega)}\right)$\\
+LWE & $n$  & $\binom{n+d-1}{d}$ & $\bigO\left(n^{\max(3(d-1), d\omega)}\right)$ & $\bigO\left(q\log(q)n^d\right)$ & $\bigO\left(q\log(q)n^{d\omega}\right)$\\
 \hline
-RLWE & $N$ & $d$ & $m_{\rlwe}= \binom{N+d-1}{d}$ & $\bigO\left(N^{\max(3(d-1), d\omega)}\right)$\\
+RLWE & $N$  & $\binom{N+d-1}{d}$ & $\bigO\left(N^{\max(3(d-1), d\omega)}\right)$ & $\bigO\left(q\log(q)N^d\right)$ & $\bigO\left(q\log(q)N^{d\omega}\right)$\\
 \hline
-MLWE & $Nn$ & $d$ & $m_{\mlwe} = \binom{Nn+d-1}{d}$ & $\bigO\left((Nn)^{\max(3(d-1), d\omega)}\right)$\\
+MLWE & $Nn$  & $\binom{Nn+d-1}{d}$ & $\bigO\left((Nn)^{\max(3(d-1), d\omega)}\right)$ & $\bigO\left(q\log(q)(Nn)^d\right)$ & $\bigO\left(q\log(q)(Nn)^{d\omega}\right)$\\
 \hline\hline
     \end{tabular}
-    \caption{Let $N, n, q \in \Z_{>0}$ and let $m_{\texttt{prob}}$, where $\texttt{prob} \in \{\text{LWE}, \rlwe, \mlwe \}$, be the number of samples of the corresponding problem. The table shows the complexity of our algebraic attack on the three LWE variants with bounded errors (e.g. error entries/coefficients drawn from a set of size $d$). $\omega$ is the linear algebra constant ($2 \le \omega \le 3$) and the complexity is measured in the number of scalar multiplications in $\Z_q$.
+    \caption{Let $N, n, q \in \Z_{>0}$. The table shows the complexity of our algebraic attack on the three LWE variants with bounded errors (e.g. error entries/coefficients drawn from a set of size $d$). $\omega$ is the linear algebra constant ($2 \le \omega \le 3$) and the complexity is measured in the number of scalar multiplications in $\Z_q$.
     }\label{tab:comparison}
 \end{table}
 
