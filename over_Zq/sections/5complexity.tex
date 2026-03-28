@@ -41,8 +41,7 @@ We have
 |\mathcal{P}_i| = \binom{n+i-1}{i}.
 \]
 \textbf{Generation Cost.} 
-Each polynomial in $\mathcal{D}_{i+1}$ contains at most $\binom{n+i}{i}+1$ monomials. Since the $S$-polynomial computation in \(\Z_q\) requires the multiplication of the polynomials by a scalar to cancel the leading terms (see \Cref{eq:spoly-expanded}), the cost of generating a single $S$-polynomial $S_{fg}$ from $f, g \in \mathcal{D}_{i+1}$ is at most:
-$ 2\left(\binom{n+i}{i}+1\right) \text{ scalar multiplications.}$
+Each polynomial in $\mathcal{D}_{i+1}$ contains at most $\binom{n+i}{i}+1$ monomials. Since the $S$-polynomial computation in \(\Z_q\) requires multiplying the polynomials by a scalar to cancel the leading terms (see \Cref{eq:spoly-expanded}), the cost of generating a single $S$-polynomial $S_{fg}$ from $f, g \in \mathcal{D}_{i+1}$ is at most $2\left(\binom{n+i}{i}+1\right) \text{ scalar multiplications.}$
 
 \textbf{Reduction Cost.}
 Once generated, the $S$-polynomial $S_{fg}$, due to its construction, contains at most $2\cdot\binom{n+i-1}{i}$ monomials of degree $i+1$, that has to be removed. The factor $2$ accounts for the contributions coming from both $f$ and $g$.

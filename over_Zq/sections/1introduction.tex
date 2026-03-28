@@ -15,7 +15,7 @@ The Learning With Errors (LWE) problem was introduced by Oded Regev in 2005~\cit
 
 % \begin{definition}[Ring-LWE~\cite{EC:LyuPeiReg10} and Module-LWE~\cite{EPRINT:BraGenVai11}]
 %     Let $N \in \Z^+$ (usually a power of $2$), $q \in \Z^+$, 
-% $R_q = \Z_q[x]/\langle \Phi_N(x) \rangle$, where $\Phi_N(x)$ is a $N$-degree irreducible polynomial (usually the $N$-th cyclotomic polynomial, e.g. $x^N + 1$), and let $\chi$ be an error distribution over $R_q$.
+% $R_q = \Z_q[x]/\langle h_N(x) \rangle$, where $h_N(x)$ is a $N$-degree irreducible polynomial (usually the $N$-th cyclotomic polynomial, e.g. $x^N + 1$), and let $\chi$ be an error distribution over $R_q$.
 % For a secret vector $\vars{s} \in R_q^n$, the distribution
 % $A_{\vars{s},\chi}$ produces samples $(\vars{a}, b) \in R_q^n \times R_q$ where:
 % \[
@@ -31,7 +31,7 @@ The Learning With Errors (LWE) problem was introduced by Oded Regev in 2005~\cit
 
 \begin{definition}[LWE~\cite{EPRINT:AlbPlaSco15,STOC:Regev05}, Ring-LWE~\cite{EC:LyuPeiReg10} and Module-LWE~\cite{EPRINT:BraGenVai11}]
     Let $N \in \Z^+$ (usually a power of $2$), $n, q \in \Z^+$, 
-$R_q = \Z_q[x]/\langle \Phi_N(x) \rangle$, where $\Phi_N(x)$ is a $N$-degree irreducible polynomial (usually the $N$-th cyclotomic polynomial, e.g. $x^N + 1$), and let $\chi$ be an error distribution over $R_q$.
+$R_q = \Z_q[x]/\langle h_N(x) \rangle$, where $h_N(x)$ is a $N$-degree irreducible polynomial (usually the $N$-th cyclotomic polynomial, e.g. $x^N + 1$), and let $\chi$ be an error distribution over $R_q$.
 For a secret vector $\vars{s} \in R_q^n$, the distribution
 $A_{\vars{s},\chi}$ produces samples $(\vars{a}, b) \in R_q^n \times R_q$ where:
 \[
@@ -47,7 +47,7 @@ If $n=1$, we refer to the problem as Ring-LWE (\rlwe), and if $n>1$, we refer to
 
 % % TODO: introduce notatino rlwe e mlwe
 % \begin{definition}[LWE~\cite{EPRINT:AlbPlaSco15,STOC:Regev05}, Ring-LWE~\cite{EC:LyuPeiReg10}, Module-LWE~\cite{EPRINT:BraGenVai11}]
-%     Let $N \in \Z_{>0}$ (usually a power of $2$), $q, n \in \Z_{>0}$, $R_q = \Z_q[x]/\langle \Phi_N(x) \rangle$ with $\Phi_N(x)$ an $N$-degree irreducible polynomial, and let $\chi$ be a probability distribution on $\Z$ (for LWE) or $R_q$ (for Ring-LWE and Module-LWE).
+%     Let $N \in \Z_{>0}$ (usually a power of $2$), $q, n \in \Z_{>0}$, $R_q = \Z_q[x]/\langle h_N(x) \rangle$ with $h_N(x)$ an $N$-degree irreducible polynomial, and let $\chi$ be a probability distribution on $\Z$ (for LWE) or $R_q$ (for Ring-LWE and Module-LWE).
     
 %     For a secret vector $\vars{s} \in \Z_q^n$ (for LWE) or $\vars{s} \in R_q^n$ (for Ring-LWE and Module-LWE), the distribution $A_{\vars{s},\chi}$ produces samples $(\vars{a}, b) \in R_q^n \times R_q$ (or $\Z_q^n \times \Z_q$ for LWE) where:
 %     \[

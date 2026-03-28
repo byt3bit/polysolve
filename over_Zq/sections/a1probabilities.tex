@@ -175,42 +175,42 @@
 
 
 \subsection{Probability of Diagonal Pivots}
-
+\luc{This part has to aligned to the provided definition parameters (k should not be used)}
 
 %%%
 \begin{definition}[LWE Framework]\label{def:GeneralLWE}
-    Let $R_q$ be a commutative ring, $k \ge 1$ be the dimension of the secret vector, and $\chi$ be an error distribution over $R_q$.
-    For a secret vector $\vars{s} \in R_q^k$, we denote by $A_{\vars{s},\chi}$ the probability distribution over $R_q^k \times R_q$ obtained by sampling:\[
-        \vars{a} \xleftarrow{\$} R_q^k, \quad e \leftarrow \chi, \quad \text{and returning} \quad (\vars{a}, b) = (\vars{a}, \langle \vars{a}, \vars{s} \rangle + e) \in R_q^k \times R_q.
+    Let $R_q$ be a commutative ring, $n \ge 1$ be the dimension of the secret vector, and $\chi$ be an error distribution over $R_q$.
+    For a secret vector $\vars{s} \in R_q^n$, we denote by $A_{\vars{s},\chi}$ the probability distribution over $R_q^n \times R_q$ obtained by sampling:\[
+        \vars{a} \xleftarrow{\$} R_q^n, \quad e \leftarrow \chi, \quad \text{and returning} \quad (\vars{a}, b) = (\vars{a}, \langle \vars{a}, \vars{s} \rangle + e) \in R_q^n \times R_q.
     \]
     \begin{itemize}
         \item Search-LWE: Recover the secret $\vars{s}$ given arbitrarily many samples drawn from $A_{\vars{s},\chi}$.
-        \item Decision-LWE: Distinguish arbitrarily many samples drawn from $A_{\vars{s},\chi}$ from the same number of samples drawn uniformly at random from $R_q^k \times R_q$.
+        \item Decision-LWE: Distinguish arbitrarily many samples drawn from $A_{\vars{s},\chi}$ from the same number of samples drawn uniformly at random from $R_q^n \times R_q$.
     \end{itemize}
-    This framework captures the three main LWE variants based on the parameterization of $R_q$ and $k$:
+    This framework captures the three main LWE variants based on the parameterization of $R_q$ and $n$:
     \begin{itemize}
-        \item Plain LWE (LWE~\cite{STOC:Regev05}): $R_q = \Z_q$ and $k = n$ (where $n$ is the standard LWE dimension).
-        \item Ring-LWE (\rlwe~\cite{EC:LyuPeiReg10}): $R_q = \Z_q[x]/\langle \Phi_N(x) \rangle$ (where $\Phi_N(x)$ is an irreducible polynomial of degree $N$) and $k = 1$.
-        \item Module-LWE (\mlwe~\cite{EPRINT:BraGenVai11}): $R_q = \Z_q[x]/\langle \Phi_N(x) \rangle$ and $k > 1$.
+        \item Plain LWE (LWE~\cite{STOC:Regev05}): $R_q = \Z_q$ (where $n$ is the standard LWE dimension).
+        \item Ring-LWE (\rlwe~\cite{EC:LyuPeiReg10}): $R_q = \Z_q[x]/\langle h_N(x) \rangle$ (where $h_N(x)$ is an irreducible polynomial of degree $N$) and $n = 1$.
+        \item Module-LWE (\mlwe~\cite{EPRINT:BraGenVai11}): $R_q = \Z_q[x]/\langle h_N(x) \rangle$ and $n > 1$.
     \end{itemize}
 \end{definition}
 %%%
 
-Let \(k < N\) and consider \(k\) vectors \(v_1,\dots,v_k \in \Z_q^N\). 
+Let \(n < N\) and consider \(n\) vectors \(v_1,\dots,v_n \in \Z_q^N\). 
 The probability that these vectors are linearly independent is well-known and can be expressed as
 \begin{equation}\label{pivots}
-\mathbb{P}_k(\{v_1,\dots,v_k\} \text{ are independent}) 
-= \prod_{j=1}^{k} \left(1 - q^{j-1-N}\right).
+\mathbb{P}_n(\{v_1,\dots,v_n\} \text{ are independent}) 
+= \prod_{j=1}^{n} \left(1 - q^{j-1-N}\right).
 \end{equation}
 For large \(q\), this probability is extremely close to 1.  
 
 \noindent
 \textsf{\textbf{Example.}} 
 Consider the parameters of CRYSTALS-Kyber768~\cite{NISTPQC:CRYSTALS-KYBER22} with \(n = 256\), \(d = 7\), and \(q = 3329\). 
-The initial set of LWE samples can be seen as \(k\) vectors in \(\Z_q^N\), with $k = \binom{n+d-1}{d} = \binom{262}{7}$, and \(N = \binom{n+d}{d} = \binom{263}{7} \).
+The initial set of LWE samples can be seen as \(m\) vectors in \(\Z_q^N\), with $m = \binom{n+d-1}{d} = \binom{262}{7}$, and \(N = \binom{n+d}{d} = \binom{263}{7} \).
 Using standard estimates for the product in the above formula, we obtain
 \begin{equation*}
 \mathbb{P}_k \ge \exp\left(-\frac{1}{(1-q^{-1})(q-1)}\right) \approx 0.9997.
 \end{equation*}
 Hence, the probability that the pivots lie on the diagonal is overwhelmingly close to 1. 
-The same argument applies for each $1 \le i \le d$, with $i$ replacing $d$ in the definitions of $k$ and $N$.
+The same argument applies for each $1 \le i \le d$, with $i$ replacing $d$ in the definitions of $m$ and $N$.
