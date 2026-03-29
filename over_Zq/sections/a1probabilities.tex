@@ -202,7 +202,7 @@ Consider the parameters of CRYSTALS-Kyber768~\cite{NISTPQC:CRYSTALS-KYBER22} wit
 The initial set of $m_{\text{MLWE}} = \binom{Nn+d-1}{d}/N$ MLWE samples can be seen as \(M\) vectors in \(\Z_q^B\), with $M = N\cdot m_{\text{MLWE}} = \binom{772}{7}$, and \(B = \binom{Nn+d}{d} = \binom{773}{7} \).
 Using standard estimates for the product in the above formula, we obtain
 \begin{equation*}
-\mathbb{P}_m \ge \exp\left(-\frac{1}{(1-q^{-1})(q-1)}\right) \approx 0.9997.
+\mathbb{P}_M \ge \exp\left(-\frac{1}{(1-q^{-1})(q-1)}\right) \approx 0.9997.
 \end{equation*}
 Hence, the probability that the pivots lie on the diagonal is overwhelmingly close to 1. 
 The same argument applies for each $1 \le i \le d$, with $i$ replacing $d$ in the definitions of $m$ and $B$.
