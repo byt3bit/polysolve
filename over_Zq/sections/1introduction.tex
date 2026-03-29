@@ -194,8 +194,7 @@ All the above-mentioned algebraic analysis that use polynomial system solving me
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-\subsection{Some ATTACKS on RLWE/PLWE (Summary in \ref{appendix:summary})}
-
+\paragraph{Algorithms for RLWE/PLWE (Summary in \ref{appendix:summary})}
 Because an RLWE sample can be naturally represented as $n$ standard LWE samples, any known attack against LWE can be directly applied to the RLWE setting. However, the added algebraic structure of polynomial rings introduces unique attack vectors that do not exist in standard LWE.
 A primary class of these algebraic attacks exploits ring homomorphisms. Initially, it was demonstrated that PLWE exhibits weak instances when the defining polynomial satisfies $f(1) \equiv 0 \pmod q$. By ``guessing'' the evaluation of the secret polynomial at 1, an attacker can solve the Decision PLWE problem in $\mathcal{O}(q)$ time. While this targets highly specific and non-standard instances, subsequent work generalized this vulnerability to the broader RLWE problem. Specifically, researchers showed that by choosing an alternative polynomial basis, apparently secure RLWE instances can be mapped into these weak PLWE instances. If the error distortion during this transformation is sufficiently small, the $\mathcal{O}(q)$ attack remains effective. 
 
