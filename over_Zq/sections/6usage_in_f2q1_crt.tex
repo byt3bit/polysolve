@@ -3,7 +3,7 @@ In previous sections we presented our algorithm for solving the LWE problem over
 Let $B(\log q)$ be a function which bounds the number of bit operations required to perform a single scalar multiplication over $\mathbb{Z}_q$. Using
 standard integer arithmetic, $B(\log q) \ll \log q$, while fast integer arithmetic allows $B(\log q) \ll M(\log q) \log q \log \log q$, where $M(t)$ is the complexity of multiplying two $t$-bit integers~\cite{DBLP:conf/issac/Storjohann96}.
 
-Let \(l_{\texttt{prob}}\) be the number of variables in the polynomial system corresponding to the problem \texttt{prob} $\in \{\text{LWE}, \rlwe, \mlwe\}$, namely \(l_{\text{LWE}} = n\), \(l_{\rlwe} = N\), and \(l_{\mlwe} = Nn\). The complexity of our algorithm for solving the three LWE variants with bounded errors (e.g. error entries/coefficients drawn from a set of size $d$) is \[\mathscr{C}^{(q)}_{alg} = \bigO\left(l_{\texttt{prob}}^{\max(3(d-1), d\omega)}B(\log q)\right)\] bit operations. 
+Let \(\ell_{\texttt{prob}}\) be the number of variables in the polynomial system corresponding to the problem \texttt{prob} $\in \{\text{LWE}, \rlwe, \mlwe\}$, namely \(\ell_{\text{LWE}} = n\), \(\ell_{\rlwe} = N\), and \(\ell_{\mlwe} = Nn\). The complexity of our algorithm for solving the three LWE variants with bounded errors (e.g.\ error entries/coefficients drawn from a set of size $d$) is \[\mathscr{C}^{(q)}_{alg} = \bigO\left(\ell_{\texttt{prob}}^{\max(3(d-1), d\omega)}B(\log q)\right)\] bit operations. 
 
 
 \textbf{Mapping to smaller rings.} Consider the ring \(\Z_q\) where \(q\) is a composite integer. 

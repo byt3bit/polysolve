@@ -9,13 +9,13 @@ For $\alpha = (\alpha_1,\dots,\alpha_n) \in \mathbb{Z}_{\ge 0}^n$ we define $\va
 f = f^{(d)} + f^{(d-1)} + \cdots + f^{(1)} + f^{(0)},
 \]
 where $f^{(k)}$ denotes the sum of all monomials in $f$ of total degree exactly $k$.
-For a fixed monomial order $\prec$ on $\Z_q[x_1,\dots,x_n]$, \LM$(f)$ and \LT$(f)$ denote respectively the leading monomial and leading term of $f$ with respect to $\prec$. The notion of $S$-polynomial is well-known in the context of Gr\"obner basis, especially when coefficients of polynomials lie in a field. When coefficients are in a ring, the $S$-polynomial computation must be adapted. Initiated by Bruno Buchberger, the study of Gr{\"o}bner basis on rings has gained more attention and has been extended to the so-called \emph{reduction rings}~\cite{buchberger1983critical,basis_of_modules_over_reduction_rings}, where additional operations are needed to deal with non-invertible elements. It is well-known that $\Z, \Z_q$ are reduction rings~\cite{reductionring_theorema,hereditary_reduction_ring}. 
+For a fixed monomial order $\prec$ on $\Z_q[x_1,\dots,x_n]$, $\lm(f)$ and $\lt(f)$ denote respectively the leading monomial and leading term of $f$ with respect to $\prec$. The notion of $S$-polynomial is well-known in the context of Gr\"obner basis, especially when coefficients of polynomials lie in a field. When coefficients are in a ring, the $S$-polynomial computation must be adapted. Initiated by Bruno Buchberger, the study of Gr{\"o}bner basis on rings has gained more attention and has been extended to the so-called \emph{reduction rings}~\cite{buchberger1983critical,basis_of_modules_over_reduction_rings}, where additional operations are needed to deal with non-invertible elements. It is well-known that $\Z, \Z_q$ are reduction rings~\cite{reductionring_theorema,hereditary_reduction_ring}. 
 In this context, for $f, g \in \Z_q[x_1,\dots,x_n]$, the $S$-polynomial is defined as
 \begin{equation}\label{eq:spoly-expanded}
-    S_{fg} := \frac{\vars{c}}{\lc(f)}\frac{\vars{x}^\gamma}{\mathrm{LM}(f)} \cdot f
-              - \frac{\vars{c}}{\lc(g)}\frac{\vars{x}^\gamma}{\mathrm{LM}(g)} \cdot g,
+    S_{fg} := \frac{\vars{c}}{\lc(f)}\frac{\vars{x}^\gamma}{\lm(f)} \cdot f
+              - \frac{\vars{c}}{\lc(g)}\frac{\vars{x}^\gamma}{\lm(g)} \cdot g,
 \end{equation}
-where $\vars{x}^\gamma  = \texttt{lcm}(\mathrm{LM}(f), \mathrm{LM}(g))$ and $\vars{c} = \texttt{lcm}(\lc(f), \lc(g))$. 
+where $\vars{x}^\gamma  = \texttt{lcm}(\mathrm{LM}(f), \lm(g))$ and $\vars{c} = \texttt{lcm}(\lc(f), \lc(g))$. 
 
 The main issue in Gr\"obner basis computations over rings arises during the $S$-polynomial reduction, e.g. multivariate polynomial division. In our algorithm we completely avoid multivariate polynomial division and thus the issues related to it. More specifically, divisions will be replaced by simple linear algebra operations which can be efficiently implemented on rings.
 
