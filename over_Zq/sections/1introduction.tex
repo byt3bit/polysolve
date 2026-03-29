@@ -34,7 +34,7 @@ The Learning With Errors (LWE) problem was introduced by Oded Regev in 2005~\cit
 % -------------------------------------------
 \begin{definition}[LWE~\cite{EPRINT:AlbPlaSco15,STOC:Regev05}, Ring-LWE~\cite{EC:LyuPeiReg10} and Module-LWE~\cite{EPRINT:BraGenVai11}]
     Let $N \in \Z^+$ (usually a power of $2$), $n, q \in \Z^+$, 
-$R_q = \Z_q[x]/\langle h_N(x) \rangle$, where $h_N(x)$ is a $N$-degree irreducible polynomial (usually the $N$-th cyclotomic polynomial, e.g. $x^N + 1$), and let $\chi$ be an error distribution over $R_q$.
+$R_q = \Z_q[x]/\langle h_N(x) \rangle$, where $h_N(x)$ is an irreducible polynomial of degree $N$ (usually the $N$-th cyclotomic polynomial, e.g. $x^N + 1$), and let $\chi$ be an error distribution over $R_q$.
 For a secret vector $\vars{s} \in R_q^n$, the distribution
 $A_{\vars{s},\chi}$ produces samples $(\vars{a}, b) \in R_q^n \times R_q$ where:
 \[
@@ -97,11 +97,10 @@ using primal and dual approaches that reduce LWE to BDD/uSVP or SIS and rely on 
 
 \noindent
 \textbf{Hardness and Cryptographic Application.}
+The foundational hardness results such as reduction of worst-case approximate GapSVP problem to the average-case LWE problem~\cite{STOC:BLPRS13,DBLP:conf/stoc/Peikert09,STOC:Regev05,DBLP:journals/jacm/Regev09}, establish LWE as a central hardness assumption in lattice-based cryptography and a foundation for post-quantum cryptographic constructions.
 % Regev proved that LWE is as hard on average as worst-case lattice problems such as GapSVP and SIVP via quantum reductions~\cite{STOC:Regev05}.
 % The hardness guarantees was later extended to purely classical reductions by Brakerski et al.~\cite{STOC:BLPRS13}, under specific, but practically relevant, parameter choices. \ar{need to be specific}
 %It has been shown that worst-case GapSVP reduces to average-case LWE~\cite{STOC:BLPRS13,STOC:Regev05}.
-As established in the literature, the worst-case approximate GapSVP reduces to the average-case LWE~\cite{STOC:BLPRS13,DBLP:conf/stoc/Peikert09,STOC:Regev05,DBLP:journals/jacm/Regev09}.
-Such results established LWE as a central hardness assumption in lattice-based cryptography, leading to numerous cryptographic constructions, including post-quantum cryptographic standards.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %The LWE problem has proven to be a rich and versatile source of many innovative cryptographic constructions. 
 Examples of such constructions include secure public-key encryption schemes resilient to both chosen-plaintext~\cite{RSA:LinPei11,DBLP:conf/crypto/PeikertVW08,STOC:Regev05} and chosen-ciphertext attacks~\cite{DBLP:conf/eurocrypt/MicciancioP12,DBLP:conf/stoc/Peikert09,DBLP:conf/stoc/PeikertW08}, oblivious transfer protocols~\cite{DBLP:conf/crypto/PeikertVW08}, identity-based encryption~\cite{DBLP:conf/eurocrypt/AgrawalBB10,DBLP:conf/crypto/AgrawalBB10,DBLP:conf/eurocrypt/CashHKP10,DBLP:conf/stoc/GentryPV08}, leakage-resilient cryptography~\cite{DBLP:conf/tcc/AkaviaGV09,DBLP:conf/crypto/ApplebaumCPS09,DBLP:conf/innovations/GoldwasserKPV10}, fully homomorphic encryption~\cite{DBLP:conf/crypto/Brakerski12,DBLP:conf/innovations/BrakerskiGV12,DBLP:conf/focs/BrakerskiV11}, among many others.
@@ -143,9 +142,9 @@ Structured variants, including Ring-LWE~\cite{EC:LyuPeiReg10} and Module-LWE~\ci
     \centering
     \renewcommand{\arraystretch}{1.8}
     \resizebox{\textwidth}{!}{%
-    \begin{tabular}{| c | c | c c | c c |}
+    \begin{tabular}{ c | c | c c | c c }
         \hline\hline
-        \multirow{2}{*}{Variant} & \multirow{2}{*}{\makecell{Secret\\Size}} & \multicolumn{2}{c|}{This Work} & \multicolumn{2}{c|}{Arora and Ge~\cite{ICALP:AroGe11}} \\
+        \multirow{2}{*}{Variant} & \multirow{2}{*}{\makecell{Secret\\Size}} & \multicolumn{2}{c|}{This Work} & \multicolumn{2}{c}{Arora and Ge~\cite{ICALP:AroGe11}} \\
         \cline{3-6}
         & & No. Samples & Time Complexity & No. Samples & Time Complexity \\
         \hline\hline
@@ -158,7 +157,7 @@ Structured variants, including Ring-LWE~\cite{EC:LyuPeiReg10} and Module-LWE~\ci
     \end{tabular}%
     }
     \vspace{0.2cm} 
-    \caption{Let $N, n, q \in \Z_{>0}$. The table shows the complexity of our algebraic attack on the three LWE variants with bounded errors (e.g., error entries/coefficients drawn from a set of size $d$). Here, $\omega$ is the linear algebra constant ($2 \le \omega \le 3$) and the complexity is measured in the number of scalar multiplications in $\Z_q$.}\label{tab:comparison}
+    \caption{Let $N, n, q \in \Z_{>0}$. The table shows the complexity of our algebraic attack on the three LWE variants with bounded errors (e.g., error entries/coefficients drawn from a set of size $d$). Here, $\omega$ is the linear algebra constant ($2 \le \omega < 3$) and the complexity is measured in the number of scalar multiplications in $\Z_q$.}\label{tab:comparison}
 \end{table}
 
 We consider algebraic attacks on LWE instances with \emph{bounded errors}, which asks to recover $\vars{s}$ from $(\vars{a}_i, b_i) = (\vars{a}_i, \langle\vars{a}_i, \vars{s}\rangle + e_i) \in \Z_q^n \times \Z_q$, for $1 \leq i \leq m$, where each $e_i$ lies in a fixed set of size $d$.
