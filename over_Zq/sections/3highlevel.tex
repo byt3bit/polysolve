@@ -1,7 +1,6 @@
 
 \paragraph{Generating the polynomial system.}
-Constructing a polynomial system corresponding to an LWE problem follows the method of Arora and Ge~\cite{ICALP:AroGe11}, i.e.~by using the polynomial
-$f(x) = x \cdot \prod_{i=1}^{t} (x+i)(x-i)$, as described in \Cref{subsec:previous-algorithms}. The same idea can be applied to \rlwe\ and \mlwe\  by first expressing them as ``extended'' LWE instances. This transformation is possible for all irreducible polynomials \(h_N(x)\). In \Cref{sec:lwe_types_reduction} and~\cite{DBLP:journals/iacr/BoerW25} the case of cyclotomic rings is detailed.
+Constructing a polynomial system corresponding to an LWE problem follows the method of Arora and Ge~\cite{ICALP:AroGe11}, i.e.~by using the polynomial $f(x) = x \cdot \prod_{i=1}^{t} (x+i)(x-i)$, as described in \Cref{subsec:previous-algorithms}. The same idea can be applied to \rlwe\ and \mlwe\  by first expressing them as ``extended'' LWE instances. This transformation is possible for all irreducible polynomials \(h_N(x)\). In \Cref{sec:lwe_types_reduction} and~\cite{DBLP:journals/iacr/BoerW25} the case of cyclotomic rings is detailed.
 % In \Cref{subsec:previous-algorithms}, we presented the polynomial representation of the \slwe\ problem introduced by Arora and Ge~\cite{ICALP:AroGe11}. This representation is the starting point of our algorithm. More specifically, we highlight the importance of the polynomial $f(x) = x \cdot \prod_{i=1}^{t} (x+i)(x-i)$, which vanishes on all possible values of the error term, to construct a system of polynomial equations capturing the \slwe\ problem. 
 % \luc{generalize to generic irreducible polynomial but give example with cyclotomic}
 \Cref{tab:information_from_one_sample} describes the polynomial system characteristics provided by one sample of the LWE variants (after conversion to LWE instances).
@@ -11,20 +10,23 @@ $f(x) = x \cdot \prod_{i=1}^{t} (x+i)(x-i)$, as described in \Cref{subsec:previo
     [hb!]
     \centering
     \renewcommand{\arraystretch}{1.3} 
-    \begin{tabular}{|c|c|c|c|
+    \begin{tabular}{c|c|c
     }
+    \hline\hline
+    \textbf{Problem} & \textbf{No.~variables} ($n_v$) & \textbf{No.~equations} ($n_e$) \\
+    \hline\hline
+    LWE & $n$ & $1$\\
     \hline
-    \textbf{Problem} & \textbf{No.~variables} & \textbf{No.~equations} & \textbf{Degree}\\
+    \rlwe\ & $N$ & $N$ \\
     \hline
-    LWE & $n$ & $1$ & $2t+1$\\
-    \hline
-    \rlwe\ & $N$ & $N$ & $2t+1$\\
-    \hline
-    \mlwe\ & $Nn$ & $N$ & $2t+1$\\
-    \hline
+    \mlwe\ & $Nn$ & $N$ \\
+    \hline\hline
     \end{tabular}
-    \caption{Let $n$ be the secret size in LWE (or the number of secret polynomials in \mlwe), $N$ the ring dimension in \rlwe\ and \mlwe\ (equiv. the secret polynomial size in \rlwe\ and \mlwe) and $t$ the error bound. The table summarizes the information gathered from one sample for the three LWE variants.}\label{tab:information_from_one_sample}
+    \caption{Summary of the information gathered from one sample for the three LWE variants.\mlf{add the error bound/degree of poly here}}\label{tab:information_from_one_sample}
 \end{table}
+%Let $n$ be the secret size in LWE (or the number of secret polynomials in \mlwe), $N$ the ring dimension in \rlwe\ and \mlwe\ (equiv. the secret polynomial size in \rlwe\ and \mlwe) and $t$ the error bound. 
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % OLD IMAGE -- Switch to this.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -37,7 +39,7 @@ $f(x) = x \cdot \prod_{i=1}^{t} (x+i)(x-i)$, as described in \Cref{subsec:previo
 % \end{figure}
 
 \paragraph{Extending Arora and Ge Technique to \(\boldsymbol{\Z}_\mathbf{q}\).}
-The original work of Arora and Ge~\cite{ICALP:AroGe11} focuses on solving the LWE problem over a finite field \(\F_p\) with prime modulus \(p\). Our algorithm, instead, operates on the general setting of \(\Z_q\) for any arbitrary integer \(q\). Hence, for a fair comparison a straightforward adaptation is required. As the linearization technique relies on the high number of samples (able to cover all the possible terms of degree less than or equal to $d$) and on the final diagonalization of the coefficient matrix derived from the polynomial system, it is sufficient to replace the diagonalization algorithm with an appropriate method working over \(\Z_q\), e.g. the Smith Normal Form. 
+The original work of Arora and Ge~\cite{ICALP:AroGe11} focuses on solving the LWE problem over a finite field \(\F_q\), i.e.\ \(q=p^k\) for some prime modulus \(p\) and \(k\in\mathbb{Z}^+\). Our algorithm, instead, operates on the general setting of \(\Z_q\) for any arbitrary integer \(q\). Hence, for a fair comparison a straightforward adaptation is required. As the linearization technique relies on the high number of samples (able to cover all the possible terms of degree less than or equal to $d$) and on the final diagonalization of the coefficient matrix derived from the polynomial system, it is sufficient to replace the diagonalization algorithm with an appropriate method working over \(\Z_q\), e.g. the Smith Normal Form. 
 Considering that LWE, \rlwe\ and \mlwe\ introduce $n$, $N$ and $Nn$ variables respectively (see \Cref{tab:information_from_one_sample}), the number of samples required by Arora and Ge's technique and the corresponding complexities are defined as in \Cref{tab:comparison}.
 
 % \begin{equation*}
@@ -50,7 +52,9 @@ Considering that LWE, \rlwe\ and \mlwe\ introduce $n$, $N$ and $Nn$ variables re
 
 
 \subsection{High-level Intuition of our Algorithm}\label{subsec:highlevel}
-In this section and \Cref{sec:pseudocode}, we provide the description of our algorithm w.r.t the LWE polynomial system \(\mathcal{F}_{\mathrm{LWE}}\) derived from \slwe. In general, let $n_v$ be the number of secret variables and $n_e$ the number of equations generated by one sample (see \Cref{tab:information_from_one_sample}), the algorithm needs \(\binom{n_v+d-1}{d}\) equations, which translates into \(\binom{n_v+d-1}{d} / n_e\) samples. For LWE, $n_v = n$ and $n_e = 1$. For the other two variants, namely \rlwe\ and \mlwe, this parameters must be adapted following \Cref{tab:information_from_one_sample}. Further details are given at the end of this section. 
+In this section and \Cref{sec:pseudocode}, we provide the description of our algorithm w.r.t.\ the LWE polynomial system \(\mathcal{F}_{\mathrm{LWE}}\) derived from \slwe. In general, let $n_v$ be the number of secret variables and $n_e$ the number of equations generated by one sample (see \Cref{tab:information_from_one_sample}), the algorithm needs \(\binom{n_v+d-1}{d}\) equations, which translates into \(\binom{n_v+d-1}{d} / n_e\) samples.
+
+%For LWE, $n_v = n$ and $n_e = 1$. For the other two variants, namely \rlwe\ and \mlwe, this parameters must be adapted following \Cref{tab:information_from_one_sample}. Further details are given at the end of this section. 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % NEW IMAGE
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
