@@ -111,7 +111,9 @@ Structured variants, including Ring-LWE~\cite{EC:LyuPeiReg10} and Module-LWE~\ci
 %     \caption{Let $N, n, q \in \Z_{>0}$. The table shows the complexity of our algebraic attack on the three LWE variants with bounded errors (e.g. error entries/coefficients drawn from a set of size $d$). $\omega$ is the linear algebra constant ($2 \le \omega \le 3$) and the complexity is measured in the number of scalar multiplications in $\Z_q$.
 %     }\label{tab:comparison}
 % \end{table}
-
+We consider algebraic attacks on LWE instances with \emph{bounded errors}, which asks to recover $\vars{s}$ from $(\vars{a}_i, b_i) = (\vars{a}_i, \langle\vars{a}_i, \vars{s}\rangle + e_i) \in \Z_q^n \times \Z_q$, for $1 \leq i \leq m$, where each $e_i$ lies in a fixed set of size $d$.
+LWBE is a variant that remains as hard as standard LWE for suitable parameters~\cite{MicPei13}. The distinctness of our (algebraic) approach is its applicability
+to general RLWE. While previous algebraic algorithms and their refinements uses polynomial system solving techniques that are applicable when the co-efficients are in $\F_q$
 
 \begin{table}[htbp]
     \centering
@@ -135,8 +137,7 @@ Structured variants, including Ring-LWE~\cite{EC:LyuPeiReg10} and Module-LWE~\ci
     \caption{Let $N, n, q \in \Z_{>0}$. The table shows the complexity of our algebraic attack on the three LWE variants with bounded errors (e.g., error entries/coefficients drawn from a set of size $d$). Here, $\omega$ is the linear algebra constant ($2 \le \omega < 3$) and the complexity is measured in the number of scalar multiplications in $\Z_q$.}\label{tab:comparison}
 \end{table}
 
-We consider algebraic attacks on LWE instances with \emph{bounded errors}, which asks to recover $\vars{s}$ from $(\vars{a}_i, b_i) = (\vars{a}_i, \langle\vars{a}_i, \vars{s}\rangle + e_i) \in \Z_q^n \times \Z_q$, for $1 \leq i \leq m$, where each $e_i$ lies in a fixed set of size $d$.
-LWBE is a variant that remains as hard as standard LWE for suitable parameters~\cite{MicPei13}.
+
 
 In this work, we introduce a new algebraic method for solving the \slwe\ problem which differs fundamentally from existing approaches. Instead of directly applying Gr\"obner basis method,
 we use \emph{a combination of diagonalization and $S$-polynomial generation} techniques. We carry out a direct complexity analysis of our new algorithm.
