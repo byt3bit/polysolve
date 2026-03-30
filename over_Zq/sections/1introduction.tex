@@ -111,9 +111,9 @@ Structured variants, including Ring-LWE~\cite{EC:LyuPeiReg10} and Module-LWE~\ci
 %     \caption{Let $N, n, q \in \Z_{>0}$. The table shows the complexity of our algebraic attack on the three LWE variants with bounded errors (e.g. error entries/coefficients drawn from a set of size $d$). $\omega$ is the linear algebra constant ($2 \le \omega \le 3$) and the complexity is measured in the number of scalar multiplications in $\Z_q$.
 %     }\label{tab:comparison}
 % \end{table}
-We consider algebraic attacks on LWE instances with \emph{bounded errors}, which asks to recover $\vars{s}$ from $(\vars{a}_i, b_i) = (\vars{a}_i, \langle\vars{a}_i, \vars{s}\rangle + e_i) \in \Z_q^n \times \Z_q$, for $1 \leq i \leq m$, where each $e_i$ lies in a fixed set of size $d$.
+We consider algebraic algorithms for the search-LWE instances with \emph{bounded errors}, which asks to recover $\vars{s}$ from $(\vars{a}_i, b_i) = (\vars{a}_i, \langle\vars{a}_i, \vars{s}\rangle + e_i) \in \Z_q^n \times \Z_q$, for $1 \leq i \leq m$, where each $e_i$ lies in a fixed set of size $d$.
 LWBE is a variant that remains as hard as standard LWE for suitable parameters~\cite{MicPei13}. The distinctness of our (algebraic) approach is its applicability
-to general RLWE. While previous algebraic algorithms and their refinements uses polynomial system solving techniques that are applicable when the co-efficients are in $\F_q$
+to general RLWE. While previous algebraic algorithms and their refinements uses polynomial system solving techniques that are applicable when the co-efficients are in $\F_q$. Surprisingly, previous works do not discuss the applicability of the techniques when the polynomial coefficients are in a ring, while it is well-known that it is non-trivial to extend the well-known polynomial system solving techniques such as Gr\"obner basis, when the coefficients are elements of a ring (e.g. $\Z_q$). 
 
 \begin{table}[htbp]
     \centering
