@@ -172,12 +172,12 @@ Despite the absence of the above mentioned assumptions, the complexity of our al
 Our main result is summarized in \Cref{thm:result}:
 
 \begin{theorem}[Main Result]\label{thm:result}
-The complexity of solving a \slwe\ instance (for bounded errors) with parameters $n$, $d$ $(<n)$ and $m_{\text{LWE}} = \binom{n+d-1}{d}$ samples is $\mathcal{O}\!\left(n^{\max(3(d-1), d\omega)}\right)$ scalar multiplications in $\Z_q$, where $n$ denotes the length of the secret vector to be recovered, $d$ the size of the set from which the error is drawn and $\omega$ is the linear algebra constant ($2 \le \omega \le 3$).
+The complexity of solving a \slwe\ instance (for bounded errors) with parameters $n$, $d$ $(<n)$ and $m_{\text{LWE}} = \binom{n+d-1}{d}$ samples is $\mathcal{O}\!\left(n^{\max(3(d-1), d\omega)}\right)$ scalar multiplications in $\Z_q$, where $n$ denotes the length of the secret vector to be recovered, $d$ the size of the set from which the error is drawn and $\omega$ is the linear algebra constant ($2 \le \omega < 3$).
 \end{theorem}
 
 \begin{corollary}[Algorithm's complexity for \rlwe\ and \mlwe]
     \label{cor:result-rlwe-mlwe}
-The complexity of solving a \rlwe\ instance (for bounded errors) with parameters $N, d$ $(<N)$ and $m_{\rlwe} = \binom{N+d-1}{d}/N$ samples is $\mathcal{O}\!\left(N^{\max(3(d-1), d\omega)}\right)$ scalar multiplications in $\Z_q$. Similarly, the complexity of solving a \mlwe\ instance with parameters $N, n, d$ $(<N)$ and $m_{\mlwe} = \binom{Nn+d-1}{d}/N$ samples is $\mathcal{O}\!\left((Nn)^{\max(3(d-1), d\omega)}\right)$ scalar multiplications in $\Z_q$.
+The complexity of solving a \rlwe\ instance (for bounded errors) with parameters $N, d$ $(<N)$ and $m_{\rlwe} = \binom{N+d-1}{d}/N$ samples is $\mathcal{O}\!\left(N^{\max(3(d-1), d\omega)}\right)$ scalar multiplications in $\Z_q$. Similarly, the complexity of solving a \mlwe\ instance with parameters $N, n, d$ $(<N)$ and $m_{\mlwe} = \binom{Nn+d-1}{d}/N$ samples is $\mathcal{O}\!\left({(Nn)}^{\max(3(d-1), d\omega)}\right)$ scalar multiplications in $\Z_q$.
 \end{corollary}
 
 % In particular, with $m = \binom{n+d-1}{d}$ samples and error support of size $d$, our complexity bound improves upon existing algebraic algorithms~\cite{EPRINT:ACFP14,EC:NMSU25,EPRINT:Steiner24b,ACISP:SunTibAbe20} for bounded error LWE.\@
