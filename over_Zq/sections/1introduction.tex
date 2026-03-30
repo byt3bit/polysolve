@@ -113,7 +113,10 @@ Structured variants, including Ring-LWE~\cite{EC:LyuPeiReg10} and Module-LWE~\ci
 %     \caption{Let $N, n, q \in \Z_{>0}$. The table shows the complexity of our algebraic attack on the three LWE variants with bounded errors (e.g. error entries/coefficients drawn from a set of size $d$). $\omega$ is the linear algebra constant ($2 \le \omega \le 3$) and the complexity is measured in the number of scalar multiplications in $\Z_q$.
 %     }\label{tab:comparison}
 % \end{table}
-
+We propose a new algebraic algorithm for the search version of LWE (RLWE and MLWE) with \emph{bounded errors}. % which asks to recover $\vars{s}$ from $(\vars{a}_i, b_i) = (\vars{a}_i, \langle\vars{a}_i, \vars{s}\rangle + e_i) \in \Z_q^n \times \Z_q$, for $1 \leq i \leq m$, where each $e_i$ lies in a fixed set of size $d$.
+It is well-known that the bound-error variant remains as hard as standard LWE for suitable parameters~\cite{MicPei13}. While previous algebraic
+algorithms and their refinements uses polynomial system solving techniques that are applicable when the co-efficients are in $\F_q$, the distinctness of
+our (algebraic) approach is its applicability when co-efficients are in a ring. Surprisingly, previous works do not discuss the applicability of the techniques when the polynomial coefficients are in a ring, although it is well-known that it is non-trivial to extend the well-known polynomial system solving techniques such as Gr\"obner basis, when the coefficients are elements of a ring (e.g. $\Z_q$). 
 
 \begin{table}[htbp]
     \centering
@@ -137,13 +140,11 @@ Structured variants, including Ring-LWE~\cite{EC:LyuPeiReg10} and Module-LWE~\ci
     \caption{Let $N, n, q \in \Z_{>0}$. The table shows the complexity of our algebraic attack on the three LWE variants with bounded errors (e.g., error entries/coefficients drawn from a set of size $d$). Here, $\omega$ is the linear algebra constant ($2 \le \omega < 3$) and the complexity is measured in the number of scalar multiplications in $\Z_q$.}\label{tab:comparison}
 \end{table}
 
-We consider algebraic attacks on LWE instances with \emph{bounded errors}, which asks to recover $\vars{s}$ from $(\vars{a}_i, b_i) = (\vars{a}_i, \langle\vars{a}_i, \vars{s}\rangle + e_i) \in \Z_q^n \times \Z_q$, for $1 \leq i \leq m$, where each $e_i$ lies in a fixed set of size $d$.
-LWBE is a variant that remains as hard as standard LWE for suitable parameters~\cite{MicPei13}.
 
-In this work, we introduce a new algebraic method for solving the \slwe\ problem which differs fundamentally from existing approaches. Instead of directly applying Gr\"obner basis method,
-we use \emph{a combination of diagonalization and $S$-polynomial generation} techniques. We carry out a direct complexity analysis of our new algorithm.
+Our proposed algorithm uses \emph{a combination of diagonalization and $S$-polynomial generation} techniques. We observe that a simple extension of Arora and Ge method \cite{ICALP:AroGe11} is possible when the polynomial co-efficients are in a ring. The complexity of our new algorithm is better that this simple extension.  
 
-Unlike previous Gr{\"o}bner basis based analyses~\cite{EPRINT:ACFP14,EPRINT:Steiner24b}, our method does not rely on semi-regularity assumptions, or degree of regularity estimation for deriving the complexity bound. Thus, our algorithm and its complexity analysis is not affected by the non-existence of semi-regular system or difficulty of estimating degree of regularity (precisely). The only assumption we make is that the LWE samples are random, which allows us to rely on linear independence properties that hold with high probability. %In particular, we do not assume semi-regularity or generic behavior of the polynomial system.
+\ar{still editing}
+Unlike previous Gr{\"o}bner basis based analyses~\cite{EPRINT:ACFP14,EPRINT:Steiner24b}, our method does not need to rely on semi-regularity assumptions, or degree of regularity estimation for deriving the complexity bound. Thus, our algorithm and its complexity analysis is not affected by the non-existence of semi-regular system or difficulty of estimating degree of regularity (precisely). The only assumption we make is that the LWE samples are random, which allows us to rely on linear independence properties that hold with high probability. %In particular, we do not assume semi-regularity or generic behavior of the polynomial system.
 
 Despite the absence of the above mentioned assumptions, the complexity of our algorithm shows polynomial improvement (\Cref{tab:comparison}) over existing algebraic algorithms based on Gr\"obner basis method. Note that the requirement of a large number of samples for our algorithm remains the same as in existing algebraic algorithms. A detailed comparison with prior algebraic attacks is provided in Table~\ref{tab:comparison}.
 Our main result is summarized in \Cref{thm:result}:
