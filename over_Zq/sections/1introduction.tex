@@ -27,18 +27,20 @@ The Learning With Errors (LWE) problem was introduced by Oded Regev in 2005~\cit
 % Another trial 
 % -------------------------------------------
 \begin{definition}[LWE~\cite{EPRINT:AlbPlaSco15,STOC:Regev05}, Ring-LWE~\cite{EC:LyuPeiReg10} and Module-LWE~\cite{EPRINT:BraGenVai11}]
-    Let $N, n, q \in \Z^+$, $R_q = \Z_q[x]/\langle h_N(x) \rangle$, where $h_N(x)$ is an irreducible polynomial of degree $N$, and let $\chi$ be an error distribution over $R_q$.
+    Let $N, n, q \in \Z_{>0}$, $R_q = \Z_q[x]/\langle h_N(x) \rangle$, where $h_N(x)$ is an irreducible polynomial of degree $N$, and let $\chi$ be an error distribution over $R_q$.
     For a secret vector $\vars{s} \in R_q^n$, the distribution $A_{\vars{s},\chi}$ produces samples $(\vars{a}, b) \in R_q^n \times R_q$ where:
     \[
         \vars{a} \xleftarrow{\$} R_q^n, \quad e \leftarrow \chi, \quad b = \langle \vars{a}, \vars{s} \rangle + e \in R_q.
     \]
-    The \emph{search} variant asks to recover $\vars{s}$ given arbitrarily many samples from $A_{\vars{s},\chi}$. The \emph{decision} variant asks to distinguish $A_{\vars{s},\chi}$ from the uniform distribution over $R_q^n \times R_q$. In cryptographic applications, usually $h_N(x)=x^N+1$ where $N$ is a power of $2$.
+    The \emph{search} variant asks to recover $\vars{s}$ given arbitrarily many samples from $A_{\vars{s},\chi}$. The \emph{decision} variant asks to distinguish $A_{\vars{s},\chi}$ from the uniform distribution over $R_q^n \times R_q$.
+    In cryptographic applications, usually $h_N(x)=x^N+1$ where $N$ is a power of $2$.
 
     When $n=1$, we refer to the problem as Ring-LWE (\rlwe), and if $n>1$, we refer to it as Module-LWE (\mlwe). By replacing \(R_q\) with \(\Z_q\), we get the standard LWE problem.
 
     
 \end{definition}
 
+\mlf{Say that RLWE is defined over number fields, but we always refer to it in the case of cyclotomic extension, where RLWE coincides with PLWE.}
 
 % % TODO: introduce notatino rlwe e mlwe
 % \begin{definition}[LWE~\cite{EPRINT:AlbPlaSco15,STOC:Regev05}, Ring-LWE~\cite{EC:LyuPeiReg10}, Module-LWE~\cite{EPRINT:BraGenVai11}]
@@ -119,7 +121,7 @@ Structured variants, including Ring-LWE~\cite{EC:LyuPeiReg10} and Module-LWE~\ci
     \resizebox{\textwidth}{!}{%
     \begin{tabular}{ c | c | c c | c c }
         \hline\hline
-        \multirow{2}{*}{Variant} & \multirow{2}{*}{\makecell{Secret\\Size}} & \multicolumn{2}{c|}{This Work} & \multicolumn{2}{c}{Arora and Ge~\cite{ICALP:AroGe11}} \\
+        \multirow{2}{*}{Variant} & \multirow{2}{*}{\makecell{Secret\\Size}} & \multicolumn{2}{c|}{This Work} & \multicolumn{2}{c}{Our Ring Extension of Arora and Ge~\cite{ICALP:AroGe11}} \\
         \cline{3-6}
         & & No. Samples & Time Complexity & No. Samples & Time Complexity \\
         \hline\hline
@@ -205,14 +207,14 @@ complexity estimate \cite{EPRINT:ACFP14} and susequent works \cite{ACISP:SunTibA
 
 % We emphasize that our approach does not aim at improving existing bounds on the degree of regularity; instead, we avoid this notion altogether by providing a fine-grained complexity directly in terms of the LWE parameters.
 
-All the above-mentioned algebraic analysis that use polynomial system solving methods, work for over $\F_q$. 
+All the above-mentioned algebraic analysis using polynomial system solving methods, work over $\F_q$. 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-\paragraph{Algorithms for RLWE/PLWE (Summary in \ref{appendix:summary})}
-Because an RLWE sample can be naturally represented as $n$ standard LWE samples, any known attack against LWE can be directly applied to the RLWE setting. However, the added algebraic structure of polynomial rings introduces unique attack vectors that do not exist in standard LWE.
-A primary class of these algebraic attacks exploits ring homomorphisms. Initially, it was demonstrated that PLWE exhibits weak instances when the defining polynomial satisfies $f(1) \equiv 0 \pmod q$. By ``guessing'' the evaluation of the secret polynomial at 1, an attacker can solve the Decision PLWE problem in $\mathcal{O}(q)$ time. While this targets highly specific and non-standard instances, subsequent work generalized this vulnerability to the broader RLWE problem. Specifically, researchers showed that by choosing an alternative polynomial basis, apparently secure RLWE instances can be mapped into these weak PLWE instances. If the error distortion during this transformation is sufficiently small, the $\mathcal{O}(q)$ attack remains effective. 
+\paragraph{Algorithms for RLWE/PLWE}
+Because an RLWE sample can be naturally represented as $N$ standard LWE samples, any known attack against LWE can be directly applied to the RLWE setting. However, the added algebraic structure of polynomial rings introduces unique attacks that do not exist in standard LWE.
+A primary class of these algebraic attacks exploits ring homomorphisms. Initially, it was demonstrated that PLWE exhibits weak instances when the defining polynomial satisfies $h_N(1) \equiv 0 \pmod q$. By ``guessing'' the evaluation of the secret polynomial at 1, an attacker can solve the Decision PLWE problem in $\mathcal{O}(q)$ time. While this targets highly specific and non-standard instances, subsequent work generalized this vulnerability to the broader RLWE problem. Specifically, researchers showed that by choosing an alternative polynomial basis, apparently secure RLWE instances can be mapped into these weak PLWE instances. If the error distortion during this transformation is sufficiently small, the $\mathcal{O}(q)$ attack remains effective. 
 
 Furthermore, while these initial techniques were limited to the Decision variant of the problem by mapping to simple prime fields $\mathbb{F}_q$, later cryptanalysis extended these attacks to the Search RLWE problem. By utilizing homomorphisms to higher-degree finite fields $\mathbb{F}_{q^f}$ and applying a chi-square statistical test to the mapped error distributions, attackers successfully exploited ``subfield vulnerabilities'' in prime cyclotomic rings. This advancement established a Search-to-Decision reduction, enabling full secret key recovery when the chosen error variance is small. 
 

@@ -17,6 +17,7 @@ where $\vars{x}^\gamma  = \texttt{lcm}(\mathrm{LM}(f), \lm(g))$ and $c = \texttt
 The main issue in Gr\"obner basis computations over rings arises during the $S$-polynomial reduction, e.g. multivariate polynomial division. In our algorithm we completely avoid multivariate polynomial division and thus the issues related to it. More specifically, divisions will be replaced by simple linear algebra operations which can be efficiently implemented on rings. (\ar{I will rphrase it or move it to a different place})
 
 %Further details on Gr\"obner basis theory and its extension on reduction rings is given in~\cite{Cox2015Ideals,buchberger1983critical}. 
+\mlf{specify also the random notation in the definition $\$$}
 
 Finally, to define the complexity of our algorithm we will use the linear algebra constant $\omega$ (that appears in the complexity of matrix multiplication), where \(2 \le \omega < 3\). The best known bound for $\omega$ is currently $\omega < 2.3728596$~\cite{DBLP:conf/issac/Gall14a}.
 

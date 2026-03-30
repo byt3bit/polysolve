@@ -1,10 +1,11 @@
 
 \paragraph{Generating the polynomial system.}
-Constructing a polynomial system corresponding to an LWE problem follows the method of Arora and Ge~\cite{ICALP:AroGe11}, i.e.~by using the polynomial $f(x) = x \cdot \prod_{i=1}^{t} (x+i)(x-i)$, as described in \Cref{subsec:previous-algorithms}. The same idea can be applied to \rlwe\ and \mlwe\  by first expressing them as ``extended'' LWE instances. This transformation is possible for all irreducible polynomials \(h_N(x)\). In \Cref{sec:lwe_types_reduction} and~\cite{DBLP:journals/iacr/BoerW25} the case of cyclotomic rings is detailed.
+Constructing a polynomial system corresponding to an LWE problem follows the method of Arora and Ge~\cite{ICALP:AroGe11}, as described in \Cref{subsec:previous-algorithms}.
+%The same idea can be applied to \rlwe\ and \mlwe\  by first expressing them as ``extended'' LWE instances. This transformation is possible for all irreducible polynomials \(h_N(x)\). In \Cref{sec:lwe_types_reduction} and~\cite{DBLP:journals/iacr/BoerW25} the case of cyclotomic rings is detailed.
 % In \Cref{subsec:previous-algorithms}, we presented the polynomial representation of the \slwe\ problem introduced by Arora and Ge~\cite{ICALP:AroGe11}. This representation is the starting point of our algorithm. More specifically, we highlight the importance of the polynomial $f(x) = x \cdot \prod_{i=1}^{t} (x+i)(x-i)$, which vanishes on all possible values of the error term, to construct a system of polynomial equations capturing the \slwe\ problem. 
 % \luc{generalize to generic irreducible polynomial but give example with cyclotomic}
-\Cref{tab:information_from_one_sample} describes the polynomial system characteristics provided by one sample of the LWE variants (after conversion to LWE instances).
-
+The same can be done for \rlwe\ and \mlwe\ by first expressing the respective samples as LWE ones. In \Cref{sec:lwe_types_reduction} and~\cite{DBLP:journals/iacr/BoerW25} the case of cyclotomic rings is detailed.
+\Cref{tab:information_from_one_sample} describes the polynomial system characteristics provided by one degree-$d$ sample, after conversion to LWE instances.
 
 \begin{table}
     [hb!]
@@ -70,7 +71,7 @@ In this section and \Cref{sec:pseudocode}, we provide the description of our alg
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-From now on, let's consider the LWE problem. In the polynomial system $\mathcal{F}_{\mathrm{LWE}}$ (stemming from \slwe), derived from $m = \binom{n+d-1}{d}$ samples, we identify each polynomial with its coefficient vector. The terms of each polynomial are ordered according to a fixed \emph{graded} monomial ordering by total degree. 
+From now on, let's consider the LWE problem, for which we have $n_v=n$ and $n_e=1$. In the polynomial system $\mathcal{F}_{\mathrm{LWE}}$ (stemming from \slwe), derived from $m = \binom{n+d-1}{d}$ samples, we identify each polynomial with its coefficient vector. The terms of each polynomial are ordered according to a fixed \emph{graded} monomial ordering by total degree. 
 % in the vector space of multivariate polynomials in $n$ variables of (total) degree at most $d$, which has dimension $w = \binom{n+d}{d}$. Fixing a graded monomial ordering induces a canonicalordering by total degree.
 This yields a matrix $M \in \Z_q^{m \times w}$ whose rows correspond to the input polynomials and $w = \binom{n+d}{d}$.
 With high probability, these rows are linearly independent (see \Cref{pivots}); diagonalizing it (computing its Smith Normal Form~\cite{DBLP:conf/issac/Storjohann96}) produces a set of polynomials with leading terms of degree $d$ (outlined by the first square structure in \Cref{fig:bigmatrix}). Note that, because we are working over $\Z_q$, the resulting polynomials are not necessarily monic, but their leading terms are all distinct and cover all monomials of degree $d$.
