@@ -66,7 +66,7 @@ In this section and \Cref{sec:pseudocode}, we provide the description of our alg
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-In the polynomial system $\mathcal{F}_{\mathrm{LWE}}$ (stemming from \slwe), derived from $m = \binom{n+d-1}{d}$ samples, we identify each polynomial with its coefficient vector. The terms of each polynomial are ordered according to a fixed \emph{graded} monomial ordering by total degree. 
+From now on, let's consider the LWE problem. In the polynomial system $\mathcal{F}_{\mathrm{LWE}}$ (stemming from \slwe), derived from $m = \binom{n+d-1}{d}$ samples, we identify each polynomial with its coefficient vector. The terms of each polynomial are ordered according to a fixed \emph{graded} monomial ordering by total degree. 
 % in the vector space of multivariate polynomials in $n$ variables of (total) degree at most $d$, which has dimension $w = \binom{n+d}{d}$. Fixing a graded monomial ordering induces a canonicalordering by total degree.
 This yields a matrix $M \in \Z_q^{m \times w}$ whose rows correspond to the input polynomials and $w = \binom{n+d}{d}$.
 With high probability, these rows are linearly independent (see \Cref{pivots}); diagonalizing it (computing its Smith Normal Form~\cite{DBLP:conf/issac/Storjohann96}) produces a set of polynomials with leading terms of degree $d$ (outlined by the first square structure in \Cref{fig:bigmatrix}). Note that, because we are working over $\Z_q$, the resulting polynomials are not necessarily monic, but their leading terms are all distinct and cover all monomials of degree $d$.
