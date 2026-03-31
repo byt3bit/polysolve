@@ -11,11 +11,17 @@
 % The degree of $f$ is $d := 2 \cdot t \sigma + 1 < q$. %We denote by $n$ the dimension of the secret. %and by $m$ the number of samples. %and $d := 2 \cdot t + 1$.
 % The resulting polynomial system $\mathcal{F}_{\mathrm{LWE}}$ is solved using the linearization method, namely by replacing monomials with a new linearized variable and then solving the resulting linear system of equations. %The \belwe\ where $\vars{e} \in \{0,1\}^m$ was introduced in~\cite{MicPei13}. 
 % The \belwe\, in which $\vars{e} \in \{0,1\}^m$, is a particular instance and was introduced in~\cite{MicPei13}.
+
+
 \section{\rlwe\ and \mlwe\ as a plain LWE instances}
 \label{sec:lwe_types_reduction}
+In this section we show how to reduce \rlwe\ and \mlwe\ to systems of polynomial equations in the coefficients of the secret. This reduction allows us to apply the algebraic techniques developed for solving LWE to the two variants of LWE.
+
+
 \mlf{clarify what are the unknowns and how many of them.}
 \paragraph{Reducing \rlwe\ to the LWE Polynomial System.} The reduction of \rlwe\ to an LWE polynomial system is well-known~\cite{EC:LyuPeiReg10}. % Given a \rlwe\ instance, we can represent the polynomials \(a, s, e\) as vectors of coefficients. This allows us to express the \rlwe\ problem as a system of polynomial equations in the coefficients of the secret despite the chosen irreducible polynomial $h_N(x)$. Here we give the reduction for the case of cyclotomic rings, i.e. $h_N(x) = x^N + 1$, but the same idea can be applied to any irreducible polynomial.
 % For example, consider a sample \(a, s, e \in R_q = \Z_q[x]/(x^N + 1)\), we can write them in terms of their coefficients, e.g. $a = a_0 + a_1 x + \dots + a_{N-1} x^{N-1}$.
+Let \(a, s, e, b \in R_q = \Z_q[x]/(x^N + 1)\) be the elements of one \rlwe\ sample. The secret polynomial $s$ has degree at most $N-1$ and hence at most $N$ coefficients, which will represent the unknowns of the system. 
 In an equation \(b = a \cdot s + e\), we can write the product \(a \cdot s\) in the cyclotomic ring \(R_q\) as $\sum_{i=0}^{N-1} a_i s_{(k-i) \pmod N}$ to obtain % then be expanded and rearranged to yield a system of polynomial equations in the coefficients \(s_0, s_1, \dots, s_{N-1}\) of the secret \(s\) which will denote the target unknowns. How to get those relations between the coefficients?
 % Let's consider
 % \[a \cdot s = (a_0 + a_1 x + \dots + a_{N-1} x^{N-1})(s_0 + s_1 x + \dots + s_{N-1} x^{N-1}).\]
@@ -24,15 +30,19 @@ In an equation \(b = a \cdot s + e\), we can write the product \(a \cdot s\) in 
 % This results in a system of polynomial equations in the coefficients of the secret \(s\) and the known coefficients of \(a\) and \(b\): for \(0 \le k < N\), 
 $b_k - \sum_{i=0}^{N-1} a_i s_{(k-i) \pmod{N}} = e_k.$
 
+
+
 As in the \slwe\ case, we can construct a polynomial \(f(x) = x \cdot \prod_{i=1}^{t} (x+i)(x-i)\) that vanishes on all possible values of the error coefficients. This means that \(f(e_k) = 0\) for all \(k\), that is \[f\left(b_k - \sum_{i=0}^{N-1} a_i s_{(k-i) \pmod N}\right) = 0.\]
 
-For one sample, the resulting polynomial system has \(N\) equations of degree \(d := 2t+1\) in \(N\) variables (the coefficients of the secret).
+For one sample, the resulting polynomial system has \(N\) equations of degree \(d := 2t+1\) in \(N\) variables (the coefficients of the secret $s$).
 
 \paragraph{Reducing of \mlwe\ to the LWE Polynomial System.}
 The reduction of \mlwe\ to the LWE polynomial system is similar to the reduction of \rlwe. Again, we express the \mlwe\ problem as a system of polynomial equations in the coefficients of the secret.
 
 Let \(\vars{a}, \vars{s} \in R_q^n\) and \(e, b \in R_q\) be the elements of one \mlwe\ sample. The \mlwe\ relation is given by:
 \[b = \langle \vars{a}, \vars{s} \rangle + e = \sum_{j=1}^n a_j s_j + e.\]
+The secret polynomials \(s_1, \dots, s_n\) have degree at most \(N-1\) and hence at most \(N\) coefficients each, which will represent the unknowns of the system. Recovering the secret in \mlwe\ corresponds to recovering the coefficients of the secret polynomials \(s_1, \dots, s_n\). Hence, the number of unknowns in the resulting system of polynomial equations is \(Nn\).
+
 For \(1 \le j \le n\), \(a_j\) and \(s_j\) can be expressed in terms of their coefficients.
 
 From the \rlwe\ reduction, we know how to express the product \(a_j s_j\) as a linear combination of the secret coefficients of \(s_j\). After the sum \(\sum_{j=1}^n a_j s_j\) is computed, the coefficients of the resulting polynomial can be expressed as linear combinations of the coefficients of all the secret polynomials \(s_1, \dots, s_n\) and the known coefficients of \(a_1, \dots, a_n\). 
