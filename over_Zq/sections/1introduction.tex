@@ -40,7 +40,7 @@ The Learning With Errors (LWE) problem was introduced by Oded Regev in 2005~\cit
     
 \end{definition}
 
-\textbf{Remark.} While the original \rlwe\ problem~\cite{EC:LyuPeiReg10} was defined over number fields, the formulation over $R_q$ is sometimes referred to as Polynomial-LWE (PLWE). The two problems coincide for power-of-two cyclotomic rings ($h_N(x) = x^N+1$); hence, following standard cryptographic practice, we simply refer to this formulation as \rlwe. \mlf{Check.}
+\textbf{Remark.} While the original \rlwe\ problem~\cite{EC:LyuPeiReg10} was defined over number fields, the formulation over $R_q$ is sometimes referred to as Polynomial-LWE (PLWE). The two problems coincide for power-of-two cyclotomic rings ($h_N(x) = x^N+1$); hence, following standard cryptographic practice, we simply refer to this formulation as \rlwe. \mlf{Check if it works.}
 
 % % TODO: introduce notatino rlwe e mlwe
 % \begin{definition}[LWE~\cite{EPRINT:AlbPlaSco15,STOC:Regev05}, Ring-LWE~\cite{EC:LyuPeiReg10}, Module-LWE~\cite{EPRINT:BraGenVai11}]
@@ -61,8 +61,6 @@ The Learning With Errors (LWE) problem was introduced by Oded Regev in 2005~\cit
         
     
 % \end{definition}
-
-
 
   
 Since its introduction, the LWE problem is investigated in algorithm and cryptography literature. In particular, LWE with \emph{bounded errors} (LWBE) was investigated in~\cite{EPRINT:ACFP14,ICALP:AroGe11,EC:NMSU25,EPRINT:Steiner24b}. Introduced by Arora and Ge~\cite{ICALP:AroGe11}, an \emph{algebraic algorithm} generates a system of error-free multivariate polynomial equations from LWE samples and solve the system using linearization technique. In~\cite{EPRINT:ACFP14}, the complexity of Arora-Ge technique was improved by using Gr{\"o}bner basis methods to solve the polynomial system of equations. Recent analysis~\cite{EC:NMSU25,EPRINT:Steiner24b} have further improved the complexity of this approach.

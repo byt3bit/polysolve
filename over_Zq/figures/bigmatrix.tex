@@ -61,12 +61,12 @@
 \node[inner sep=0pt, draw=gray, outer sep=0pt, matrix={0.8}{5.1}, fill=none, below=2mm of ld2, label=center:$\ddots$] (dots) {};
 
 % 1 BLOCK
-\node[gray, matrix={0.7}{0.7}, fill=none, below=2mm of dots.south east, xshift=-9mm] (d1block) {};
+\node[gray, matrix={1}{1}, fill=none, below=2mm of dots.south east, xshift=-13mm] (d1block) {};
 \draw[lightgray, line width=0.70mm] (d1block.north west) -- (d1block.south east) -- cycle;
 \node[font=\footnotesize\bfseries, fill=white, draw=gray, line width=0.4pt, inner sep=2pt] at (d1block.center) {$1$};
 
-\node[lipicsBulletGray, matrix={0.7}{0.3}, fill=lightgray, right=2mm of d1block] (smalld1) {};
-\node[font=\footnotesize] at (smalld1.center) {deg $0$};
+\node[lipicsBulletGray, matrix={1}{0.5}, fill=lightgray, right=2mm of d1block] (smalld1) {};
+\node[font=\footnotesize] at (smalld1.center) {\shortstack{deg \\ $0$}};
 
 
 \node[draw, dotted, thick, rounded corners, inner sep=4pt, fit=(d1block)(smalld1)] (box1) {};
